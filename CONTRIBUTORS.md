@@ -2,6 +2,8 @@
 
 ## Cohort Participants
 
+- [Quinn Lashinsky](https://github.com/qmaximillian) 🤠
+
 ## Mentors
 
 - [Lauren Beatty](https://github.com/laurenmbeatty) 👩‍🎤
