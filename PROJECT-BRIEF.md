@@ -24,45 +24,45 @@ Each week, the team of 4 developers will split into 2 pairs of 2 developers each
 
 Pairings will go as follows:
 
-#### Week 1, {start date - end date}
+#### Week 1, August 2 - 8
 
-1. {Name} & {Name}
-2. {Name} & {Name}
+1. Quinn & Gabby
+2. Lauren & Kat
 
-#### Week 2, {start date - end date}
+#### Week 2, August 9 - 15
 
-1. {Name} & {Name}
-2. {Name} & {Name}
+1. Kat & Quinn
+2. Gabby & Lauren
 
-#### Week 3, {start date - end date}
+#### Week 3, August 16 - 22
 
-1. {Name} & {Name}
-2. {Name} & {Name}
+1. Lauren & Quinn
+2. Gabby & Kat
 
-#### Week 4, {start date - end date}
+#### Week 4, August 23 - 29
 
-1. {Name} & {Name}
-2. {Name} & {Name}
+1. Quinn & Gabby
+2. Lauren & Kat
 
-#### Week 5, {start date - end date}
+#### Week 5, August 30 - September 5
 
-1. {Name} & {Name}
-2. {Name} & {Name}
+1. Kat & Quinn
+2. Gabby & Lauren
 
-#### Week 6, {start date - end date}
+#### Week 6, September 6 - 12
 
-1. {Name} & {Name}
-2. {Name} & {Name}
+1. Lauren & Quinn
+2. Gabby & Kat
 
-#### Week 7, {start date - end date}
+#### Week 7, September 13 - 19
 
-1. {Name} & {Name}
-2. {Name} & {Name}
+1. Quinn & Gabby
+2. Lauren & Kat
 
-#### Week 8, {start date - end date}
+#### Week 8, September 20 - 26
 
-1. {Name} & {Name}
-2. {Name} & {Name}
+1. Kat & Quinn
+2. Gabby & Lauren
 
 ### Pair Programming
 
