@@ -1,13 +1,13 @@
 # The Collab Lab
 
-## Cohort Participants
+## Cohort Participants!
 
 - [Quinn Lashinsky](https://github.com/qmaximillian) 🤠
 - [Lauren Yu](https://github.com/laurenyz) 🐘
 - [Gabby Moreno](https://github.com/gabymoreno9) 🐝 
 - [Kat DeVrieze](https://github.com/katmdev) 😸
 
-## Mentors
+## Mentors!
 
 - [Lauren Beatty](https://github.com/laurenmbeatty) 👩‍🎤
 - [Keeley Hammond](https://github.com/VerteDinde) 👾
