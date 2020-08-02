@@ -4,7 +4,7 @@
 
 - [Quinn Lashinsky](https://github.com/qmaximillian) 🤠
 - [Lauren Yu](https://github.com/laurenyz) 🐘
-- [Gabby Moreno] (https://github.com/gabymoreno9) 🐝 
+- [Gabby Moreno](https://github.com/gabymoreno9) 🐝 
 
 ## Mentors
 
