@@ -3,6 +3,7 @@
 ## Cohort Participants
 
 - [Quinn Lashinsky](https://github.com/qmaximillian) 🤠
+- [Lauren Yu](https://github.com/laurenyz) 🐘
 
 ## Mentors
 
