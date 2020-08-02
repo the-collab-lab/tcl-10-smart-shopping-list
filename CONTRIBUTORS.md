@@ -4,6 +4,7 @@
 
 - [Quinn Lashinsky](https://github.com/qmaximillian) 🤠
 - [Lauren Yu](https://github.com/laurenyz) 🐘
+- [Kat DeVrieze](https://github.com/katmdev) 😸
 
 ## Mentors
 
