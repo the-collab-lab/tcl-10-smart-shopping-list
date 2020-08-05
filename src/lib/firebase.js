@@ -16,5 +16,18 @@ var firebaseConfig = {
 };
 
 let fb = firebase.initializeApp(firebaseConfig);
+let db = firebase.firestore();
 
-export { fb };
+export function writeToFirestore(collectionName, options = {}) {
+  return db
+    .collection(collectionName)
+    .add(options)
+    .then(function(docRef) {
+      return docRef.id;
+    })
+    .catch(function(error) {
+      console.error('Error adding document: ', error);
+    });
+}
+
+export { fb, db };
