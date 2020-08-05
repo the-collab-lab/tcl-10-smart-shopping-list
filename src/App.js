@@ -1,21 +1,19 @@
 import React from 'react';
 import logo from './logo.svg';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { Route, Link, Switch } from 'react-router-dom';
 import './App.css';
-import List from './List';
-import AddItem from './AddItem';
-import Nav from './Nav';
+import List from './components/List';
+import AddItem from './components/AddItem';
+import BottomNav from './components/BottomNav';
 
 function App() {
   return (
     <div className="App">
-      <Router>
-        <Switch>
-          <Route exact path="/list" component={List} />
-          <Route exact path="/add-item" component={AddItem} />
-        </Switch>
-        <Nav />
-      </Router>
+      <Switch>
+        <Route exact path="/list" component={List} />
+        <Route exact path="/add-item" component={AddItem} />
+      </Switch>
+      <BottomNav />
     </div>
   );
 }
