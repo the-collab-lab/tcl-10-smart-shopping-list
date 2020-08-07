@@ -14,7 +14,6 @@ function App() {
 
   React.useEffect(() => {
     db.collection('shopping-list').onSnapshot(function(querySnapshot) {
-      console.log(querySnapshot);
       let querySnapshotResults = [];
       querySnapshot.forEach(function(doc) {
         const { id, name } = doc.data();
