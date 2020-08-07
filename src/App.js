@@ -1,55 +1,34 @@
 import React, { useState } from 'react';
-import * as firebase from 'firebase';
+import { db } from './lib/firebase.js';
 import 'firebase/firestore';
 import './App.css';
-
 import { TextField, Button } from '@material-ui/core';
-
-let app = firebase.initializeApp({
-  apiKey: 'AIzaSyDFXBbPe8ZUkuAIc4Ep-BGbesyTW4yPy-g',
-  authDomain: 'tcl-10-smart-shopping-list.firebaseapp.com',
-  databaseURL: 'https://tcl-10-smart-shopping-list.firebaseio.com',
-  projectId: 'tcl-10-smart-shopping-list',
-  storageBucket: 'tcl-10-smart-shopping-list.appspot.com',
-  messagingSenderId: '946401926689',
-  appId: '1:946401926689:web:24889e069cf0aff111cd60',
-});
-
-let db = firebase.firestore();
-
-function loadResults() {
-  return db
-    .collection('shopping-list')
-    .get()
-    .then(results => {
-      return results.docs.map(result => ({
-        id: result.id,
-        data: result.data(),
-      }));
-    });
-}
-
-function addItemToShoppingList(name) {
-  console.log(name);
-  return db.collection('shopping-list').add({ name });
-}
 
 function App() {
   let [results, setResults] = useState([]);
   let [name, setName] = useState('');
-  function refreshResults() {
-    loadResults().then(data => setResults(data));
+
+  function addItemToShoppingList(name) {
+    db.collection('shopping-list').add({ name });
   }
+
+  React.useEffect(() => {
+    db.collection('shopping-list').onSnapshot(function(querySnapshot) {
+      console.log(querySnapshot);
+      let querySnapshotResults = [];
+      querySnapshot.forEach(function(doc) {
+        const { id, name } = doc.data();
+        querySnapshotResults.push({ id, name });
+      });
+      setResults(querySnapshotResults);
+    });
+  }, []);
 
   function handleSubmitForm(event) {
     event.preventDefault();
     if (name.length > 0) {
-      addItemToShoppingList(name).then(refreshResults);
+      addItemToShoppingList(name);
     }
-  }
-
-  if (results.length === 0) {
-    refreshResults();
   }
 
   return (
@@ -58,7 +37,7 @@ function App() {
         <div style={{ background: '#fff', padding: '40px', borderRadius: 5 }}>
           <ul style={{ color: 'black' }}>
             {results.map(result => (
-              <li key={result.id}>{result.data.name}</li>
+              <li key={result.id}>{result.name}</li>
             ))}
           </ul>
 
