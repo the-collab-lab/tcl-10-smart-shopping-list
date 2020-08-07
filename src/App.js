@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { db } from './lib/firebase.js';
 import { writeToFirestore } from './lib/firebase';
-import { TextField, Button } from '@material-ui/core';
 import './App.css';
 
 function App() {
@@ -37,19 +36,27 @@ function App() {
             ))}
           </ul>
           <form onSubmit={handleSubmitForm}>
-            <TextField
-              id="standard-basic"
-              label="Item"
-              value={name}
-              onChange={e => setName(e.target.value)}
-            />
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={name.length === 0}
+            <label
+              style={{
+                color: 'grey',
+                fontSize: '12px',
+                display: 'flex',
+                justifyContent: 'flex-start',
+              }}
+              for="add-shopping-list-item"
             >
-              Submit
-            </Button>
+              Add Item
+            </label>
+            <div style={{ display: 'flex' }}>
+              <input
+                value={name}
+                onChange={e => setName(e.target.value)}
+                id="add-shopping-list-item"
+              ></input>
+              <button disabled={name.length === 0} type="submit">
+                Add
+              </button>
+            </div>
           </form>
         </div>
       </header>
