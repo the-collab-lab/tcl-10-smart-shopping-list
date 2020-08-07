@@ -32,37 +32,37 @@ Pairings will go as follows:
 #### Week 2, August 9 - 15
 
 1. Kat & Quinn
-2. Gabby & Lauren
+2. Tiana & Lauren
 
 #### Week 3, August 16 - 22
 
 1. Lauren & Quinn
-2. Gabby & Kat
+2. Tiana & Kat
 
 #### Week 4, August 23 - 29
 
-1. Quinn & Gabby
+1. Quinn & Tiana
 2. Lauren & Kat
 
 #### Week 5, August 30 - September 5
 
 1. Kat & Quinn
-2. Gabby & Lauren
+2. Tiana & Lauren
 
 #### Week 6, September 6 - 12
 
 1. Lauren & Quinn
-2. Gabby & Kat
+2. Tiana & Kat
 
 #### Week 7, September 13 - 19
 
-1. Quinn & Gabby
+1. Quinn & Tiana
 2. Lauren & Kat
 
 #### Week 8, September 20 - 26
 
 1. Kat & Quinn
-2. Gabby & Lauren
+2. Tiana & Lauren
 
 ### Pair Programming
 
