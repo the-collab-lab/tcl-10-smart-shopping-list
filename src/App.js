@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import { db } from './lib/firebase.js';
-import 'firebase/firestore';
-import './App.css';
+import { writeToFirestore } from './lib/firebase';
 import { TextField, Button } from '@material-ui/core';
+import './App.css';
 
 function App() {
   let [results, setResults] = useState([]);
   let [name, setName] = useState('');
-
-  function addItemToShoppingList(name) {
-    db.collection('shopping-list').add({ name });
-  }
 
   React.useEffect(() => {
     db.collection('shopping-list').onSnapshot(function(querySnapshot) {
@@ -26,7 +22,8 @@ function App() {
   function handleSubmitForm(event) {
     event.preventDefault();
     if (name.length > 0) {
-      addItemToShoppingList(name);
+      writeToFirestore('shopping-list', { name });
+      setName('');
     }
   }
 
@@ -39,7 +36,6 @@ function App() {
               <li key={result.id}>{result.name}</li>
             ))}
           </ul>
-
           <form onSubmit={handleSubmitForm}>
             <TextField
               id="standard-basic"
