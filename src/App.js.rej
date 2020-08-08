@@ -1,7 +1,0 @@
-diff a/src/App.js b/src/App.js	(rejected hunks)
-@@ -16,3 +16,2 @@ function App() {
--    db.collection("shopping-list")
--    .onSnapshot(function(querySnapshot) {
--      console.log(querySnapshot)
-+    db.collection('shopping-list').onSnapshot(function(querySnapshot) {
-+      console.log(querySnapshot);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { db } from './lib/firebase.js';
 import { writeToFirestore } from './lib/firebase';
 import './App.css';
@@ -7,7 +7,7 @@ function App() {
   let [results, setResults] = useState([]);
   let [name, setName] = useState('');
 
-  React.useEffect(() => {
+  useEffect(() => {
     db.collection('shopping-list').onSnapshot(function(querySnapshot) {
       let querySnapshotResults = [];
       querySnapshot.forEach(function(doc) {
