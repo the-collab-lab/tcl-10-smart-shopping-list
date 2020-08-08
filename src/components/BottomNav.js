@@ -1,30 +1,23 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function BottomNav(props) {
-  const path = props.history.location.pathname;
   return (
     <nav>
       <ul>
         <li>
-          <Link
-            to="/list"
-            className={path === '/list' ? 'selected-view' : null}
-          >
+          <NavLink exact to="/list" activeClassName="selected-view">
             List
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link
-            to="/add-item"
-            className={path === '/add-item' ? 'selected-view' : null}
-          >
-            Add an Item
-          </Link>
+          <NavLink exact to="/add-item" activeClassName="selected-view">
+            Add Item
+          </NavLink>
         </li>
       </ul>
     </nav>
   );
 }
 
-export default withRouter(BottomNav);
+export default BottomNav;
