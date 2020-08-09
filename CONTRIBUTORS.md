@@ -6,6 +6,7 @@
 - [Lauren Yu](https://github.com/laurenyz) 🐘
 - [Gabby Moreno](https://github.com/gabymoreno9) 🐝 
 - [Kat DeVrieze](https://github.com/katmdev) 😸
+- [Tiana Johnson](https://github.com/tianajohnson) 👾
 
 ## Mentors
 
