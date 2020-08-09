@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Route, Link, Switch } from 'react-router-dom';
 import { db } from './lib/firebase.js';
 import { writeToFirestore } from './lib/firebase';
 import './App.css';
+import List from './components/List';
+import AddItem from './components/AddItem';
+import BottomNav from './components/BottomNav';
 
 function App() {
   let [results, setResults] = useState([]);
@@ -60,6 +64,11 @@ function App() {
           </form>
         </div>
       </header>
+      <Switch>
+        <Route exact path="/list" component={List} />
+        <Route exact path="/add-item" component={AddItem} />
+      </Switch>
+      <BottomNav />
     </div>
   );
 }
