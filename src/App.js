@@ -63,11 +63,12 @@ function App() {
             </div>
           </form>
         </div>
+        <Switch>
+          <Route exact path="/list" component={List} />
+          <Route exact path="/add-item" component={AddItem} />
+        </Switch>
       </header>
-      <Switch>
-        <Route exact path="/list" component={List} />
-        <Route exact path="/add-item" component={AddItem} />
-      </Switch>
+
       <BottomNav />
     </div>
   );
