@@ -19,7 +19,7 @@ const AddItem = () => {
           display: 'flex',
           justifyContent: 'flex-start',
         }}
-        for="add-shopping-list-item"
+        htmlFor="add-shopping-list-item"
       >
         Add Item
       </label>

@@ -15,9 +15,10 @@ const List = () => {
   }, []);
   return (
     <ul style={{ color: 'black' }}>
-      {results.map(result => (
-        <li key={result.id}>{result.name}</li>
-      ))}
+      {results.map(result => {
+        console.log(result);
+        return <li key={result.id}>{result.name}</li>;
+      })}
     </ul>
   );
 };
