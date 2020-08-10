@@ -16,7 +16,6 @@ const List = () => {
   return (
     <ul style={{ color: 'black' }}>
       {results.map(result => {
-        console.log(result);
         return <li key={result.id}>{result.name}</li>;
       })}
     </ul>
