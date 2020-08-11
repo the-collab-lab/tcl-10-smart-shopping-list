@@ -1,7 +1,15 @@
 import React from 'react';
 
-const List = () => {
-  return <h1>THIS IS THE LIST</h1>;
+const List = props => {
+  return (
+    <div style={{ background: '#fff', padding: '40px', borderRadius: 5 }}>
+      <ul style={{ color: 'black' }}>
+        {props.listItems.map(result => (
+          <li key={result.id}>{result.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 export default List;
