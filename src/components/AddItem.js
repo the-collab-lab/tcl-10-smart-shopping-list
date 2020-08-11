@@ -1,43 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { writeToFirestore } from '../lib/firebase';
 
-const AddItem = props => {
+const AddItem = () => {
+  let [name, setName] = useState('');
+  let [consistency, setConsistency] = useState('');
+
+  function handleSubmitForm(event) {
+    event.preventDefault();
+    if (name.length > 0) {
+      writeToFirestore('shopping-list', {
+        name,
+        consistency,
+        lastPurchaseDate: null,
+      });
+      setName('');
+    }
+  }
+
   return (
-    <form onSubmit={props.handleSubmitForm}>
-      <label
-        style={{
-          color: 'grey',
-          fontSize: '12px',
-          display: 'flex',
-          justifyContent: 'flex-start',
-        }}
-        for="add-shopping-list-item"
-      >
-        Item Name
-      </label>
-      <div style={{ display: 'flex' }}>
-        <input
-          value={props.name}
-          onChange={e => props.setName(e.target.value)}
-          id="add-shopping-list-item"
-        ></input>
-        <label
-          style={{
-            color: 'grey',
-            fontSize: '12px',
-            display: 'flex',
-            justifyContent: 'flex-start',
-          }}
-          for="add-shopping-list-item"
-        >
-          How soon will you buy this again?
-        </label>
-        <input type="radio" />
-        <label>Soon</label>
+    <form onSubmit={event => handleSubmitForm(event)}>
+      <label htmlFor="add-shopping-list-item">Item Name</label>
 
-        <button disabled={props.name.length === 0} type="submit">
-          Add
-        </button>
-      </div>
+      <input
+        value={name}
+        onChange={e => setName(e.target.value)}
+        id="add-shopping-list-item"
+      />
+      <fieldset>
+        <legend>How soon will you buy this again?</legend>
+        <div>
+          <input
+            onChange={e => setConsistency(e.target.value)}
+            type="radio"
+            id="soon"
+            name="consistency"
+            value={7}
+          />
+          <label htmlFor="soon">Soon</label>
+          <input
+            onChange={e => setConsistency(e.target.value)}
+            type="radio"
+            id="kind-of-soon"
+            name="consistency"
+            value={14}
+          />
+          <label htmlFor="kind-of-soon">Kind of Soon</label>
+          <input
+            onChange={e => setConsistency(e.target.value)}
+            type="radio"
+            id="not-soon"
+            name="consistency"
+            value={30}
+          />
+          <label htmlFor="not-soon">Not Soon</label>
+        </div>
+      </fieldset>
+      <button
+        disabled={name.length === 0 || consistency.length === 0}
+        type="submit"
+      >
+        Add Item
+      </button>
     </form>
   );
 };
