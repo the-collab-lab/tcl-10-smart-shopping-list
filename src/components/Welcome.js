@@ -10,7 +10,7 @@ const Welcome = () => {
   return (
     <div>
       <h1>Welcome to your Smart Shopping list!</h1>
-      <Link exact to="/list" onClick={setTokenStorage}>
+      <Link to="/list" onClick={setTokenStorage}>
         Create New List
       </Link>
       <p>- or -</p>

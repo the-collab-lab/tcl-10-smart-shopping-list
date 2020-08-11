@@ -7,12 +7,14 @@ const List = () => {
     db.collection('shopping-list').onSnapshot(function(querySnapshot) {
       let querySnapshotResults = [];
       querySnapshot.forEach(function(doc) {
-        const { id, name } = doc.data();
+        const { name } = doc.data();
+        const { id } = doc;
         querySnapshotResults.push({ id, name });
       });
       setResults(querySnapshotResults);
     });
   }, []);
+
   return (
     <ul style={{ color: 'black' }}>
       {results.map(result => {
