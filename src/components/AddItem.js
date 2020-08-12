@@ -8,7 +8,7 @@ const AddItem = () => {
   function handleSubmitForm(event) {
     event.preventDefault();
     if (name.length > 0) {
-      writeToFirestore('shopping-list', {
+      writeToFirestore('put-token-here', {
         name,
         consistency,
         lastPurchaseDate: null,
