@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import Welcome from './components/Welcome';
 import List from './components/List';
@@ -15,6 +15,7 @@ function App() {
             <Route exact path="/" component={Welcome} />
             <Route exact path="/list" component={List} />
             <Route exact path="/add-item" component={AddItem} />
+            <Redirect to="/" />
           </Switch>
         </div>
       </header>

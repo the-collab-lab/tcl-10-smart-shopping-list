@@ -3,10 +3,12 @@ import { writeToFirestore } from '../lib/firebase';
 
 const AddItem = () => {
   let [name, setName] = useState('');
+  const token = localStorage.getItem('token');
+
   function handleSubmitForm(event) {
     event.preventDefault();
     if (name.length > 0) {
-      writeToFirestore('shopping-list', { name });
+      writeToFirestore(token, { name });
       setName('');
     }
   }

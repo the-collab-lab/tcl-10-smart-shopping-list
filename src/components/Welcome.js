@@ -1,12 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import getToken from '../lib/tokens';
+import { writeToFirestore } from '../lib/firebase';
 
 const Welcome = () => {
   const setTokenStorage = () => {
     const token = getToken();
     localStorage.setItem('token', token);
+    writeToFirestore(token);
   };
+
   return (
     <div>
       <h1>Welcome to your Smart Shopping list!</h1>
