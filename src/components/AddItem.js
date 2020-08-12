@@ -13,6 +13,7 @@ const AddItem = () => {
         consistency,
         lastPurchaseDate: null,
       });
+      alert(`${name} has been successfully added to your list.`);
       setName('');
     }
   }
@@ -20,7 +21,6 @@ const AddItem = () => {
   return (
     <form onSubmit={event => handleSubmitForm(event)}>
       <label htmlFor="add-shopping-list-item">Item Name</label>
-
       <input
         value={name}
         onChange={e => setName(e.target.value)}
