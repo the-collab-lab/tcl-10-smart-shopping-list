@@ -10,7 +10,7 @@ function App() {
   let [results, setResults] = useState([]);
 
   useEffect(() => {
-    db.collection('shopping-list').onSnapshot(function(querySnapshot) {
+    db.collection('put-token-here').onSnapshot(function(querySnapshot) {
       let querySnapshotResults = [];
       querySnapshot.forEach(function(doc) {
         const { id, name } = doc.data();
