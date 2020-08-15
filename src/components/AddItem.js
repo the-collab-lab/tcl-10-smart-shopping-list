@@ -15,8 +15,13 @@ const AddItem = () => {
       });
       alert(`${name} has been successfully added to your list.`);
       setName('');
+      setFrequency(7);
     }
   }
+
+  const handleRadioChange = e => {
+    setFrequency(parseInt(e.target.value));
+  };
 
   return (
     <form onSubmit={event => handleSubmitForm(event)}>
@@ -30,49 +35,36 @@ const AddItem = () => {
       <fieldset>
         <legend>How soon will you buy this again?</legend>
         <div>
-          {frequency === 7 ? (
-            <input
-              onChange={e => setFrequency(parseInt(e.target.value))}
-              type="radio"
-              id="soon"
-              name="frequency"
-              value={7}
-              checked
-            />
-          ) : (
-            <input
-              onChange={e => setFrequency(parseInt(e.target.value))}
-              type="radio"
-              id="soon"
-              name="frequency"
-              value={7}
-            />
-          )}
+          <input
+            onChange={e => handleRadioChange(e)}
+            type="radio"
+            id="soon"
+            name="soon"
+            checked={frequency === 7}
+            value={7}
+          />
           <label htmlFor="soon">Soon</label>
           <input
-            onChange={e => setFrequency(parseInt(e.target.value))}
+            checked={frequency === 14}
+            onChange={e => handleRadioChange(e)}
             type="radio"
             id="kind-of-soon"
-            name="frequency"
+            name="kind-of-soon"
             value={14}
           />
           <label htmlFor="kind-of-soon">Kind of Soon</label>
           <input
-            onChange={e => setFrequency(parseInt(e.target.value))}
+            checked={frequency === 30}
+            onChange={e => handleRadioChange(e)}
             type="radio"
             id="not-soon"
-            name="frequency"
+            name="not-soon"
             value={30}
           />
           <label htmlFor="not-soon">Not Soon</label>
         </div>
       </fieldset>
-      <button
-        // disabled={name.length === 0 || frequency.length === 0}
-        type="submit"
-      >
-        Add Item
-      </button>
+      <button type="submit">Add Item</button>
     </form>
   );
 };
