@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Link, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { db } from './lib/firebase.js';
 import './App.css';
 import List from './components/List';

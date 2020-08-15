@@ -3,7 +3,7 @@ import { writeToFirestore } from '../lib/firebase';
 
 const AddItem = () => {
   let [name, setName] = useState('');
-  let [frequency, setFrequency] = useState('');
+  let [frequency, setFrequency] = useState(7);
 
   function handleSubmitForm(event) {
     event.preventDefault();
@@ -30,7 +30,7 @@ const AddItem = () => {
         <legend>How soon will you buy this again?</legend>
         <div>
           <input
-            onChange={e => setFrequency(e.target.value)}
+            onChange={e => setFrequency(parseInt(e.target.value))}
             type="radio"
             id="soon"
             name="frequency"
@@ -38,7 +38,7 @@ const AddItem = () => {
           />
           <label htmlFor="soon">Soon</label>
           <input
-            onChange={e => setFrequency(e.target.value)}
+            onChange={e => setFrequency(parseInt(e.target.value))}
             type="radio"
             id="kind-of-soon"
             name="frequency"
@@ -46,7 +46,7 @@ const AddItem = () => {
           />
           <label htmlFor="kind-of-soon">Kind of Soon</label>
           <input
-            onChange={e => setFrequency(e.target.value)}
+            onChange={e => setFrequency(parseInt(e.target.value))}
             type="radio"
             id="not-soon"
             name="frequency"
