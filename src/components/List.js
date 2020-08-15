@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../lib/firebase';
 import { NavLink } from 'react-router-dom';
 
-const List = () => {
+const List = ({ token }) => {
   let [results, setResults] = useState([]);
-  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const unsubscribe = db

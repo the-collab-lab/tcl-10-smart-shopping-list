@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { writeToFirestore } from '../lib/firebase';
 
-const AddItem = () => {
+const AddItem = ({ token }) => {
   let [name, setName] = useState('');
-  const token = localStorage.getItem('token');
 
   function handleSubmitForm(event) {
     event.preventDefault();

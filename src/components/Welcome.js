@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import getToken from '../lib/tokens';
 import { writeToFirestore } from '../lib/firebase';
 
-const Welcome = () => {
+const Welcome = ({ setToken }) => {
   const setTokenStorage = () => {
     const token = getToken();
     localStorage.setItem('token', token);
+    setToken(token);
     writeToFirestore(token);
   };
 
