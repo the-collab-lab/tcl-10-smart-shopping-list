@@ -22,6 +22,7 @@ const AddItem = () => {
     <form onSubmit={event => handleSubmitForm(event)}>
       <label htmlFor="add-shopping-list-item">Item Name</label>
       <input
+        required
         value={name}
         onChange={e => setName(e.target.value)}
         id="add-shopping-list-item"
@@ -29,13 +30,24 @@ const AddItem = () => {
       <fieldset>
         <legend>How soon will you buy this again?</legend>
         <div>
-          <input
-            onChange={e => setFrequency(parseInt(e.target.value))}
-            type="radio"
-            id="soon"
-            name="frequency"
-            value={7}
-          />
+          {frequency === 7 ? (
+            <input
+              onChange={e => setFrequency(parseInt(e.target.value))}
+              type="radio"
+              id="soon"
+              name="frequency"
+              value={7}
+              checked
+            />
+          ) : (
+            <input
+              onChange={e => setFrequency(parseInt(e.target.value))}
+              type="radio"
+              id="soon"
+              name="frequency"
+              value={7}
+            />
+          )}
           <label htmlFor="soon">Soon</label>
           <input
             onChange={e => setFrequency(parseInt(e.target.value))}
@@ -56,7 +68,7 @@ const AddItem = () => {
         </div>
       </fieldset>
       <button
-        disabled={name.length === 0 || frequency.length === 0}
+        // disabled={name.length === 0 || frequency.length === 0}
         type="submit"
       >
         Add Item
