@@ -15,6 +15,7 @@ const AddItem = () => {
       });
       alert(`${name} has been successfully added to your list.`);
       setName('');
+      setFrequency(7);
     }
   }
 
