@@ -30,24 +30,14 @@ const AddItem = () => {
       <fieldset>
         <legend>How soon will you buy this again?</legend>
         <div>
-          {frequency === 7 ? (
-            <input
-              onChange={e => setFrequency(parseInt(e.target.value))}
-              type="radio"
-              id="soon"
-              name="frequency"
-              value={7}
-              checked
-            />
-          ) : (
-            <input
-              onChange={e => setFrequency(parseInt(e.target.value))}
-              type="radio"
-              id="soon"
-              name="frequency"
-              value={7}
-            />
-          )}
+          <input
+            onChange={e => setFrequency(parseInt(e.target.value))}
+            type="radio"
+            id="soon"
+            name="frequency"
+            value={7}
+            checked={frequency === 7}
+          />
           <label htmlFor="soon">Soon</label>
           <input
             onChange={e => setFrequency(parseInt(e.target.value))}
@@ -67,12 +57,7 @@ const AddItem = () => {
           <label htmlFor="not-soon">Not Soon</label>
         </div>
       </fieldset>
-      <button
-        // disabled={name.length === 0 || frequency.length === 0}
-        type="submit"
-      >
-        Add Item
-      </button>
+      <button type="submit">Add Item</button>
     </form>
   );
 };
