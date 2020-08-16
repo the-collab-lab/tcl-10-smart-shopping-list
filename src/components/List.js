@@ -2,27 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../lib/firebase';
 import { NavLink } from 'react-router-dom';
 
-const List = ({ token }) => {
-  let [results, setResults] = useState([]);
-
-  useEffect(() => {
-    const unsubscribe = db
-      .collection(token)
-      .onSnapshot(function(querySnapshot) {
-        let querySnapshotResults = [];
-        querySnapshot.forEach(function(doc) {
-          const { name } = doc.data();
-          const { id } = doc;
-
-          if (name) {
-            querySnapshotResults.push({ id, name });
-          }
-        });
-        setResults(querySnapshotResults);
-      });
-
-    return unsubscribe;
-  }, [token]);
+const List = ({ token, results }) => {
 
   return (
     <>
