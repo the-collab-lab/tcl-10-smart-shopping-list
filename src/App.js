@@ -1,46 +1,71 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { db } from './lib/firebase.js';
 import './App.css';
+import Welcome from './components/Welcome';
 import List from './components/List';
 import AddItem from './components/AddItem';
 import BottomNav from './components/BottomNav';
+import RequireAuth from './components/RequireAuth';
 
 function App() {
+  const [token, setToken] = useState(localStorage.getItem('token'));
   let [results, setResults] = useState([]);
 
   useEffect(() => {
-    db.collection('put-token-here').onSnapshot(function(querySnapshot) {
-      let querySnapshotResults = [];
-      querySnapshot.forEach(function(doc) {
-        const { id, name } = doc.data();
-        querySnapshotResults.push({ id, name });
+    const unsubscribe = db
+      .collection(token)
+      .onSnapshot(function(querySnapshot) {
+        let querySnapshotResults = [];
+        querySnapshot.forEach(function(doc) {
+          const { name } = doc.data();
+          const { id } = doc;
+
+          if (name) {
+            querySnapshotResults.push({ id, name });
+          }
+        });
+        setResults(querySnapshotResults);
       });
-      setResults(querySnapshotResults);
-    });
-  }, []);
+
+    return unsubscribe;
+  }, [token]);
+//   let [results, setResults] = useState([]);
+
+//   useEffect(() => {
+//     db.collection('put-token-here').onSnapshot(function(querySnapshot) {
+//       let querySnapshotResults = [];
+//       querySnapshot.forEach(function(doc) {
+//         const { id, name } = doc.data();
+//         querySnapshotResults.push({ id, name });
+//       });
+//       setResults(querySnapshotResults);
+//     });
+//   }, []);
 
   return (
     <div className="App">
       <header className="App-header">
-        <Switch>
-          <Route
-            exact
-            path="/list"
-            render={() => {
-              return <List listItems={results} />;
-            }}
-          />
-          <Route
-            exact
-            path="/add-item"
-            render={() => {
-              return <AddItem />;
-            }}
-          />
-        </Switch>
+        <div style={{ background: '#fff', padding: '40px', borderRadius: 5 }}>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => <Welcome setToken={setToken} />}
+            />
+            <RequireAuth>
+              <Route exact path="/list" render={() => <List token={token} results={results} />} />
+              <Route
+                exact
+                path="/add-item"
+                render={() => <AddItem token={token} />}
+              />
+            </RequireAuth>
+            <Redirect to="/" />
+          </Switch>
+        </div>
       </header>
-      <BottomNav />
+      {token ? <BottomNav /> : null}
     </div>
   );
 }

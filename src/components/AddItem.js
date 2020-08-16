@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { writeToFirestore } from '../lib/firebase';
 
-const AddItem = () => {
+const AddItem = ({token}) => {
   let [name, setName] = useState('');
   let [frequency, setFrequency] = useState(7);
 
   function handleSubmitForm(event) {
     event.preventDefault();
     if (name.length > 0) {
-      writeToFirestore('put-token-here', {
+      writeToFirestore(token, {
         name,
         frequency,
         lastPurchaseDate: null,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-function BottomNav(props) {
+function BottomNav() {
   return (
     <nav>
       <ul>

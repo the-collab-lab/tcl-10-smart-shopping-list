@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { db } from '../lib/firebase';
+import { NavLink } from 'react-router-dom';
 
-const List = props => {
+const List = ({ token, results }) => {
+
   return (
-    <div style={{ background: '#fff', padding: '40px', borderRadius: 5 }}>
+    <>
+      {results.length === 0 ? (
+        <>
+          <header>Smart Shopping List</header>
+          <p>Your shopping list is currently empty</p>
+          <NavLink exact to="/add-item">
+            Add Item
+          </NavLink>
+        </>
+      ) : null}
       <ul style={{ color: 'black' }}>
-        {props.listItems.map(result => (
-          <li key={result.id}>{result.name}</li>
-        ))}
+        {results.map(result => {
+          return <li key={result.id}>{result.name}</li>;
+        })}
       </ul>
-    </div>
+    </>
   );
 };
 
