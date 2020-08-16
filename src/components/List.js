@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { db } from '../lib/firebase';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 const List = ({ token, results }) => {
-
   return (
     <>
       {results.length === 0 ? (

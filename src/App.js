@@ -13,35 +13,25 @@ function App() {
   let [results, setResults] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = db
-      .collection(token)
-      .onSnapshot(function(querySnapshot) {
-        let querySnapshotResults = [];
-        querySnapshot.forEach(function(doc) {
-          const { name } = doc.data();
-          const { id } = doc;
+    if (token) {
+      const unsubscribe = db
+        .collection(token)
+        .onSnapshot(function(querySnapshot) {
+          let querySnapshotResults = [];
+          querySnapshot.forEach(function(doc) {
+            const { name } = doc.data();
+            const { id } = doc;
 
-          if (name) {
-            querySnapshotResults.push({ id, name });
-          }
+            if (name) {
+              querySnapshotResults.push({ id, name });
+            }
+          });
+          setResults(querySnapshotResults);
         });
-        setResults(querySnapshotResults);
-      });
 
-    return unsubscribe;
+      return unsubscribe;
+    }
   }, [token]);
-//   let [results, setResults] = useState([]);
-
-//   useEffect(() => {
-//     db.collection('put-token-here').onSnapshot(function(querySnapshot) {
-//       let querySnapshotResults = [];
-//       querySnapshot.forEach(function(doc) {
-//         const { id, name } = doc.data();
-//         querySnapshotResults.push({ id, name });
-//       });
-//       setResults(querySnapshotResults);
-//     });
-//   }, []);
 
   return (
     <div className="App">
@@ -54,7 +44,11 @@ function App() {
               render={() => <Welcome setToken={setToken} />}
             />
             <RequireAuth>
-              <Route exact path="/list" render={() => <List token={token} results={results} />} />
+              <Route
+                exact
+                path="/list"
+                render={() => <List results={results} />}
+              />
               <Route
                 exact
                 path="/add-item"
