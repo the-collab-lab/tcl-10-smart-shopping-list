@@ -52,7 +52,7 @@ function App() {
               <Route
                 exact
                 path="/add-item"
-                render={() => <AddItem token={token} />}
+                render={() => <AddItem token={token} results={results} />}
               />
             </RequireAuth>
             <Redirect to="/" />

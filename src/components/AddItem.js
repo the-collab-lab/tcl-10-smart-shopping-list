@@ -1,19 +1,32 @@
 import React, { useState } from 'react';
 import { writeToFirestore } from '../lib/firebase';
 
-const AddItem = ({token}) => {
+const AddItem = ({ token, results }) => {
   let [name, setName] = useState('');
   let [frequency, setFrequency] = useState(7);
 
   function handleSubmitForm(event) {
     event.preventDefault();
     if (name.length > 0) {
-      writeToFirestore(token, {
-        name,
-        frequency,
-        lastPurchaseDate: null,
+      let count = 0;
+      results.forEach(result => {
+        if (
+          name.replace(/[\W_]/gi, '').toLowerCase() ===
+          result.name.replace(/[\W_]/gi, '').toLowerCase()
+        ) {
+          count++;
+        }
       });
-      alert(`${name} has been successfully added to your list.`);
+      if (count) {
+        alert(`${name} already exists on your list`);
+      } else {
+        writeToFirestore(token, {
+          name,
+          frequency,
+          lastPurchaseDate: null,
+        });
+        alert(`${name} has been successfully added to your list.`);
+      }
       setName('');
       setFrequency(7);
     }
