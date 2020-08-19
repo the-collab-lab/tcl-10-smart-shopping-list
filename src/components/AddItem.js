@@ -7,29 +7,23 @@ const AddItem = ({ token, results }) => {
 
   function handleSubmitForm(event) {
     event.preventDefault();
-    if (name.length > 0) {
-      let count = 0;
-      results.forEach(result => {
-        if (
-          name.replace(/[\W_]/gi, '').toLowerCase() ===
-          result.name.replace(/[\W_]/gi, '').toLowerCase()
-        ) {
-          count++;
-        }
+    const duplicateResults = results.filter(
+      result =>
+        name.replace(/[\W_]/g, '').toLowerCase() ===
+        result.name.replace(/[\W_]/g, '').toLowerCase(),
+    );
+    if (duplicateResults.length) {
+      alert(`${name} already exists on your list`);
+    } else {
+      writeToFirestore(token, {
+        name,
+        frequency,
+        lastPurchaseDate: null,
       });
-      if (count) {
-        alert(`${name} already exists on your list`);
-      } else {
-        writeToFirestore(token, {
-          name,
-          frequency,
-          lastPurchaseDate: null,
-        });
-        alert(`${name} has been successfully added to your list.`);
-      }
-      setName('');
-      setFrequency(7);
+      alert(`${name} has been successfully added to your list.`);
     }
+    setName('');
+    setFrequency(7);
   }
 
   return (
