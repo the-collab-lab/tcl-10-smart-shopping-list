@@ -7,12 +7,15 @@ const AddItem = ({ token, results }) => {
 
   function handleSubmitForm(event) {
     event.preventDefault();
-    const duplicateResults = results.filter(
-      result =>
-        name.replace(/[\W_]/g, '').toLowerCase() ===
-        result.name.replace(/[\W_]/g, '').toLowerCase(),
-    );
-    if (duplicateResults.length) {
+    if (!name.trim()) {
+      alert(`Please enter a valid item`);
+    } else if (
+      results.filter(
+        result =>
+          name.replace(/[\W_]/g, '').toLowerCase() ===
+          result.name.replace(/[\W_]/g, '').toLowerCase(),
+      ).length
+    ) {
       alert(`${name} already exists on your list`);
     } else {
       writeToFirestore(token, {
