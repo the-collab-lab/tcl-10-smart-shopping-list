@@ -10,27 +10,29 @@ import RequireAuth from './components/RequireAuth';
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
+  const [isLoading, setIsLoading] = useState(true);
   let [results, setResults] = useState([]);
 
   useEffect(() => {
+    let unsubscribe;
+
     if (token) {
-      const unsubscribe = db
-        .collection(token)
-        .onSnapshot(function(querySnapshot) {
-          let querySnapshotResults = [];
-          querySnapshot.forEach(function(doc) {
-            const { name } = doc.data();
-            const { id } = doc;
+      unsubscribe = db.collection(token).onSnapshot(function(querySnapshot) {
+        let querySnapshotResults = [];
+        querySnapshot.forEach(function(doc) {
+          const { name } = doc.data();
+          const { id } = doc;
 
-            if (name) {
-              querySnapshotResults.push({ id, name });
-            }
-          });
-          setResults(querySnapshotResults);
+          if (name) {
+            querySnapshotResults.push({ id, name });
+          }
         });
-
-      return unsubscribe;
+        setResults(querySnapshotResults);
+        setIsLoading(false);
+      });
     }
+
+    return unsubscribe;
   }, [token]);
 
   return (
@@ -41,13 +43,21 @@ function App() {
             <Route
               exact
               path="/"
-              render={() => <Welcome setToken={setToken} />}
+              render={() =>
+                token ? (
+                  <Redirect to="/list" />
+                ) : (
+                  <Welcome setToken={setToken} />
+                )
+              }
             />
             <RequireAuth>
               <Route
                 exact
                 path="/list"
-                render={() => <List results={results} />}
+                render={() =>
+                  isLoading ? <div>Loading...</div> : <List results={results} />
+                }
               />
               <Route
                 exact
