@@ -15,13 +15,14 @@ const Welcome = ({ setToken }) => {
 
   function handleSubmit(event) {
     event.preventDefault();
+    const trimmed_input = input.trim();
 
-    db.collection(input).onSnapshot(function(querySnapshot) {
+    db.collection(trimmed_input).onSnapshot(function(querySnapshot) {
       if (querySnapshot.empty) {
         alert('Shopping list does not exist');
       } else {
-        localStorage.setItem('token', input);
-        setToken(input);
+        localStorage.setItem('token', trimmed_input);
+        setToken(trimmed_input);
       }
     });
   }
