@@ -7,16 +7,14 @@ const AddItem = ({ token, results }) => {
 
   function handleSubmitForm(event) {
     event.preventDefault();
-    if (!name.trim()) {
-      alert(`Please enter a valid item`);
-    } else if (
+    if (
       results.filter(
         result =>
           name.replace(/[\W_]/g, '').toLowerCase() ===
           result.name.replace(/[\W_]/g, '').toLowerCase(),
       ).length
     ) {
-      alert(`${name} already exists on your list`);
+      alert(`${name} already exists on your list.`);
     } else {
       writeToFirestore(token, {
         name,
@@ -68,7 +66,9 @@ const AddItem = ({ token, results }) => {
           <label htmlFor="not-soon">Not Soon</label>
         </div>
       </fieldset>
-      <button type="submit">Add Item</button>
+      <button type="submit" onClick={() => setName(name.trim())}>
+        Add Item
+      </button>
     </form>
   );
 };
