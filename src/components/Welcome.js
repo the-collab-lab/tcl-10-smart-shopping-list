@@ -35,7 +35,9 @@ const Welcome = ({ setToken }) => {
       <p>- or -</p>
       <p>Join an existing shopping list by entering a three word token.</p>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="join-list"></label>
+        <div>
+          <label htmlFor="join-list">Enter a share token</label>
+        </div>
         <input
           id="join-list"
           onChange={event => setInput(event.target.value)}
