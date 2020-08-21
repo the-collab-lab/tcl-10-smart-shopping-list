@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
 import { writeToFirestore } from '../lib/firebase';
 
-const AddItem = ({token}) => {
+const AddItem = ({ token, results }) => {
   let [name, setName] = useState('');
   let [frequency, setFrequency] = useState(7);
 
   function handleSubmitForm(event) {
     event.preventDefault();
-    if (name.length > 0) {
+    if (
+      results.filter(
+        result =>
+          name.replace(/[\W_]/g, '').toLowerCase() ===
+          result.name.replace(/[\W_]/g, '').toLowerCase(),
+      ).length
+    ) {
+      alert(`${name} already exists on your list.`);
+    } else {
       writeToFirestore(token, {
         name,
         frequency,
@@ -58,7 +66,9 @@ const AddItem = ({token}) => {
           <label htmlFor="not-soon">Not Soon</label>
         </div>
       </fieldset>
-      <button type="submit">Add Item</button>
+      <button type="submit" onClick={() => setName(name.trim())}>
+        Add Item
+      </button>
     </form>
   );
 };
