@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-const List = ({ token, results }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-
+const List = ({ token, results, setSearchTerm, searchTerm }) => {
   return (
     <>
       <form>
