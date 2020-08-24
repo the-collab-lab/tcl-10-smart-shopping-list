@@ -6,13 +6,18 @@ const List = ({ token, results }) => {
 
   return (
     <>
-      <label htmlFor="searchField">Search</label>
-      <br />
-      <input
-        onChange={event => setSearchTerm(event.target.value)}
-        value={searchTerm}
-        id="searchField"
-      ></input>
+      <form>
+        <label htmlFor="searchField">Search</label>
+        <br />
+        <input
+          onChange={event => setSearchTerm(event.target.value)}
+          value={searchTerm}
+          id="searchField"
+        ></input>
+        <button disabled={searchTerm === ''} onClick={() => setSearchTerm('')}>
+          x
+        </button>
+      </form>
       {results.length === 0 ? (
         <>
           <header>Smart Shopping List</header>
