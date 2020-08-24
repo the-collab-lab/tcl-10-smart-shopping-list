@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const List = ({ token, results, setSearchTerm, searchTerm }) => {
+const List = ({ results, setSearchTerm, searchTerm }) => {
   return (
     <>
       <form>
