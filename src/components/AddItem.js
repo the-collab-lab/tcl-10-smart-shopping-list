@@ -19,7 +19,7 @@ const AddItem = ({ token, results }) => {
       writeToFirestore(token, {
         name,
         frequency,
-        lastPurchaseDate: null,
+        purchaseDates: [],
       });
       alert(`${name} has been successfully added to your list.`);
       setName('');

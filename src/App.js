@@ -12,19 +12,21 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [isLoading, setIsLoading] = useState(true);
   let [results, setResults] = useState([]);
+  let [deactivated, setDeactivated] = useState([]);
 
   useEffect(() => {
+    // timestamp logic to find out list item status
     let unsubscribe;
 
     if (token) {
       unsubscribe = db.collection(token).onSnapshot(function(querySnapshot) {
         let querySnapshotResults = [];
         querySnapshot.forEach(function(doc) {
-          const { name } = doc.data();
+          const { name, purchaseDates } = doc.data();
           const { id } = doc;
 
           if (name) {
-            querySnapshotResults.push({ id, name });
+            querySnapshotResults.push({ id, name, purchaseDates });
           }
         });
         setResults(querySnapshotResults);
@@ -56,7 +58,16 @@ function App() {
                 exact
                 path="/list"
                 render={() =>
-                  isLoading ? <div>Loading...</div> : <List results={results} />
+                  isLoading ? (
+                    <div>Loading...</div>
+                  ) : (
+                    <List
+                      results={results}
+                      token={token}
+                      setDeactivated={setDeactivated}
+                      deactivated={deactivated}
+                    />
+                  )
                 }
               />
               <Route
