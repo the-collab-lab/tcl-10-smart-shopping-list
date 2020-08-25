@@ -8,7 +8,7 @@ const List = ({ results, token }) => {
   }
 
   function checkTime(time) {
-    return Date.now() - time < 86400000 && Date.now() - time >= 0; //number of milliseconds equal to 24 hours
+    return Date.now() - time <= 86400000; //number of milliseconds equal to 24 hours
   }
   return (
     <>
