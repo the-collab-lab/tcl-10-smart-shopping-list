@@ -1,7 +1,6 @@
 .App {
   font-size: 62.5%;
   color: black;
-  text-align: center;
 }
 
 .App-logo {
@@ -33,4 +32,17 @@ nav {
   bottom: 0;
   text-align: center;
   background-color: white;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.deactivated {
+  color: gray;
+}
+
+.checkbox {
+  margin: 10px;
 }

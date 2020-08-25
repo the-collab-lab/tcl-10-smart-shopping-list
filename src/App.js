@@ -12,10 +12,8 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [isLoading, setIsLoading] = useState(true);
   let [results, setResults] = useState([]);
-  let [deactivated, setDeactivated] = useState([]);
 
   useEffect(() => {
-    // timestamp logic to find out list item status
     let unsubscribe;
 
     if (token) {
@@ -61,12 +59,7 @@ function App() {
                   isLoading ? (
                     <div>Loading...</div>
                   ) : (
-                    <List
-                      results={results}
-                      token={token}
-                      setDeactivated={setDeactivated}
-                      deactivated={deactivated}
-                    />
+                    <List results={results} token={token} />
                   )
                 }
               />

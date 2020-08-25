@@ -2,10 +2,13 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { updatePurchaseDate } from '../lib/firebase.js';
 
-const List = ({ results, token, setDeactivated, deactivated }) => {
+const List = ({ results, token }) => {
   function handleOnCheck(event) {
-    setDeactivated([...deactivated, event.target.value]);
     updatePurchaseDate(token, event.target.value);
+  }
+
+  function checkTime(time) {
+    return Date.now() - time < 86400000; //number of milliseconds equal to 24 hours
   }
   return (
     <>
@@ -18,19 +21,24 @@ const List = ({ results, token, setDeactivated, deactivated }) => {
           </NavLink>
         </>
       ) : null}
-      <ul style={{ color: 'black' }}>
+      <ul>
         {results.map(result => {
+          const time = Math.max(...result.purchaseDates); //pulls most recent purchase date
           return (
-            <li key={result.id}>
+            <li
+              key={result.id}
+              className={checkTime(time) ? 'deactivated' : null}
+            >
               <label htmlFor={result.id}></label>
               <input
                 type="checkbox"
-                /*{ Date.now() - Math.max(...result.purchaseDates) < 86400000 ? disabled : null }*/ name={
-                  result.id
-                }
+                disabled={checkTime(time)}
+                defaultChecked={checkTime(time)}
+                name={result.id}
                 id=""
                 value={result.id}
                 onClick={handleOnCheck}
+                className="checkbox"
               />
               {result.name}
             </li>
