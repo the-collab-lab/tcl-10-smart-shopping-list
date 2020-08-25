@@ -29,7 +29,9 @@ const List = ({ results, token }) => {
               key={result.id}
               className={checkTime(time) ? 'deactivated' : null}
             >
-              <label htmlFor={result.id}></label>
+              <label htmlFor={result.id} className="sr-only">
+                {result.name}
+              </label>
               <input
                 type="checkbox"
                 disabled={checkTime(time)}
