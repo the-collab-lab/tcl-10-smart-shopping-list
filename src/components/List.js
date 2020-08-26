@@ -12,8 +12,7 @@ const List = ({ results, setSearchTerm, searchTerm }) => {
             Add Item
           </NavLink>
         </>
-      ) : null}
-      <div>
+      ) : (
         <form>
           <label htmlFor="searchField">Search</label>
           <input
@@ -29,16 +28,19 @@ const List = ({ results, setSearchTerm, searchTerm }) => {
             x
           </button>
         </form>
-        <ul style={{ color: 'black' }}>
-          {results
-            .filter(result =>
-              result.name.toLowerCase().includes(searchTerm.toLowerCase()),
-            )
-            .map(result => (
-              <li key={result.id}>{result.name}</li>
-            ))}
-        </ul>
-      </div>
+      )}
+      <ul style={{ color: 'black' }}>
+        {results
+          .filter(result =>
+            result.name
+              .toLowerCase()
+              .replace(/[\W_]/g, '')
+              .includes(searchTerm.toLowerCase()),
+          )
+          .map(result => (
+            <li key={result.id}>{result.name}</li>
+          ))}
+      </ul>
     </>
   );
 };
