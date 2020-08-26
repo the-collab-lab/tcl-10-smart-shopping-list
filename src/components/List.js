@@ -30,7 +30,7 @@ const List = ({ results, token }) => {
               className={checkTime(time) ? 'deactivated' : null}
             >
               <label htmlFor={result.id} className="sr-only">
-                {result.name}
+                Mark {result.name} as purchased.
               </label>
               <input
                 type="checkbox"
