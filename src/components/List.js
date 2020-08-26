@@ -24,9 +24,6 @@ const List = ({ results, token }) => {
       <ul>
         {results.map(result => {
           const time = Math.max(...result.purchaseDates); //pulls most recent purchase date
-          console.log(checkTime(time));
-          console.log(Date.now() - time);
-          console.log(time);
           return (
             <li
               key={result.id}
