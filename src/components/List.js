@@ -22,7 +22,23 @@ const List = ({ results, setSearchTerm, searchTerm }) => {
             Add Item
           </NavLink>
         </>
-      ) : null}
+      ) : (
+        <form>
+          <label htmlFor="searchField">Search</label>
+          <input
+            onChange={event => setSearchTerm(event.target.value)}
+            value={searchTerm}
+            id="searchField"
+            style={{ margin: 10 }}
+          ></input>
+          <button
+            disabled={searchTerm === ''}
+            onClick={() => setSearchTerm('')}
+          >
+            x
+          </button>
+        </form>
+      )}
       <ul style={{ color: 'black' }}>
         {results
           .filter(result =>
