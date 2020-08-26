@@ -24,6 +24,9 @@ const List = ({ results, token }) => {
       <ul>
         {results.map(result => {
           const time = Math.max(...result.purchaseDates); //pulls most recent purchase date
+          console.log(checkTime(time));
+          console.log(Date.now() - time);
+          console.log(time);
           return (
             <li
               key={result.id}
@@ -37,7 +40,7 @@ const List = ({ results, token }) => {
                 disabled={checkTime(time)}
                 defaultChecked={checkTime(time)}
                 name={result.id}
-                id=""
+                id={result.id}
                 value={result.id}
                 onClick={handleOnCheck}
                 className="checkbox"
