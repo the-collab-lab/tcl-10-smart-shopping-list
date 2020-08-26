@@ -13,7 +13,7 @@ const List = ({ results, setSearchTerm, searchTerm }) => {
           </NavLink>
         </>
       ) : (
-        <form>
+        <>
           <label htmlFor="searchField">Search</label>
           <input
             onChange={event => setSearchTerm(event.target.value)}
@@ -27,7 +27,7 @@ const List = ({ results, setSearchTerm, searchTerm }) => {
           >
             x
           </button>
-        </form>
+        </>
       )}
       <ul style={{ color: 'black' }}>
         {results
