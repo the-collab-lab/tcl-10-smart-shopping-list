@@ -28,7 +28,10 @@ const List = ({ results, setSearchTerm, searchTerm }) => {
       <ul style={{ color: 'black' }}>
         {results
           .filter(result =>
-            result.name.toLowerCase().includes(searchTerm.toLowerCase()),
+            result.name
+              .toLowerCase()
+              .replace(/[\W_]/g, '')
+              .includes(searchTerm.toLowerCase()),
           )
           .map(result => (
             <li key={result.id}>{result.name}</li>
