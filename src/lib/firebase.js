@@ -18,15 +18,6 @@ var firebaseConfig = {
 let fb = firebase.initializeApp(firebaseConfig);
 let db = firebase.firestore();
 
-export function updatePurchaseDate(collectionName, itemId = {}) {
-  const itemRef = db.collection(collectionName).doc(itemId);
-  itemRef.update({
-    purchaseDates: firebase.firestore.FieldValue.arrayUnion(
-      firebase.firestore.Timestamp.now().toMillis(),
-    ),
-  });
-}
-
 export function writeToFirestore(collectionName, options = {}) {
   db.collection(collectionName).add(options);
 }
