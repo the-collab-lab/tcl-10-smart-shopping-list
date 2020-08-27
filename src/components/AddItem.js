@@ -19,7 +19,7 @@ const AddItem = ({ token, results }) => {
       writeToFirestore(token, {
         name,
         frequency,
-        lastPurchaseDate: null,
+        purchaseDates: [],
       });
       alert(`${name} has been successfully added to your list.`);
       setName('');
@@ -36,6 +36,9 @@ const AddItem = ({ token, results }) => {
         onChange={e => setName(e.target.value)}
         id="add-shopping-list-item"
       />
+      <button disabled={name === ''} onClick={() => setName('')}>
+        x
+      </button>
       <fieldset>
         <legend>How soon will you buy this again?</legend>
         <div>
