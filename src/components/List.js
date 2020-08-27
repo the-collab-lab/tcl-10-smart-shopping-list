@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { updatePurchaseDate } from '../lib/firebase.js';
 
-const List = ({ results, token }) => {
+const List = ({ results, token, setSearchTerm, searchTerm }) => {
   function handleOnCheck(event) {
     updatePurchaseDate(token, event.target.value);
   }
@@ -10,18 +10,40 @@ const List = ({ results, token }) => {
   function checkTime(time) {
     return Date.now() - time <= 86400000; //number of milliseconds equal to 24 hours
   }
+
   return (
-    <>
+    <div style={{ height: '50vh', width: '50vw' }}>
+      <header>Smart Shopping List</header>
       {results.length === 0 ? (
         <>
-          <header>Smart Shopping List</header>
           <p>Your shopping list is currently empty</p>
           <NavLink exact to="/add-item">
             Add Item
           </NavLink>
         </>
-      ) : null}
-      <ul>
+      ) : (
+        <div>
+          <div>
+            <label htmlFor="searchField" className="sr-only">
+              Search
+            </label>
+          </div>
+          <input
+            onChange={event => setSearchTerm(event.target.value)}
+            autoFocus
+            value={searchTerm}
+            id="searchField"
+            placeholder="Search..."
+          ></input>
+          <button
+            disabled={searchTerm === ''}
+            onClick={() => setSearchTerm('')}
+          >
+            x
+          </button>
+        </div>
+      )}
+       <ul>
         {results.map(result => {
           const time = Math.max(...result.purchaseDates); //pulls most recent purchase date
           return (
@@ -47,7 +69,7 @@ const List = ({ results, token }) => {
           );
         })}
       </ul>
-    </>
+    </div>
   );
 };
 
