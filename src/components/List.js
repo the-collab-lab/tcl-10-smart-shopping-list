@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const List = ({ results, setSearchTerm, searchTerm }) => {
@@ -16,6 +16,8 @@ const List = ({ results, setSearchTerm, searchTerm }) => {
         <>
           <label htmlFor="searchField">Search</label>
           <input
+            autoFocus
+            className="list-search-field"
             onChange={event => setSearchTerm(event.target.value)}
             value={searchTerm}
             id="searchField"
