@@ -12,6 +12,7 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [isLoading, setIsLoading] = useState(true);
   let [results, setResults] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     let unsubscribe;
@@ -56,7 +57,15 @@ function App() {
                 exact
                 path="/list"
                 render={() =>
-                  isLoading ? <div>Loading...</div> : <List results={results} />
+                  isLoading ? (
+                    <div>Loading...</div>
+                  ) : (
+                    <List
+                      results={results}
+                      searchTerm={searchTerm}
+                      setSearchTerm={setSearchTerm}
+                    />
+                  )
                 }
               />
               <Route
