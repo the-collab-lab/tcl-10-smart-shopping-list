@@ -1,16 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { updatePurchaseDate } from '../lib/firebase.js';
 
-const List = ({ results, token, setSearchTerm, searchTerm }) => {
-  function handleOnCheck(event) {
-    updatePurchaseDate(token, event.target.value);
-  }
-
-  function checkTime(time) {
-    return Date.now() - time <= 86400000; //number of milliseconds equal to 24 hours
-  }
-
+const List = ({ results, setSearchTerm, searchTerm }) => {
   return (
     <div style={{ height: '50vh', width: '50vw' }}>
       <header>Smart Shopping List</header>
@@ -43,31 +34,17 @@ const List = ({ results, token, setSearchTerm, searchTerm }) => {
           </button>
         </div>
       )}
-       <ul>
-        {results.map(result => {
-          const time = Math.max(...result.purchaseDates); //pulls most recent purchase date
-          return (
-            <li
-              key={result.id}
-              className={checkTime(time) ? 'deactivated' : null}
-            >
-              <label htmlFor={result.id} className="sr-only">
-                Mark {result.name} as purchased.
-              </label>
-              <input
-                type="checkbox"
-                disabled={checkTime(time)}
-                defaultChecked={checkTime(time)}
-                name={result.id}
-                id={result.id}
-                value={result.id}
-                onClick={handleOnCheck}
-                className="checkbox"
-              />
-              {result.name}
-            </li>
-          );
-        })}
+      <ul style={{ color: 'black' }}>
+        {results
+          .filter(result =>
+            result.name
+              .toLowerCase()
+              .replace(/[\W_]/g, '')
+              .includes(searchTerm.toLowerCase()),
+          )
+          .map(result => (
+            <li key={result.id}>{result.name}</li>
+          ))}
       </ul>
     </div>
   );

@@ -1,19 +1,7 @@
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  border: 0;
-  padding: 0;
-  white-space: nowrap;
-  clip-path: inset(100%);
-  clip: rect(0 0 0 0);
-  overflow: hidden;
-}
-
 .App {
   font-size: 62.5%;
   color: black;
+  text-align: center;
 }
 
 .App-logo {
@@ -45,17 +33,4 @@ nav {
   bottom: 0;
   text-align: center;
   background-color: white;
-}
-
-ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.deactivated {
-  color: gray;
-}
-
-.checkbox {
-  margin: 10px;
 }
