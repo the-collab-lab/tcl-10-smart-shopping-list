@@ -21,11 +21,11 @@ function App() {
       unsubscribe = db.collection(token).onSnapshot(function(querySnapshot) {
         let querySnapshotResults = [];
         querySnapshot.forEach(function(doc) {
-          const { name } = doc.data();
+          const { name, purchaseDates } = doc.data();
           const { id } = doc;
 
           if (name) {
-            querySnapshotResults.push({ id, name });
+            querySnapshotResults.push({ id, name, purchaseDates });
           }
         });
         setResults(querySnapshotResults);
@@ -64,6 +64,7 @@ function App() {
                       results={results}
                       searchTerm={searchTerm}
                       setSearchTerm={setSearchTerm}
+                      token={token}
                     />
                   )
                 }
