@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import styles from '../List.module.css';
 import { updatePurchaseDate } from '../lib/firebase.js';
 
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
@@ -11,7 +12,7 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
     return Date.now() - time <= 86400000; //number of milliseconds equal to 24 hours
   }
   return (
-    <div style={{ height: '50vh', width: '25vw' }}>
+    <div className={styles['list-container']}>
       <header>Smart Shopping List</header>
       {results.length === 0 ? (
         <>
@@ -23,14 +24,16 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
       ) : (
         <div>
           <div>
-            <label htmlFor="searchField">Search</label>
+            <label htmlFor="searchField" className="sr-only">
+              Search
+            </label>
           </div>
+
           <input
             onChange={event => setSearchTerm(event.target.value)}
             autoFocus
             value={searchTerm}
             id="searchField"
-            style={{ margin: 10 }}
             placeholder="Search..."
           ></input>
           <button
@@ -41,39 +44,41 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
           </button>
         </div>
       )}
-      <ul className="ul-list">
-        {results
-          .filter(result =>
-            result.name
-              .toLowerCase()
-              .replace(/[\W_]/g, '')
-              .includes(searchTerm.toLowerCase()),
-          )
-          .map(result => {
-            const time = Math.max(...result.purchaseDates); //pulls most recent purchase date
-            return (
-              <li
-                key={result.id}
-                className={checkTime(time) ? 'deactivated' : null}
-              >
-                <label htmlFor={result.id} className="sr-only">
-                  Mark {result.name} as purchased.
-                </label>
-                <input
-                  type="checkbox"
-                  disabled={checkTime(time)}
-                  defaultChecked={checkTime(time)}
-                  name={result.id}
-                  id={result.id}
-                  value={result.id}
-                  onClick={handleOnCheck}
-                  className="checkbox"
-                />
-                {result.name}
-              </li>
-            );
-          })}
-      </ul>
+      <div className={styles['list-results-container']}>
+        <ul className={styles['ul-list']}>
+          {results
+            .filter(result =>
+              result.name
+                .toLowerCase()
+                .replace(/[\W_]/g, '')
+                .includes(searchTerm.toLowerCase()),
+            )
+            .map(result => {
+              const time = Math.max(...result.purchaseDates); //pulls most recent purchase date
+              return (
+                <li
+                  key={result.id}
+                  className={checkTime(time) ? 'deactivated' : null}
+                >
+                  <label htmlFor={result.id} className="sr-only">
+                    Mark {result.name} as purchased.
+                  </label>
+                  <input
+                    type="checkbox"
+                    disabled={checkTime(time)}
+                    defaultChecked={checkTime(time)}
+                    name={result.id}
+                    id={result.id}
+                    value={result.id}
+                    onClick={handleOnCheck}
+                    className="checkbox"
+                  />
+                  {result.name}
+                </li>
+              );
+            })}
+        </ul>
+      </div>
     </div>
   );
 };
