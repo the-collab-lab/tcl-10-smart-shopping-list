@@ -21,6 +21,10 @@ Cypress.Commands.add('removeLocalStorageToken', () => {
 })
 
 Cypress.Commands.add('setupFirestoreMock', () => {
+    // Firestore gives us 20,000 writes/deletes per day
+
+    // Seems like there's a better way to do this by stubbing the tests
+    // Instead of directly accessing the database
     docs.forEach(({name}) => {
         writeToFirestore(token, {
             name,
@@ -44,7 +48,7 @@ Cypress.Commands.add('cleanupFirestoreMock', () => {
 
 
 
-beforeEach(function(){
+beforeEach(() => {
     cy.cleanupFirestoreMock()
     cy.removeLocalStorageToken()
     cy.setupFirestoreMock()
@@ -52,55 +56,59 @@ beforeEach(function(){
     cy.visit('list')
 })
 
-describe('new test', () => {
-    it(`Checks that the input with the class 'list-search-field' is focused`, () => {
-        cy.focused()
-            .should('have.class', 'list-search-field')
-    })
-
-    it('Makes sure the input element exists in the DOM', () => {
+describe('Test the List.js component', () => {
+    it('Checks the input element exists in the DOM', () => {
         cy.get('.list-search-field')
             .should('exist')
     })
 
-    it('Typed input contains results only from typed text', () => {
-        let typedText = 'hoisin'
-
-        // first case   
-        cy.get('.list-search-field')
-            .type(typedText)
-            .should('have.value', typedText)
-
-        cy.contains("Hoisin Sauce")
-        cy.contains("Red Pepper").should("not.exist")
-        cy.contains("Cake Mix").should("not.exist")
-        cy.contains("Salt").should("not.exist")
-        cy.contains("Oranges").should("not.exist")
-
-        cy.get('.list-search-field').clear()
-
-        // second case
-        typedText = 'pe'
-        
-        cy.get('.list-search-field')
-            .type(typedText)
-            .should('have.value', typedText)
-        
-        cy.contains("Red Pepper")
-        cy.contains("Pears")
-        cy.contains("Peas")
-
-        cy.contains("Hoisin Sauce").should("not.exist")
-        cy.contains("Cake Mix").should("not.exist")
-        cy.contains("Salt").should("not.exist")
-        cy.contains("Oranges").should("not.exist")
+    it(`Checks that the input with the class 'list-search-field' is focused`, () => {
+        cy.focused()
+            .should('have.id', 'search-field')
     })
 
-    it(`A user can click a button to clear the input field text if the value isn't an empty string`, () => {
+    describe('Checks that the typed input contains results only from typed text', () => {
+        
+        it('First Case', () => {
+
+            let typedText = 'hoisin'
+    
+            cy.get(`input[id*="search-field"]`)
+                .type(typedText)
+                .should('have.value', typedText)
+    
+            cy.contains("Hoisin Sauce")
+            cy.contains("Red Pepper").should("not.exist")
+            cy.contains("Cake Mix").should("not.exist")
+            cy.contains("Salt").should("not.exist")
+            cy.contains("Oranges").should("not.exist")
+    
+        })
+
+        it("Second Case", () => {
+
+            let typedText = 'pe'
+            cy.get(`input[id*="search-field"]`)
+                .type(typedText)
+                .should('have.value', typedText)
+            
+            cy.contains("Red Pepper")
+            cy.contains("Pears")
+            cy.contains("Peas")
+    
+            cy.contains("Hoisin Sauce").should("not.exist")
+            cy.contains("Cake Mix").should("not.exist")
+            cy.contains("Salt").should("not.exist")
+            cy.contains("Oranges").should("not.exist")
+        })
+        
+    })
+
+    it(`Checks that a user can click a button to clear the input field text if the value isn't an empty string`, () => {
         let typedText = 'red'
 
 
-        let input = cy.get('input')
+        let input = cy.get(`input[id*="search-field"]`)
 
         input
             .type(typedText)
@@ -110,9 +118,9 @@ describe('new test', () => {
         input.should('have.value', '')
     })
     
-    it(`If input field is an empty string, button should be disabled`, () => {
-        let input = cy.get('input')
-        let button = cy.get('button')
+    it(`Checks that the 'x' button is disabled if the input field is an empty string, `, () => {
+        let input = cy.get(`input[id*="search-field"]`)
+        let button = cy.get(`button[id*="clear-search-field"]`)
 
         input.should('have.value', '')
         button.should('have.attr', 'disabled')

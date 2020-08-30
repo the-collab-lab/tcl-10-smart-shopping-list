@@ -20,10 +20,11 @@ const List = ({ results, setSearchTerm, searchTerm }) => {
             className="list-search-field"
             onChange={event => setSearchTerm(event.target.value)}
             value={searchTerm}
-            id="searchField"
+            id="search-field"
             style={{ margin: 10 }}
           ></input>
           <button
+            id="clear-search-field"
             disabled={searchTerm === ''}
             onClick={() => setSearchTerm('')}
           >
