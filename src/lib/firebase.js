@@ -31,9 +31,9 @@ export function writeToFirestore(collectionName, options = {}) {
   db.collection(collectionName).add(options);
 }
 
-export function updateFirestore(collectionName, itemKey, options = {}) {
+export function updateFirestore(collectionName, itemId = {}, options = {}) {
   db.collection(collectionName)
-    .doc(itemKey)
+    .doc(itemId)
     .update(options);
 }
 

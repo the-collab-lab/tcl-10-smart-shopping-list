@@ -8,18 +8,35 @@
  *
  * @return {Number} Estimated number of days until the next purchase
  */
-const calculateEstimate = (lastEstimate, latestInterval, numberOfPurchases) => {
-    if (numberOfPurchases >= 2) {
-        if (isNaN(lastEstimate)) {
-            lastEstimate = 14;
-        }
-        let previousFactor = lastEstimate * numberOfPurchases;
-        let latestFactor = latestInterval * (numberOfPurchases - 1);
-        let totalDivisor = numberOfPurchases * 2 - 1;
-        return Math.round((previousFactor + latestFactor) / totalDivisor);
-    } else {
-        return latestInterval;
-    }
+// const calculateEstimate = (lastEstimate, latestInterval, numberOfPurchases) => {
+//     if (numberOfPurchases >= 2) {
+//         if (isNaN(lastEstimate)) {
+//             lastEstimate = 14;
+//         }
+//         let previousFactor = lastEstimate * numberOfPurchases;
+//         let latestFactor = latestInterval * (numberOfPurchases - 1);
+//         let totalDivisor = numberOfPurchases * 2 - 1;
+//         return Math.round((previousFactor + latestFactor) / totalDivisor);
+//     } else {
+//         return latestInterval;
+//     }
+// };
+
+// export default calculateEstimate;
+
+const getMean = array => {
+  return array.reduce((acc, val) => acc + val, 0) / array.length;
+};
+const getStandardDeviation = (array, mean) => {
+  return Math.sqrt(
+    array
+      .reduce((acc, val) => acc.concat((val - mean) ** 2), [])
+      .reduce((acc, val) => acc + val, 0) /
+      (array.length - 1),
+  );
+};
+const getZIndex = (datum, mean, standardDeviation) => {
+  return Math.abs((datum - mean) / standardDeviation);
 };
 
-export default calculateEstimate;
+export { getMean, getStandardDeviation, getZIndex };

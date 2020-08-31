@@ -1,23 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from '../List.module.css';
 import { updatePurchaseDate, updateFirestore } from '../lib/firebase.js';
+import { result } from 'lodash';
+import { getMean, getStandardDeviation, getZIndex } from '../lib/estimates.js';
 
-let examplePurchaseDates = [
-  1598892792083,
-  1598287992083,
-  1597078392083,
-  1594486392083,
-  1594313592083,
-];
+// let examplePurchaseDates = [
+//   0, 2, 7, 14, 21, 28, 50, 57, 64, 78
+// ];
 
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
   function handleOnCheck(event) {
-    // updatePurchaseDate(token, event.target.value)
-    //   .then(() => {
-    console.log(calculateFrequency(examplePurchaseDates));
-    // updateFirestore(token, event.target.value),
-    // });
+    updatePurchaseDate(token, event.target.value);
+    let itemResults = results.filter(
+      result => result.id === event.target.value,
+    );
+    if (itemResults[0].purchaseDates.length >= 2) {
+      const updatedFrequency = calculateFrequency(itemResults[0].purchaseDates);
+      // updateFirestore(token, itemResults[0].id, {
+      //     frequency: updatedFrequency
+      // })
+    }
   }
 
   function checkTime(time) {
@@ -25,20 +28,27 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
   }
 
   function calculateFrequency(results) {
+    console.log(results);
     const arr = [];
-
+    const newArr = [];
+    // // calculate difference between purchase dates
     for (let i = 0; i < results.length - 1; i++) {
       arr.push(Math.abs(Math.floor(results[i + 1] - results[i])));
     }
+    console.log(arr);
+    // // // calculate mean
+    const mean = getMean(arr);
 
-    const mean = arr.reduce((acc, val) => acc + val, 0) / arr.length;
-
-    const standardDeviation = Math.sqrt(
-      arr
-        .reduce((acc, val) => acc.concat((val - mean) ** 2), [])
-        .reduce((acc, val) => acc + val, 0) /
-        (arr.length - 1),
-    );
+    // // // calculate standard deviation
+    const standardDeviation = getStandardDeviation(arr, mean);
+    console.log(standardDeviation);
+    // find z-index for each item in array & remove outliers
+    for (let i = 0; i < arr.length; i++) {
+      if (getZIndex(i, mean, standardDeviation) < 2) {
+        newArr.push(arr[i]);
+      }
+    }
+    return parseInt(getMean(newArr));
   }
 
   return (
