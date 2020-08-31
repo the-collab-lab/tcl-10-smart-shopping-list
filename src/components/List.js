@@ -1,16 +1,20 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from '../List.module.css';
-import { updatePurchaseDate } from '../lib/firebase.js';
+import { updatePurchaseDate, updateFirestore } from '../lib/firebase.js';
 
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
   function handleOnCheck(event) {
-    updatePurchaseDate(token, event.target.value);
+    updatePurchaseDate(token, event.target.value).then(
+      updateFirestore(token, event.target.value),
+    );
   }
 
   function checkTime(time) {
     return Date.now() - time <= 86400000; //number of milliseconds equal to 24 hours
   }
+
+  function calculateFrequency(results) {}
   return (
     <div className={styles['list-container']}>
       <header>Smart Shopping List</header>

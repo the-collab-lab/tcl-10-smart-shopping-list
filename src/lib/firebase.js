@@ -31,4 +31,10 @@ export function writeToFirestore(collectionName, options = {}) {
   db.collection(collectionName).add(options);
 }
 
+export function updateFirestore(collectionName, itemKey, options = {}) {
+  db.collection(collectionName)
+    .doc(itemKey)
+    .update(options);
+}
+
 export { fb, db };
