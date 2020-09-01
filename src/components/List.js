@@ -11,9 +11,9 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
   function checkTime(time) {
     return Date.now() - time <= 86400000; //number of milliseconds equal to 24 hours
   }
-  function handleDelete(id) {
-    let response = window.confirm('Do you want to delete this item?');
-    return response ? deleteItem(token, id) : null;
+  function handleDelete(result) {
+    let response = window.confirm(`Do you want to delete ${result.name}`);
+    return response ? deleteItem(token, result.id) : null;
   }
 
   return (
@@ -80,7 +80,7 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
                   />
                   {result.name}
                   {/* this is just for me */}
-                  <button onClick={() => handleDelete(result.id)}>x</button>
+                  <button onClick={() => handleDelete(result)}>x</button>
                 </li>
               );
             })}
