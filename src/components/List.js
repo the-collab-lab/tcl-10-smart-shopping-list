@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from '../List.module.css';
-import { updatePurchaseDate } from '../lib/firebase.js';
+import { updatePurchaseDate, deleteItem } from '../lib/firebase.js';
 
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
   function handleOnCheck(event) {
@@ -11,6 +11,11 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
   function checkTime(time) {
     return Date.now() - time <= 86400000; //number of milliseconds equal to 24 hours
   }
+  function handleDelete(id) {
+    console.log(id);
+    deleteItem(token, id);
+  }
+
   return (
     <div className={styles['list-container']}>
       <header>Smart Shopping List</header>
@@ -74,6 +79,8 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
                     className="checkbox"
                   />
                   {result.name}
+                  {/* this is just for me */}
+                  <button onClick={() => handleDelete(result.id)}>x</button>
                 </li>
               );
             })}
