@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from '../List.module.css';
 import { updatePurchaseDate, updateFirestore } from '../lib/firebase.js';
-import { result } from 'lodash';
 import { getMean, getStandardDeviation, getZIndex } from '../lib/estimates.js';
 
 // let examplePurchaseDates = [
@@ -10,16 +9,26 @@ import { getMean, getStandardDeviation, getZIndex } from '../lib/estimates.js';
 // ];
 
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
-  function handleOnCheck(event) {
-    updatePurchaseDate(token, event.target.value);
-    let itemResults = results.filter(
-      result => result.id === event.target.value,
-    );
-    if (itemResults[0].purchaseDates.length >= 2) {
-      const updatedFrequency = calculateFrequency(itemResults[0].purchaseDates);
-      // updateFirestore(token, itemResults[0].id, {
-      //     frequency: updatedFrequency
-      // })
+  async function handleOnCheck(event) {
+    debugger;
+    let updatedFrequency = 0;
+
+    let foundItem = results.find(result => result.id === event.target.value);
+
+    if (foundItem.purchaseDates.length >= 2) {
+      updatedFrequency = calculateFrequency(foundItem.purchaseDates);
+    }
+
+    let tasks = [
+      () => updatePurchaseDate(token, event.target.value),
+      () =>
+        updateFirestore(token, foundItem.id, {
+          frequency: updatedFrequency,
+        }),
+    ];
+
+    for (let fn of tasks) {
+      await fn();
     }
   }
 
@@ -41,14 +50,18 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
 
     // // // calculate standard deviation
     const standardDeviation = getStandardDeviation(arr, mean);
-    console.log(standardDeviation);
+
+    if (standardDeviation === 0) {
+      return mean;
+    }
     // find z-index for each item in array & remove outliers
     for (let i = 0; i < arr.length; i++) {
       if (getZIndex(i, mean, standardDeviation) < 2) {
         newArr.push(arr[i]);
       }
     }
-    return parseInt(getMean(newArr));
+
+    return getMean(newArr);
   }
 
   return (
