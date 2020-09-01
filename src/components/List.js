@@ -1,67 +1,19 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from '../List.module.css';
-import { updatePurchaseDate, updateFirestore } from '../lib/firebase.js';
-import { getMean, getStandardDeviation, getZIndex } from '../lib/estimates.js';
+import { updatePurchaseDate } from '../lib/firebase.js';
 
 // let examplePurchaseDates = [
 //   0, 2, 7, 14, 21, 28, 50, 57, 64, 78
 // ];
 
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
-  async function handleOnCheck(event) {
-    debugger;
-    let updatedFrequency = 0;
-
-    let foundItem = results.find(result => result.id === event.target.value);
-
-    if (foundItem.purchaseDates.length >= 2) {
-      updatedFrequency = calculateFrequency(foundItem.purchaseDates);
-    }
-
-    let tasks = [
-      () => updatePurchaseDate(token, event.target.value),
-      () =>
-        updateFirestore(token, foundItem.id, {
-          frequency: updatedFrequency,
-        }),
-    ];
-
-    for (let fn of tasks) {
-      await fn();
-    }
+  function handleOnCheck(event) {
+    updatePurchaseDate(token, event.target.value);
   }
 
   function checkTime(time) {
     return Date.now() - time <= 86400000; //number of milliseconds equal to 24 hours
-  }
-
-  function calculateFrequency(results) {
-    console.log(results);
-    const arr = [];
-    const newArr = [];
-    // // calculate difference between purchase dates
-    for (let i = 0; i < results.length - 1; i++) {
-      arr.push(Math.abs(Math.floor(results[i + 1] - results[i])));
-    }
-    console.log(arr);
-    // // // calculate mean
-    const mean = getMean(arr);
-
-    // // // calculate standard deviation
-    const standardDeviation = getStandardDeviation(arr, mean);
-
-    if (standardDeviation === 0) {
-      return mean;
-    }
-    // find z-index for each item in array & remove outliers
-    for (let i = 0; i < arr.length; i++) {
-      if (getZIndex(i, mean, standardDeviation) < 2) {
-        newArr.push(arr[i]);
-      }
-    }
-
-    return getMean(newArr);
   }
 
   return (

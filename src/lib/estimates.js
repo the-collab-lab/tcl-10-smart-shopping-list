@@ -39,4 +39,32 @@ const getZIndex = (datum, mean, standardDeviation) => {
   return Math.abs((datum - mean) / standardDeviation);
 };
 
-export { getMean, getStandardDeviation, getZIndex };
+const calculateFrequency = results => {
+  const arr = [];
+  const newArr = [];
+  // // calculate difference between purchase dates
+  for (let i = 0; i < results.length - 1; i++) {
+    arr.push(Math.abs(Math.floor(results[i + 1] - results[i])));
+  }
+  // // // calculate mean
+  const mean = getMean(arr);
+
+  // // // calculate standard deviation
+  const standardDeviation = getStandardDeviation(arr, mean);
+
+  if (standardDeviation === 0) {
+    return mean;
+  }
+  // find z-index for each item in array & remove outliers
+
+  for (let i = 0; i <= arr.length; i++) {
+    if (getZIndex(arr[i], mean, standardDeviation) < 2) {
+      newArr.push(arr[i]);
+    }
+  }
+  let newMean = getMean(newArr);
+
+  return newMean;
+};
+
+export { getMean, getStandardDeviation, getZIndex, calculateFrequency };

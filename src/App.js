@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { db } from './lib/firebase.js';
+import { db, updateFirestore } from './lib/firebase.js';
+import { calculateFrequency } from './lib/estimates';
 import './App.css';
 import Welcome from './components/Welcome';
 import List from './components/List';
@@ -28,13 +29,37 @@ function App() {
             querySnapshotResults.push({ id, name, purchaseDates, frequency });
           }
         });
+
+        querySnapshot.docChanges().forEach(change => {
+          if (change.type === 'modified') {
+            // console.log('change.doc.data',  change.doc.data())
+            let updatedPurchaseDates = change.doc.data().purchaseDates;
+            console.log(results);
+            let oldPurchaseDates = results.find(
+              elem => elem.id === change.doc.id,
+            );
+            console.log('updated', updatedPurchaseDates);
+            console.log('old', oldPurchaseDates);
+
+            if (
+              updatedPurchaseDates.length >= 2 &&
+              oldPurchaseDates.length !== updatedPurchaseDates.length
+            ) {
+              let updatedFrequency = calculateFrequency(updatedPurchaseDates);
+              updateFirestore(token, change.doc.id, {
+                frequency: updatedFrequency,
+              });
+            }
+          }
+        });
+
         setResults(querySnapshotResults);
         setIsLoading(false);
       });
     }
 
     return unsubscribe;
-  }, [token]);
+  }, [token, results]);
 
   return (
     <div className="App">

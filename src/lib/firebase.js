@@ -18,7 +18,7 @@ var firebaseConfig = {
 let fb = firebase.initializeApp(firebaseConfig);
 let db = firebase.firestore();
 
-export function updatePurchaseDate(collectionName, itemId = {}) {
+export function updatePurchaseDate(collectionName, itemId) {
   const itemRef = db.collection(collectionName).doc(itemId);
   itemRef.update({
     purchaseDates: firebase.firestore.FieldValue.arrayUnion(
