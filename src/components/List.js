@@ -3,10 +3,6 @@ import { NavLink } from 'react-router-dom';
 import styles from '../List.module.css';
 import { updatePurchaseDate } from '../lib/firebase.js';
 
-// let examplePurchaseDates = [
-//   0, 2, 7, 14, 21, 28, 50, 57, 64, 78
-// ];
-
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
   function handleOnCheck(event) {
     updatePurchaseDate(token, event.target.value);

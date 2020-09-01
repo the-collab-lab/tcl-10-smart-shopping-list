@@ -2,6 +2,7 @@
 // for the second line, which makes both the linter and react-firebase happy
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import { calculateFrequency } from './estimates';
 
 // Initalize Firebase.
 // These details will need to be replaced with the project specific env vars at the start of each new cohort.
@@ -20,11 +21,37 @@ let db = firebase.firestore();
 
 export function updatePurchaseDate(collectionName, itemId) {
   const itemRef = db.collection(collectionName).doc(itemId);
-  itemRef.update({
-    purchaseDates: firebase.firestore.FieldValue.arrayUnion(
-      firebase.firestore.Timestamp.now().toMillis(),
-    ),
-  });
+  console.log(itemId);
+  return itemRef
+    .update({
+      purchaseDates: firebase.firestore.FieldValue.arrayUnion(
+        firebase.firestore.Timestamp.now().toMillis(),
+      ),
+    })
+    .then(function() {
+      console.log('completed');
+      db.collection(collectionName).onSnapshot(function(querySnapshot) {
+        querySnapshot.docChanges().forEach(change => {
+          console.log('change type', change.type);
+          let purchaseDates = change.doc.data().purchaseDates;
+          if (
+            change.type === 'added' &&
+            change.doc.id === itemId &&
+            purchaseDates.length > 2
+          ) {
+            console.log('item id', itemId);
+            console.log('matching id', change.doc.id);
+            console.log('data to be changed', change.doc.data());
+            console.log('purchase dates of changed item', purchaseDates);
+            let updatedFrequency = calculateFrequency(purchaseDates);
+            console.log('updated frequency', updatedFrequency);
+            updateFirestore(collectionName, itemId, {
+              frequency: updatedFrequency,
+            });
+          }
+        });
+      });
+    });
 }
 
 export function writeToFirestore(collectionName, options = {}) {
