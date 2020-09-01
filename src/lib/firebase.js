@@ -29,14 +29,7 @@ export function updatePurchaseDate(collectionName, itemId = {}) {
 
 export function deleteItem(collectionName, itemId = {}) {
   const itemRef = db.collection(collectionName).doc(itemId);
-  itemRef
-    .delete()
-    .then(function() {
-      console.log('Document successfully deleted!');
-    })
-    .catch(function(error) {
-      console.error('Error removing document: ', error);
-    });
+  itemRef.delete();
 }
 
 export function writeToFirestore(collectionName, options = {}) {

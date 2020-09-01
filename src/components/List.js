@@ -12,8 +12,8 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
     return Date.now() - time <= 86400000; //number of milliseconds equal to 24 hours
   }
   function handleDelete(id) {
-    console.log(id);
-    deleteItem(token, id);
+    let response = window.confirm('Do you want to delete this item?');
+    return response ? deleteItem(token, id) : null;
   }
 
   return (
