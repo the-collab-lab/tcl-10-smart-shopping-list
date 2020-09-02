@@ -12,7 +12,9 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
     return Date.now() - time <= 86400000; //number of milliseconds equal to 24 hours
   }
   function handleDelete(result) {
-    let response = window.confirm(`Do you want to delete ${result.name}`);
+    let response = window.confirm(
+      `Permanently remove "${result.name}" from your shopping list? \nYou cannot undo this action, and this item's purchase history will be lost.`,
+    );
     return response ? deleteItem(token, result.id) : null;
   }
 
