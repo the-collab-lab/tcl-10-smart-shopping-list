@@ -81,7 +81,6 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
                     className="checkbox"
                   />
                   {result.name}
-                  {/* this is just for me */}
                   <button onClick={() => handleDelete(result)}>x</button>
                 </li>
               );
