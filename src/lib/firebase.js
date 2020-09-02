@@ -21,7 +21,6 @@ let db = firebase.firestore();
 
 export function updatePurchaseDate(collectionName, itemId) {
   const itemRef = db.collection(collectionName).doc(itemId);
-  console.log(itemId);
   return itemRef
     .update({
       purchaseDates: firebase.firestore.FieldValue.arrayUnion(
@@ -29,27 +28,22 @@ export function updatePurchaseDate(collectionName, itemId) {
       ),
     })
     .then(function() {
-      console.log('completed');
-      db.collection(collectionName).onSnapshot(function(querySnapshot) {
-        querySnapshot.docChanges().forEach(change => {
-          console.log('change type', change.type);
-          let purchaseDates = change.doc.data().purchaseDates;
-          if (
-            change.type === 'added' &&
-            change.doc.id === itemId &&
-            purchaseDates.length > 2
-          ) {
-            console.log('item id', itemId);
-            console.log('matching id', change.doc.id);
-            console.log('data to be changed', change.doc.data());
-            console.log('purchase dates of changed item', purchaseDates);
-            let updatedFrequency = calculateFrequency(purchaseDates);
-            console.log('updated frequency', updatedFrequency);
-            updateFirestore(collectionName, itemId, {
-              frequency: updatedFrequency,
-            });
-          }
-        });
+      updateFrequency(collectionName, itemId);
+    });
+}
+
+export function updateFrequency(collectionName, itemId) {
+  db.collection(collectionName)
+    .where(firebase.firestore.FieldPath.documentId(), '==', itemId)
+    .onSnapshot(function(querySnapshot) {
+      querySnapshot.docChanges().forEach(change => {
+        let purchaseDates = change.doc.data().purchaseDates;
+        if (change.type === 'added' && purchaseDates.length > 2) {
+          let calculatedPurchaseFrequency = calculateFrequency(purchaseDates);
+          updateFirestore(collectionName, itemId, {
+            frequency: calculatedPurchaseFrequency,
+          });
+        }
       });
     });
 }
