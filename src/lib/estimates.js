@@ -38,13 +38,13 @@ const calculateFrequency = results => {
   // calculate standard deviation
   const standardDeviation = getStandardDeviation(arr, mean);
   // if standard deviation is 0, it means all data points are equal and the mean is an accurate predictor of the purchase frequency
-  // this also avoids NaN errors in z-index from dividing 0 / 0
+  // this also avoids NaN errors in z-index from dividing by 0
   if (standardDeviation === 0) {
     return mean;
   } else {
     // find z-index for each item in array & remove outlying data (factor of 1)
     for (let i = 0; i < arr.length; i++) {
-      if (Math.abs(getZIndex(arr[i], mean, standardDeviation)) < 1) {
+      if (Math.abs(getZIndex(arr[i], mean, standardDeviation)) <= 1) {
         newArr.push(arr[i]);
       }
     }
