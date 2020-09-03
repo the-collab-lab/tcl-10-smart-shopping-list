@@ -19,7 +19,7 @@ var firebaseConfig = {
 let fb = firebase.initializeApp(firebaseConfig);
 let db = firebase.firestore();
 
-export function updatePurchaseDate(collectionName, itemId, purchseDates) {
+export function updatePurchaseDate(collectionName, itemId, purchaseDates) {
   //include current purchaseDates as parameter
   const itemRef = db.collection(collectionName).doc(itemId);
   const currentPurchaseDate = firebase.firestore.Timestamp.now().toMillis(); // set the new purchase date
