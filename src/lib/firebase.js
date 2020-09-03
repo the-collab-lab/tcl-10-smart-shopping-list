@@ -23,7 +23,8 @@ export function updatePurchaseDate(collectionName, itemId, purchaseDates) {
   //include current purchaseDates as parameter
   const itemRef = db.collection(collectionName).doc(itemId);
   const currentPurchaseDate = firebase.firestore.Timestamp.now().toMillis(); // set the new purchase date
-  const newPurchaseDates = purchaseDates.concat(currentPurchaseDate); // set new purchase dates array for calculate function
+  const newPurchaseDates = [...purchaseDates, currentPurchaseDate]; // set new purchase dates array for calculate function
+  console.log('Old:', purchaseDates);
   updateFrequency(collectionName, itemId, newPurchaseDates);
   return itemRef.update({
     purchaseDates: firebase.firestore.FieldValue.arrayUnion(
@@ -33,6 +34,7 @@ export function updatePurchaseDate(collectionName, itemId, purchaseDates) {
 }
 
 export function updateFrequency(collectionName, itemId, purchaseDates) {
+  console.log('New:', purchaseDates);
   let calculatedPurchaseFrequency = calculateFrequency(purchaseDates);
   updateFirestore(collectionName, itemId, {
     frequency: calculatedPurchaseFrequency,
