@@ -13,7 +13,8 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
   }
   function handleDelete(result) {
     let response = window.confirm(
-      `Permanently remove "${result.name}" from your shopping list? \nYou cannot undo this action, and this item's purchase history will be lost.`,
+      `Permanently remove "${result.name}" from your shopping list? 
+You cannot undo this action, and this item's purchase history will be lost.`,
     );
     return response ? deleteItem(token, result.id) : null;
   }
