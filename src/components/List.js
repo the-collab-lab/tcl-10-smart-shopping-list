@@ -5,7 +5,6 @@ import { updatePurchaseDate } from '../lib/firebase.js';
 
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
   function handleOnCheck(event, purchaseDates) {
-    console.log(purchaseDates);
     updatePurchaseDate(token, event.target.value, purchaseDates);
   }
 
