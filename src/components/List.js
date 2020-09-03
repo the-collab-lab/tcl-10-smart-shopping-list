@@ -4,14 +4,14 @@ import styles from '../List.module.css';
 import { updatePurchaseDate } from '../lib/firebase.js';
 
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
-  function handleOnCheck(event) {
-    updatePurchaseDate(token, event.target.value);
+  function handleOnCheck(event, purchaseDates) {
+    console.log(purchaseDates);
+    updatePurchaseDate(token, event.target.value, purchaseDates);
   }
 
   function checkTime(time) {
     return Date.now() - time <= 86400000; //number of milliseconds equal to 24 hours
   }
-
   return (
     <div className={styles['list-container']}>
       <header>Smart Shopping List</header>
@@ -71,7 +71,7 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
                     name={result.id}
                     id={result.id}
                     value={result.id}
-                    onClick={handleOnCheck}
+                    onClick={e => handleOnCheck(e, result.purchaseDates)}
                     className="checkbox"
                   />
                   {result.name}

@@ -19,34 +19,54 @@ var firebaseConfig = {
 let fb = firebase.initializeApp(firebaseConfig);
 let db = firebase.firestore();
 
-export function updatePurchaseDate(collectionName, itemId) {
+export function updatePurchaseDate(collectionName, itemId, purchseDates) {
+  //include current purchaseDates as parameter
   const itemRef = db.collection(collectionName).doc(itemId);
-  return itemRef
-    .update({
-      purchaseDates: firebase.firestore.FieldValue.arrayUnion(
-        firebase.firestore.Timestamp.now().toMillis(),
-      ),
-    })
-    .then(function() {
-      updateFrequency(collectionName, itemId);
-    });
+  const currentPurchaseDate = firebase.firestore.Timestamp.now().toMillis(); // set the new purchase date
+  const newPurchaseDates = purchaseDates.concat(currentPurchaseDate); // set new purchase dates array for calculate function
+  updateFrequency(collectionName, itemId, newPurchaseDates);
+  return itemRef.update({
+    purchaseDates: firebase.firestore.FieldValue.arrayUnion(
+      currentPurchaseDate,
+    ),
+  });
 }
 
-export function updateFrequency(collectionName, itemId) {
-  db.collection(collectionName)
-    .where(firebase.firestore.FieldPath.documentId(), '==', itemId)
-    .onSnapshot(function(querySnapshot) {
-      querySnapshot.docChanges().forEach(change => {
-        let purchaseDates = change.doc.data().purchaseDates;
-        if (change.type === 'added' && purchaseDates.length > 2) {
-          let calculatedPurchaseFrequency = calculateFrequency(purchaseDates);
-          updateFirestore(collectionName, itemId, {
-            frequency: calculatedPurchaseFrequency,
-          });
-        }
-      });
-    });
+export function updateFrequency(collectionName, itemId, purchaseDates) {
+  let calculatedPurchaseFrequency = calculateFrequency(purchaseDates);
+  updateFirestore(collectionName, itemId, {
+    frequency: calculatedPurchaseFrequency,
+  });
 }
+
+// export function updatePurchaseDate(collectionName, itemId) {
+//   const itemRef = db.collection(collectionName).doc(itemId);
+//   return itemRef
+//     .update({
+//       purchaseDates: firebase.firestore.FieldValue.arrayUnion(
+//         firebase.firestore.Timestamp.now().toMillis(),
+//       ),
+//     })
+//     .then(function() {
+//       updateFrequency(collectionName, itemId);
+//     });
+// }
+
+// export function updateFrequency(collectionName, itemId) {
+//   db.collection(collectionName)
+//     .where(firebase.firestore.FieldPath.documentId(), '==', itemId)
+//     .onSnapshot(function(querySnapshot) {
+//       querySnapshot.docChanges().forEach(change => {
+//         let purchaseDates = change.doc.data().purchaseDates;
+//         if (change.type === 'added' && purchaseDates.length > 2) {
+//           let calculatedPurchaseFrequency = calculateFrequency(purchaseDates);
+//           updateFirestore(collectionName, itemId, {
+//             frequency: calculatedPurchaseFrequency,
+//           });
+//         }
+//       });
+//     });
+// }
 
 export function writeToFirestore(collectionName, options = {}) {
   db.collection(collectionName).add(options);
