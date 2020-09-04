@@ -27,6 +27,11 @@ export function updatePurchaseDate(collectionName, itemId = {}) {
   });
 }
 
+export function deleteItem(collectionName, itemId = {}) {
+  const itemRef = db.collection(collectionName).doc(itemId);
+  itemRef.delete();
+}
+
 export function writeToFirestore(collectionName, options = {}) {
   db.collection(collectionName).add(options);
 }

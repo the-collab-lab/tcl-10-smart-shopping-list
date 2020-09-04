@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from '../List.module.css';
-import { updatePurchaseDate } from '../lib/firebase.js';
+import { updatePurchaseDate, deleteItem } from '../lib/firebase.js';
 
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
   function handleOnCheck(event) {
@@ -11,6 +11,14 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
   function checkTime(time) {
     return Date.now() - time <= 86400000; //number of milliseconds equal to 24 hours
   }
+  function handleDelete(result) {
+    let response = window.confirm(
+      `Permanently remove "${result.name}" from your shopping list? 
+You cannot undo this action, and this item's purchase history will be lost.`,
+    );
+    return response ? deleteItem(token, result.id) : null;
+  }
+
   return (
     <div className={styles['list-container']}>
       <header>Smart Shopping List</header>
@@ -74,6 +82,7 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
                     className="checkbox"
                   />
                   {result.name}
+                  <button onClick={() => handleDelete(result)}>x</button>
                 </li>
               );
             })}
