@@ -24,10 +24,9 @@ export function updatePurchaseDate(
   itemId,
   existingPurchaseDates,
 ) {
-  //include current purchaseDates as parameter
-  const currentPurchaseDate = firebase.firestore.Timestamp.now().toMillis(); // set the new purchase date
+  const currentPurchaseDate = firebase.firestore.Timestamp.now().toMillis();
   if (existingPurchaseDates.length > 2) {
-    const newPurchaseDates = [...existingPurchaseDates, currentPurchaseDate]; // set new purchase dates array for calculate function
+    const newPurchaseDates = [...existingPurchaseDates, currentPurchaseDate];
     updateFirestore(collectionName, itemId, {
       purchaseDates: firebase.firestore.FieldValue.arrayUnion(
         currentPurchaseDate,
