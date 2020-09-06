@@ -7,7 +7,6 @@ const AddItem = ({ token, results }) => {
 
   function handleSubmitForm(event) {
     event.preventDefault();
-    console.log(frequency);
 
     if (
       results.filter(
