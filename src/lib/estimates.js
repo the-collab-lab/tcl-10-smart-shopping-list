@@ -13,16 +13,13 @@ const getMean = array => {
 // to change to sample (if we only wanted to consider a user's more recent purchase history, for example) use array.length - 1
 const getStandardDeviation = (array, mean) => {
   return Math.sqrt(
-    array
-      .reduce(
+    getMean(
+      array.reduce(
         (squaredDifferences, currentValue) =>
           squaredDifferences.concat((currentValue - mean) ** 2),
         [],
-      )
-      .reduce(
-        (squaredDifferences, currentValue) => squaredDifferences + currentValue,
-        0,
-      ) / array.length,
+      ),
+    ),
   );
 };
 // calculate z-index
@@ -40,10 +37,11 @@ const getZIndex = (currentValue, mean, standardDeviation) => {
 // frequency calculation
 const calculateFrequency = results => {
   const differencesArray = [];
-  const normalizedDifferencesArray = [];
   // // calculate difference between purchase dates
-  for (let i = 0; i < results.length - 1; i++) {
+  let i = 0;
+  while (i < results.length - 1) {
     differencesArray.push(results[i + 1] - results[i]);
+    i++;
   }
   // calculate mean
   const mean = getMean(differencesArray);
@@ -55,15 +53,10 @@ const calculateFrequency = results => {
     return mean;
   } else {
     // find z-index for each item in array & remove outlying data (factor of 1)
-    for (let i = 0; i < differencesArray.length; i++) {
-      if (
-        Math.abs(getZIndex(differencesArray[i], mean, standardDeviation)) <= 1
-      ) {
-        normalizedDifferencesArray.push(differencesArray[i]);
-      }
-    }
-    let newMean = getMean(normalizedDifferencesArray);
-    return newMean;
+    let normalizedDifferencesArray = differencesArray.filter(difference =>
+      Math.abs(Math.abs(getZIndex(difference, mean, standardDeviation)) <= 1),
+    );
+    return getMean(normalizedDifferencesArray);
   }
 };
 

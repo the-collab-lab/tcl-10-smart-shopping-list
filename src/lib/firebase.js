@@ -25,20 +25,20 @@ export function updatePurchaseDate(
   existingPurchaseDates,
 ) {
   const currentPurchaseDate = firebase.firestore.Timestamp.now().toMillis();
+  let dataForFirestore = {
+    purchaseDates: firebase.firestore.FieldValue.arrayUnion(
+      currentPurchaseDate,
+    ),
+  };
+
   if (existingPurchaseDates.length > 2) {
     const newPurchaseDates = [...existingPurchaseDates, currentPurchaseDate];
     updateFirestore(collectionName, itemId, {
-      purchaseDates: firebase.firestore.FieldValue.arrayUnion(
-        currentPurchaseDate,
-      ),
+      ...dataForFirestore,
       frequency: calculateFrequency(newPurchaseDates),
     });
   } else {
-    updateFirestore(collectionName, itemId, {
-      purchaseDates: firebase.firestore.FieldValue.arrayUnion(
-        currentPurchaseDate,
-      ),
-    });
+    updateFirestore(collectionName, itemId, dataForFirestore);
   }
 }
 
