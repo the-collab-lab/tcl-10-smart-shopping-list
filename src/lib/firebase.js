@@ -2,6 +2,7 @@
 // for the second line, which makes both the linter and react-firebase happy
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import { calculateFrequency } from './estimates';
 
 // Initalize Firebase.
 // These details will need to be replaced with the project specific env vars at the start of each new cohort.
@@ -18,13 +19,27 @@ var firebaseConfig = {
 let fb = firebase.initializeApp(firebaseConfig);
 let db = firebase.firestore();
 
-export function updatePurchaseDate(collectionName, itemId = {}) {
-  const itemRef = db.collection(collectionName).doc(itemId);
-  itemRef.update({
-    purchaseDates: firebase.firestore.FieldValue.arrayUnion(
-      firebase.firestore.Timestamp.now().toMillis(),
-    ),
-  });
+export function updatePurchaseDate(
+  collectionName,
+  itemId,
+  existingPurchaseDates,
+) {
+  const currentPurchaseDate = firebase.firestore.Timestamp.now().toMillis();
+  if (existingPurchaseDates.length > 2) {
+    const newPurchaseDates = [...existingPurchaseDates, currentPurchaseDate];
+    updateFirestore(collectionName, itemId, {
+      purchaseDates: firebase.firestore.FieldValue.arrayUnion(
+        currentPurchaseDate,
+      ),
+      frequency: calculateFrequency(newPurchaseDates),
+    });
+  } else {
+    updateFirestore(collectionName, itemId, {
+      purchaseDates: firebase.firestore.FieldValue.arrayUnion(
+        currentPurchaseDate,
+      ),
+    });
+  }
 }
 
 export function deleteItem(collectionName, itemId = {}) {
@@ -34,6 +49,12 @@ export function deleteItem(collectionName, itemId = {}) {
 
 export function writeToFirestore(collectionName, options = {}) {
   db.collection(collectionName).add(options);
+}
+
+export function updateFirestore(collectionName, itemId = {}, options = {}) {
+  db.collection(collectionName)
+    .doc(itemId)
+    .update(options);
 }
 
 export { fb, db };

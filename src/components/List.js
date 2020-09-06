@@ -4,8 +4,8 @@ import styles from '../List.module.css';
 import { updatePurchaseDate, deleteItem } from '../lib/firebase.js';
 
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
-  function handleOnCheck(event) {
-    updatePurchaseDate(token, event.target.value);
+  function handleOnCheck(event, purchaseDates) {
+    updatePurchaseDate(token, event.target.value, purchaseDates);
   }
 
   function checkTime(time) {
@@ -78,7 +78,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
                     name={result.id}
                     id={result.id}
                     value={result.id}
-                    onClick={handleOnCheck}
+                    onClick={e => handleOnCheck(e, result.purchaseDates)}
                     className="checkbox"
                   />
                   {result.name}

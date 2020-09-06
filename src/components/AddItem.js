@@ -3,10 +3,12 @@ import { writeToFirestore } from '../lib/firebase';
 
 const AddItem = ({ token, results }) => {
   let [name, setName] = useState('');
-  let [frequency, setFrequency] = useState(7);
+  let [frequency, setFrequency] = useState(604800000);
 
   function handleSubmitForm(event) {
     event.preventDefault();
+    console.log(frequency);
+
     if (
       results.filter(
         result =>
@@ -23,7 +25,7 @@ const AddItem = ({ token, results }) => {
       });
       alert(`${name} has been successfully added to your list.`);
       setName('');
-      setFrequency(7);
+      setFrequency(604800000);
     }
   }
 
@@ -44,8 +46,8 @@ const AddItem = ({ token, results }) => {
             type="radio"
             id="soon"
             name="frequency"
-            value={7}
-            checked={frequency === 7}
+            value={604800000}
+            checked={frequency === 604800000}
           />
           <label htmlFor="soon">Soon</label>
           <input
@@ -53,7 +55,7 @@ const AddItem = ({ token, results }) => {
             type="radio"
             id="kind-of-soon"
             name="frequency"
-            value={14}
+            value={1209600000}
           />
           <label htmlFor="kind-of-soon">Kind of Soon</label>
           <input
@@ -61,7 +63,7 @@ const AddItem = ({ token, results }) => {
             type="radio"
             id="not-soon"
             name="frequency"
-            value={30}
+            value={2592000000}
           />
           <label htmlFor="not-soon">Not Soon</label>
         </div>
