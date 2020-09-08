@@ -17,3 +17,19 @@
   text-align: left;
   margin-top: 0;
 }
+
+.soon {
+  background-color: yellow;
+}
+
+.kind-of-soon {
+  background-color: red;
+}
+
+.not-soon {
+  background-color: blue;
+}
+
+.inactive {
+  background-color: orange;
+}

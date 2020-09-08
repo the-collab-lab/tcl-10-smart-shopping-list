@@ -24,19 +24,22 @@ You cannot undo this action, and this item's purchase history will be lost.`,
     let kindOfSoon = [];
     let notSoon = [];
     let inactive = [];
-
     results.forEach(result => {
       switch (true) {
         case result.frequency <= 604800000:
+          result.timeClass = 'soon';
           soon.push(result);
           break;
         case result.frequency <= 1209600000:
+          result.timeClass = 'kind-of-soon';
           kindOfSoon.push(result);
           break;
         case result.frequency <= 2592000000:
+          result.timeClass = 'not-soon';
           notSoon.push(result);
           break;
         default:
+          result.timeClass = 'inactive';
           inactive.push(result);
           break;
       }
@@ -111,7 +114,11 @@ You cannot undo this action, and this item's purchase history will be lost.`,
               return (
                 <li
                   key={result.id}
-                  className={checkTime(time) ? 'deactivated' : null}
+                  className={
+                    checkTime(time)
+                      ? `deactivated ${styles[result.timeClass]}`
+                      : `${styles[result.timeClass]}`
+                  }
                 >
                   <label htmlFor={result.id} className="sr-only">
                     Mark {result.name} as purchased.
