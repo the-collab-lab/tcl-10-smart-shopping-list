@@ -19,6 +19,50 @@ You cannot undo this action, and this item's purchase history will be lost.`,
     return response ? deleteItem(token, result.id) : null;
   }
 
+  function sortedResults() {
+    let soon = [];
+    let kindOfSoon = [];
+    let notSoon = [];
+    let inactive = [];
+
+    results.forEach(result => {
+      switch (true) {
+        case result.frequency <= 604800000:
+          soon.push(result);
+          break;
+        case result.frequency <= 1209600000:
+          kindOfSoon.push(result);
+          break;
+        case result.frequency <= 2592000000:
+          notSoon.push(result);
+          break;
+        default:
+          inactive.push(result);
+          break;
+      }
+    });
+
+    return [
+      ...soon.sort((a, b) =>
+        b.name.toLowerCase() > a.name.toLowerCase() ? 1 : -1,
+      ),
+      ...kindOfSoon.sort((a, b) =>
+        b.name.toLowerCase() > a.name.toLowerCase() ? 1 : -1,
+      ),
+      ...notSoon.sort((a, b) =>
+        b.name.toLowerCase() > a.name.toLowerCase() ? 1 : -1,
+      ),
+      ...inactive.sort((a, b) =>
+        b.name.toLowerCase() > a.name.toLowerCase() ? 1 : -1,
+      ),
+    ];
+
+    // Need to buy soon (fewer than 7 days)
+    // Need to buy kind of soon (between 7 & 30 days)
+    // Need to buy not soon (more than 30 days)
+    // Inactive (when there’s only 1 purchase in the database or the purchase is really out of date [the time that has elapsed since the last purchase is 2x what was estimated])
+  }
+
   return (
     <div className={styles['list-container']}>
       <header>Smart Shopping List</header>
@@ -54,7 +98,8 @@ You cannot undo this action, and this item's purchase history will be lost.`,
       )}
       <div className={styles['list-results-container']}>
         <ul className={styles['ul-list']}>
-          {results
+          {sortedResults()
+            .sort((a, b) => (a.frequency > b.frequency ? 1 : -1))
             .filter(result =>
               result.name
                 .toLowerCase()
