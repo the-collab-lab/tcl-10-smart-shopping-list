@@ -24,6 +24,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
     let kindOfSoon = [];
     let notSoon = [];
     let inactive = [];
+
     results.forEach(result => {
       switch (true) {
         case result.frequency <= 604800000:
@@ -47,23 +48,18 @@ You cannot undo this action, and this item's purchase history will be lost.`,
 
     return [
       ...soon.sort((a, b) =>
-        b.name.toLowerCase() > a.name.toLowerCase() ? 1 : -1,
+        a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1,
       ),
       ...kindOfSoon.sort((a, b) =>
-        b.name.toLowerCase() > a.name.toLowerCase() ? 1 : -1,
+        a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1,
       ),
       ...notSoon.sort((a, b) =>
-        b.name.toLowerCase() > a.name.toLowerCase() ? 1 : -1,
+        a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1,
       ),
       ...inactive.sort((a, b) =>
-        b.name.toLowerCase() > a.name.toLowerCase() ? 1 : -1,
+        a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1,
       ),
     ];
-
-    // Need to buy soon (fewer than 7 days)
-    // Need to buy kind of soon (between 7 & 30 days)
-    // Need to buy not soon (more than 30 days)
-    // Inactive (when there’s only 1 purchase in the database or the purchase is really out of date [the time that has elapsed since the last purchase is 2x what was estimated])
   }
 
   return (
@@ -102,7 +98,6 @@ You cannot undo this action, and this item's purchase history will be lost.`,
       <div className={styles['list-results-container']}>
         <ul className={styles['ul-list']}>
           {sortedResults()
-            .sort((a, b) => (a.frequency > b.frequency ? 1 : -1))
             .filter(result =>
               result.name
                 .toLowerCase()
@@ -119,6 +114,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
                       ? `deactivated ${styles[result.timeClass]}`
                       : `${styles[result.timeClass]}`
                   }
+                  aria-label={result.timeClass.split('-').join(' ')}
                 >
                   <label htmlFor={result.id} className="sr-only">
                     Mark {result.name} as purchased.
