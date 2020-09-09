@@ -109,28 +109,31 @@ You cannot undo this action, and this item's purchase history will be lost.`,
               return (
                 <li
                   key={result.id}
-                  className={
-                    checkTime(time)
-                      ? `deactivated ${styles[result.timeClass]}`
-                      : `${styles[result.timeClass]}`
-                  }
+                  className={checkTime(time) ? `deactivated` : null}
                   aria-label={result.timeClass.split('-').join(' ')}
                 >
-                  <label htmlFor={result.id} className="sr-only">
-                    Mark {result.name} as purchased.
-                  </label>
-                  <input
-                    type="checkbox"
-                    disabled={checkTime(time)}
-                    defaultChecked={checkTime(time)}
-                    name={result.id}
-                    id={result.id}
-                    value={result.id}
-                    onClick={e => handleOnCheck(e, result.purchaseDates)}
-                    className="checkbox"
-                  />
-                  {result.name}
-                  <button onClick={() => handleDelete(result)}>x</button>
+                  <span className="container">
+                    <label htmlFor={result.id}>
+                      {result.name}
+                      <input
+                        type="checkbox"
+                        disabled={checkTime(time)}
+                        defaultChecked={checkTime(time)}
+                        name={result.id}
+                        id={result.id}
+                        value={result.id}
+                        onClick={e => handleOnCheck(e, result.purchaseDates)}
+                        className="checkbox"
+                      />
+                      <span className={`checkmark ${result.timeClass}`}></span>
+                    </label>
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDelete(result)}
+                    >
+                      x
+                    </button>
+                  </span>
                 </li>
               );
             })}
