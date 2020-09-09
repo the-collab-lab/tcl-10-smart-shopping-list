@@ -2,10 +2,40 @@ import React from 'react';
 
 const Details = ({ details, setDetails }) => {
   const lastPurch = Math.max(...details.purchaseDates);
-  let [lastMonth, lastDate, lastYear] = new Date(lastPurch)
-    .toLocaleDateString()
-    .split('/');
-  console.log(new Date(lastPurch));
+
+  let futurePurch = lastPurch + details.frequency;
+  let numOfPurch = details.purchaseDates.length;
+
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  const getTime = date => {
+    if (numOfPurch) {
+      const fullDate = new Date(date);
+      const dateArray = [
+        fullDate.getFullYear() /*year*/,
+        months[fullDate.getMonth()] /*month string*/,
+        fullDate.getDate() /*date*/,
+      ];
+      return `${dateArray[1]} ${dateArray[2]}, ${dateArray[0]}`;
+    } else {
+      return 'This item has no purtchase history';
+    }
+  };
+
+  console.log(getTime(futurePurch));
 
   return (
     <div className="background">
@@ -15,8 +45,12 @@ const Details = ({ details, setDetails }) => {
         </button>
         <h2>Smart Shopping List</h2>
         <h3>{details.name}</h3>
-        <h4>Last Purchased: </h4>
-        <h4>Next Purchuse date: </h4>
+        <h4>Last Purchased: {getTime(lastPurch)} </h4>
+        <h4>Next Purchuse date: {getTime(futurePurch)} </h4>
+        <h4>
+          You have purchused this item {numOfPurch} time
+          {numOfPurch === 1 ? null : 's'}{' '}
+        </h4>
       </div>
     </div>
   );
