@@ -76,10 +76,14 @@ ul {
   background-color: white;
   border-radius: 10px;
   padding: 20px;
+  position: relative;
 }
 
 .back-button {
-  float: left;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  padding: 10px;
 }
 
 .details-header {

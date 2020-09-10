@@ -18,13 +18,14 @@ var firebaseConfig = {
 
 let fb = firebase.initializeApp(firebaseConfig);
 let db = firebase.firestore();
+let timestamp = firebase.firestore.Timestamp.now().toMillis();
 
 export function updatePurchaseDate(
   collectionName,
   itemId,
   existingPurchaseDates,
 ) {
-  const currentPurchaseDate = firebase.firestore.Timestamp.now().toMillis();
+  const currentPurchaseDate = timestamp;
   if (existingPurchaseDates.length > 2) {
     const newPurchaseDates = [...existingPurchaseDates, currentPurchaseDate];
     updateFirestore(collectionName, itemId, {
@@ -57,4 +58,4 @@ export function updateFirestore(collectionName, itemId = {}, options = {}) {
     .update(options);
 }
 
-export { fb, db };
+export { fb, db, timestamp };
