@@ -40,10 +40,14 @@ const Details = ({ details, setDetails }) => {
   return (
     <div className="background">
       <div className="modal">
-        <button onClick={() => setDetails({})}>
-          This will be a back arrow
-        </button>
-        <h2>Smart Shopping List</h2>
+        <div className="details-header">
+          <button className="back-button" onClick={() => setDetails({})}>
+            <span role="img" aria-label="carrot">
+              &#60;
+            </span>
+          </button>
+          <h2>Smart Shopping List</h2>
+        </div>
         <h3>{details.name}</h3>
         <h4>Last Purchased: {getTime(lastPurch)} </h4>
         <h4>Next Purchuse date: {getTime(futurePurch)} </h4>

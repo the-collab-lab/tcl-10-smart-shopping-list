@@ -77,3 +77,11 @@ ul {
   border-radius: 10px;
   padding: 20px;
 }
+
+.back-button {
+  float: left;
+}
+
+.details-header {
+  flex-direction: row;
+}
