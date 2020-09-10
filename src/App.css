@@ -83,7 +83,7 @@ ul {
   width: 0;
 }
 
-/* Create a custom checkbox */
+/* Create different background colors depending on id */
 .checkmark.soon {
   position: absolute;
   top: 0.2em;
@@ -101,7 +101,8 @@ ul {
   left: 0;
   height: 1em;
   width: 1em;
-  background-color: yellow;
+  background-color: orange;
+  opacity: 40%;
   cursor: pointer;
 }
 
@@ -111,7 +112,8 @@ ul {
   left: 0;
   height: 1em;
   width: 1em;
-  background-color: purple;
+  background-color: red;
+  opacity: 40%;
   cursor: pointer;
 }
 
@@ -122,6 +124,7 @@ ul {
   height: 1em;
   width: 1em;
   background-color: gray;
+  opacity: 40%;
   cursor: pointer;
 }
 
@@ -130,10 +133,10 @@ ul {
   background-color: #ccc;
 }
 
-/* When the checkbox is checked, add a blue background */
-.container.kind-of-soon input:checked ~ .checkmark {
+/* change when checked
+.container.soon input:checked ~ .checkmark {
   background-color: green;
-}
+} */
 
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {

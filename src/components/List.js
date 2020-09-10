@@ -26,27 +26,29 @@ You cannot undo this action, and this item's purchase history will be lost.`,
     let inactive = [];
 
     results.forEach(result => {
+      //separates each item into arrays by frequency
       switch (true) {
-        case result.frequency <= 604800000:
+        case result.frequency <= 604800000: //milliseconds in 7 days
           result.timeClass = 'soon';
           soon.push(result);
           break;
-        case result.frequency <= 1209600000:
+        case result.frequency <= 1209600000: //milliseconds in 14 days
           result.timeClass = 'kind-of-soon';
           kindOfSoon.push(result);
           break;
-        case result.frequency <= 2592000000:
+        case result.frequency <= 2592000000: //milliseconds in 30 days
           result.timeClass = 'not-soon';
           notSoon.push(result);
           break;
         default:
-          result.timeClass = 'inactive';
+          result.timeClass = 'inactive'; //everything above else defaults to inactive
           inactive.push(result);
           break;
       }
     });
 
     return [
+      //combines all the arrays after they've been sorted alphabetically
       ...soon.sort((a, b) =>
         a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1,
       ),
