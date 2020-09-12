@@ -91,7 +91,7 @@ ul {
   height: 1em;
   width: 1em;
   background-color: green;
-  opacity: 40%;
+  opacity: 0.4;
   cursor: pointer;
 }
 
@@ -102,7 +102,7 @@ ul {
   height: 1em;
   width: 1em;
   background-color: orange;
-  opacity: 40%;
+  opacity: 0.4;
   cursor: pointer;
 }
 
@@ -113,7 +113,7 @@ ul {
   height: 1em;
   width: 1em;
   background-color: red;
-  opacity: 40%;
+  opacity: 0.4;
   cursor: pointer;
 }
 
@@ -124,7 +124,7 @@ ul {
   height: 1em;
   width: 1em;
   background-color: gray;
-  opacity: 40%;
+  opacity: 0.4;
   cursor: pointer;
 }
 
@@ -132,11 +132,6 @@ ul {
 .container:hover input ~ .checkmark {
   background-color: #ccc;
 }
-
-/* change when checked
-.container.soon input:checked ~ .checkmark {
-  background-color: green;
-} */
 
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
