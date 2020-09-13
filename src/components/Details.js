@@ -1,11 +1,11 @@
 import React from 'react';
 
 const Details = ({ details, setDetails }) => {
-  let numOfPurch = details.purchaseDates.length;
+  const numOfPurch = details.purchaseDates.length;
   const lastPurch = numOfPurch
     ? Math.max(...details.purchaseDates)
     : details.addedDate;
-  let futurePurch = lastPurch + details.frequency;
+  const futurePurch = lastPurch + details.frequency;
 
   const months = [
     'January',
@@ -36,25 +36,27 @@ const Details = ({ details, setDetails }) => {
     <div className="background">
       <div className="modal">
         <div className="details-header">
-          <button className="back-button" onClick={() => setDetails({})}>
-            <span role="img" aria-label="back to list">
-              &#60;
-            </span>
+          <button
+            className="back-button"
+            aria-label="back to list"
+            onClick={() => setDetails({})}
+          >
+            <span role="img">&#60;</span>
           </button>
           <h2>Smart Shopping List</h2>
         </div>
         <h3>{details.name}</h3>
-        <h4>
+        <p>
           Last Purchase Date:{' '}
           {numOfPurch
             ? getTime(lastPurch)
             : 'This item has no purchase history'}{' '}
-        </h4>
-        <h4>Next Purchase Date: {getTime(futurePurch)} </h4>
-        <h4>
+        </p>
+        <p>Next Purchase Date: {getTime(futurePurch)} </p>
+        <p>
           You have purchased this item {numOfPurch} time
           {numOfPurch === 1 ? null : 's'}.
-        </h4>
+        </p>
       </div>
     </div>
   );

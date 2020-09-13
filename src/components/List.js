@@ -91,9 +91,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
               );
             })}
         </ul>
-        {details.name ? (
-          <Details details={details} setDetails={setDetails} />
-        ) : null}
+        {details.name && <Details details={details} setDetails={setDetails} />}
       </div>
     </div>
   );
