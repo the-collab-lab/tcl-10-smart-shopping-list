@@ -87,7 +87,7 @@ ul {
 .checkmark.soon {
   position: absolute;
   top: 0.2em;
-  left: 0;
+  left: 0.2em;
   height: 1em;
   width: 1em;
   background-color: green;
@@ -98,7 +98,7 @@ ul {
 .checkmark.kind-of-soon {
   position: absolute;
   top: 0.2em;
-  left: 0;
+  left: 0.2em;
   height: 1em;
   width: 1em;
   background-color: orange;
@@ -109,7 +109,7 @@ ul {
 .checkmark.not-soon {
   position: absolute;
   top: 0.2em;
-  left: 0;
+  left: 0.2em;
   height: 1em;
   width: 1em;
   background-color: red;
@@ -120,7 +120,7 @@ ul {
 .checkmark.inactive {
   position: absolute;
   top: 0.2em;
-  left: 0;
+  left: 0.2em;
   height: 1em;
   width: 1em;
   background-color: gray;
@@ -134,8 +134,8 @@ ul {
 }
 
 /* change when checked
-.container.soon input:checked ~ .checkmark {
-  background-color: green;
+.container input:checked ~ .checkmark {
+  background-color: yellow;
 } */
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -165,4 +165,8 @@ ul {
 
 .delete-btn {
   margin: 0.5em;
+}
+
+.container input:focus ~ .checkmark {
+  box-shadow: 0 0 0 3px #5e9ed6;
 }
