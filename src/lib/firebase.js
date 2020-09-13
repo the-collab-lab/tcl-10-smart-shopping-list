@@ -18,26 +18,22 @@ var firebaseConfig = {
 
 let fb = firebase.initializeApp(firebaseConfig);
 let db = firebase.firestore();
+let timestamp = firebase.firestore.Timestamp.now().toMillis();
 
 export function updatePurchaseDate(
   collectionName,
   itemId,
   existingPurchaseDates,
 ) {
-  const currentPurchaseDate = firebase.firestore.Timestamp.now().toMillis();
   if (existingPurchaseDates.length > 2) {
-    const newPurchaseDates = [...existingPurchaseDates, currentPurchaseDate];
+    const newPurchaseDates = [...existingPurchaseDates, timestamp];
     updateFirestore(collectionName, itemId, {
-      purchaseDates: firebase.firestore.FieldValue.arrayUnion(
-        currentPurchaseDate,
-      ),
+      purchaseDates: firebase.firestore.FieldValue.arrayUnion(timestamp),
       frequency: calculateFrequency(newPurchaseDates),
     });
   } else {
     updateFirestore(collectionName, itemId, {
-      purchaseDates: firebase.firestore.FieldValue.arrayUnion(
-        currentPurchaseDate,
-      ),
+      purchaseDates: firebase.firestore.FieldValue.arrayUnion(timestamp),
     });
   }
 }
@@ -57,4 +53,4 @@ export function updateFirestore(collectionName, itemId = {}, options = {}) {
     .update(options);
 }
 
-export { fb, db };
+export { fb, db, timestamp };

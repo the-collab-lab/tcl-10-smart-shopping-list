@@ -21,16 +21,15 @@ function App() {
       unsubscribe = db.collection(token).onSnapshot(function(querySnapshot) {
         let querySnapshotResults = [];
         querySnapshot.forEach(function(doc) {
-          const { name, purchaseDates, frequency, addedDate } = doc.data();
+          const { name, addedDate, purchaseDates, frequency } = doc.data();
           const { id } = doc;
-
           if (name) {
             querySnapshotResults.push({
               id,
               name,
+              addedDate,
               purchaseDates,
               frequency,
-              addedDate,
             });
           }
         });

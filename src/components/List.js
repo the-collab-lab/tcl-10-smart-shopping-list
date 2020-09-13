@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from '../List.module.css';
+import Details from './Details';
 import { updatePurchaseDate, deleteItem } from '../lib/firebase.js';
 
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
+  const [details, setDetails] = useState({});
+
   function handleOnCheck(event, purchaseDates) {
     updatePurchaseDate(token, event.target.value, purchaseDates);
   }
@@ -150,6 +153,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
                       />
                       <span className={`checkmark ${result.timeClass}`}></span>
                     </label>
+                    <button onClick={() => setDetails(result)}>Details</button>
                     <button
                       className="delete-btn"
                       onClick={() => handleDelete(result)}
@@ -161,6 +165,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
               );
             })}
         </ul>
+        {details.name && <Details details={details} setDetails={setDetails} />}
       </div>
     </div>
   );
