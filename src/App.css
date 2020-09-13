@@ -80,48 +80,31 @@ ul {
 }
 
 /* Create different background colors depending on id */
-.checkmark.soon {
+
+.checkmark {
   position: absolute;
   top: 0.2em;
   left: 0.2em;
   height: 1em;
   width: 1em;
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+.soon {
   background-color: green;
-  opacity: 0.4;
-  cursor: pointer;
 }
 
-.checkmark.kind-of-soon {
-  position: absolute;
-  top: 0.2em;
-  left: 0.2em;
-  height: 1em;
-  width: 1em;
+.kind-of-soon {
   background-color: orange;
-  opacity: 0.4;
-  cursor: pointer;
 }
 
-.checkmark.not-soon {
-  position: absolute;
-  top: 0.2em;
-  left: 0.2em;
-  height: 1em;
-  width: 1em;
+.not-soon {
   background-color: red;
-  opacity: 0.4;
-  cursor: pointer;
 }
 
-.checkmark.inactive {
-  position: absolute;
-  top: 0.2em;
-  left: 0.2em;
-  height: 1em;
-  width: 1em;
+.inactive {
   background-color: gray;
-  opacity: 0.4;
-  cursor: pointer;
 }
 
 /* On mouse-over, add a grey background color */
