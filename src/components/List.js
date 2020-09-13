@@ -158,7 +158,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
                       />
                       <span className={`checkmark ${result.timeClass}`}></span>
                     </label>
-                    <button onClick={() => handleDelete(result)}>Delete</button>
+                    <button onClick={() => setDetails(result)}>Details</button>
                     <button
                       className="delete-btn"
                       onClick={() => handleDelete(result)}
