@@ -19,45 +19,72 @@ You cannot undo this action, and this item's purchase history will be lost.`,
     return response ? deleteItem(token, result.id) : null;
   }
 
-  function sortedResults() {
-    let soon = [];
-    let kindOfSoon = [];
-    let notSoon = [];
-    let inactive = [];
+  function predictedNextPurchase(lastPurchase, frequency) {
+    //takes the last purchase date, frequency, and current date and calculates how many days are there until anticipated purchase date
+    return Math.round((lastPurchase + frequency - Date.now()) / 86400000);
+  }
 
+  function lastPurchaseDate(result) {
+    // needs to be connected to itemAdded timestamp from other branch
+    //placeholder for addedItem date
+    const placeholderAddedDate = new Date('September 3, 20 00:20:18');
+    //if there is a purchase date, it's returning the recent purchase date. Otherwise, returning addedDate
+    return result.purchaseDates.length > 0
+      ? new Date(Math.max(...result.purchaseDates)).getTime()
+      : placeholderAddedDate.getTime();
+  }
+
+  function sortedResults() {
+    let active = [];
+    let inactive = [];
     results.forEach(result => {
-      //separates each item into arrays by frequency
-      switch (true) {
-        case result.frequency <= 604800000: //milliseconds in 7 days
-          result.timeClass = 'soon';
-          soon.push(result);
-          break;
-        case result.frequency <= 1209600000: //milliseconds in 14 days
-          result.timeClass = 'kind-of-soon';
-          kindOfSoon.push(result);
-          break;
-        case result.frequency <= 2592000000: //milliseconds in 30 days
-          result.timeClass = 'not-soon';
-          notSoon.push(result);
-          break;
-        default:
-          result.timeClass = 'inactive'; //everything above else defaults to inactive
-          inactive.push(result);
-          break;
+      //pulls out inactive items - identified by having a negative number less than the negative frequency, or has a frequency greater than 30.
+      //for example, if an item has a frequency of 7 days, and the anticpated days left is -8, that means it's been 15 days since the last purchase date, and is inactive
+      if (
+        predictedNextPurchase(lastPurchaseDate(result), result.frequency) <
+          -1 * Math.round(result.frequency / 86400000) ||
+        Math.round(result.frequency / 86400000) > 30
+      ) {
+        result.timeClass = 'inactive';
+        inactive.push(result);
+      } else {
+        active.push(result);
+        switch (true) {
+          case predictedNextPurchase(
+            lastPurchaseDate(result),
+            result.frequency,
+          ) <= 7:
+            result.timeClass = 'soon';
+            break;
+          case predictedNextPurchase(
+            lastPurchaseDate(result),
+            result.frequency,
+          ) <= 14:
+            result.timeClass = 'kind-of-soon';
+            break;
+          case predictedNextPurchase(
+            lastPurchaseDate(result),
+            result.frequency,
+          ) <= 30:
+            result.timeClass = 'not-soon';
+            break;
+          default:
+            result.timeClass = 'inactive'; //everything above else defaults to inactive
+            break;
+        }
       }
     });
-
+    //sorts active items alphabetically and by next purchase date
     return [
-      //combines all the arrays after they've been sorted alphabetically
-      ...soon.sort((a, b) =>
-        a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1,
-      ),
-      ...kindOfSoon.sort((a, b) =>
-        a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1,
-      ),
-      ...notSoon.sort((a, b) =>
-        a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1,
-      ),
+      ...active
+        .sort((a, b) => (a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1))
+        .sort((a, b) =>
+          predictedNextPurchase(lastPurchaseDate(a), a.frequency) >
+          predictedNextPurchase(lastPurchaseDate(b), b.frequency)
+            ? 1
+            : -1,
+        ),
+      //just sorts inactive items alphabetically. It doesn't make as much sense to sort HOW inactive an item is
       ...inactive.sort((a, b) =>
         a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1,
       ),
@@ -112,11 +139,14 @@ You cannot undo this action, and this item's purchase history will be lost.`,
                 <li
                   key={result.id}
                   className={checkTime(time) ? `deactivated` : null}
-                  aria-label={result.timeClass.split('-').join(' ')}
+                  // aria-label={result.timeClass.split('-').join(' ')}
                 >
                   <span className="container">
                     <label htmlFor={result.id}>
-                      {result.name}
+                      {`${result.name} ${predictedNextPurchase(
+                        lastPurchaseDate(result),
+                        result.frequency,
+                      )} ${Math.round(result.frequency / 86400000)}`}
                       <input
                         type="checkbox"
                         disabled={checkTime(time)}
