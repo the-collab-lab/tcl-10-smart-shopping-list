@@ -11,6 +11,7 @@
   overflow: hidden;
 }
 .App {
+  position: relative;
   font-size: 62.5%;
   color: black;
   text-align: center;
@@ -143,4 +144,29 @@ ul {
 
 .container input:focus ~ .checkmark {
   box-shadow: 0 0 0 3px #5e9ed6;
+}
+.background {
+  position: absolute;
+  background-color: rgba(41, 43, 45, 0.75);
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  position: relative;
+}
+
+.back-button {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  padding: 10px;
 }

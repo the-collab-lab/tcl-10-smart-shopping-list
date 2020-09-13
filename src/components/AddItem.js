@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { writeToFirestore } from '../lib/firebase';
+import { writeToFirestore, timestamp } from '../lib/firebase';
 
 const AddItem = ({ token, results }) => {
   let [name, setName] = useState('');
@@ -20,6 +20,7 @@ const AddItem = ({ token, results }) => {
       writeToFirestore(token, {
         name,
         frequency,
+        addedDate: timestamp,
         purchaseDates: [],
       });
       alert(`${name} has been successfully added to your list.`);
