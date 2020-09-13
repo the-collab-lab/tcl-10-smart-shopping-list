@@ -27,11 +27,10 @@ You cannot undo this action, and this item's purchase history will be lost.`,
   function lastPurchaseDate(result) {
     // needs to be connected to itemAdded timestamp from other branch
     //placeholder for addedItem date
-    const placeholderAddedDate = new Date('September 3, 20 00:20:18');
     //if there is a purchase date, it's returning the recent purchase date. Otherwise, returning addedDate
     return result.purchaseDates.length > 0
-      ? new Date(Math.max(...result.purchaseDates)).getTime()
-      : placeholderAddedDate.getTime();
+      ? Math.max(...result.purchaseDates)
+      : result.addedDate;
   }
 
   function sortedResults() {
@@ -49,23 +48,20 @@ You cannot undo this action, and this item's purchase history will be lost.`,
         inactive.push(result);
       } else {
         active.push(result);
+
+        let predictedPurchase = predictedNextPurchase(
+          lastPurchaseDate(result),
+          result.frequency,
+        );
+
         switch (true) {
-          case predictedNextPurchase(
-            lastPurchaseDate(result),
-            result.frequency,
-          ) <= 7:
+          case predictedPurchase <= 7:
             result.timeClass = 'soon';
             break;
-          case predictedNextPurchase(
-            lastPurchaseDate(result),
-            result.frequency,
-          ) <= 14:
+          case predictedPurchase <= 14:
             result.timeClass = 'kind-of-soon';
             break;
-          case predictedNextPurchase(
-            lastPurchaseDate(result),
-            result.frequency,
-          ) <= 30:
+          case predictedPurchase <= 30:
             result.timeClass = 'not-soon';
             break;
           default:
@@ -139,7 +135,6 @@ You cannot undo this action, and this item's purchase history will be lost.`,
                 <li
                   key={result.id}
                   className={checkTime(time) ? `deactivated` : null}
-                  // aria-label={result.timeClass.split('-').join(' ')}
                 >
                   <span className="container">
                     <label htmlFor={result.id}>
@@ -156,6 +151,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
                         value={result.id}
                         onClick={e => handleOnCheck(e, result.purchaseDates)}
                         className="checkbox"
+                        aria-label={result.timeClass.split('-').join(' ')}
                       />
                       <span className={`checkmark ${result.timeClass}`}></span>
                     </label>
