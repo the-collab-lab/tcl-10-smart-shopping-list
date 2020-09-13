@@ -25,8 +25,6 @@ You cannot undo this action, and this item's purchase history will be lost.`,
   }
 
   function lastPurchaseDate(result) {
-    // needs to be connected to itemAdded timestamp from other branch
-    //placeholder for addedItem date
     //if there is a purchase date, it's returning the recent purchase date. Otherwise, returning addedDate
     return result.purchaseDates.length > 0
       ? Math.max(...result.purchaseDates)
@@ -138,10 +136,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
                 >
                   <span className="container">
                     <label htmlFor={result.id}>
-                      {`${result.name} ${predictedNextPurchase(
-                        lastPurchaseDate(result),
-                        result.frequency,
-                      )} ${Math.round(result.frequency / 86400000)}`}
+                      {result.name}
                       <input
                         type="checkbox"
                         disabled={checkTime(time)}
