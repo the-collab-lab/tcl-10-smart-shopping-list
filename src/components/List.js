@@ -155,6 +155,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
   }
 
   function checkmarkColor(result, time) {
+    //uses timeClasses found above to return the correct color of checkbox
     switch (result.timeClass) {
       case 'soon':
         return (
@@ -244,12 +245,12 @@ You cannot undo this action, and this item's purchase history will be lost.`,
                   key={result.id}
                   className={checkTime(time) ? `deactivated` : null}
                 >
-                  <Paper
+                  <Paper // adds background color. If we don't want a shadow, we can set elevation to 0
                     elevation={1}
                     className="list-item"
                     style={{ margin: '.2em' }}
                   >
-                    <Grid
+                    <Grid // used to align labe/checkbox with icon buttons and to properly space
                       container
                       direction="row"
                       justify="space-between"
@@ -258,7 +259,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
                     >
                       <Grid item>
                         <FormControlLabel
-                          control={checkmarkColor(result, time)}
+                          control={checkmarkColor(result, time)} //sends to above function to pull back the correct color checkbox component
                           label={result.name}
                           disabled={checkTime(time)}
                           id={result.id}
