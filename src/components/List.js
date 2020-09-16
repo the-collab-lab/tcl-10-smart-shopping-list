@@ -3,6 +3,71 @@ import { NavLink } from 'react-router-dom';
 import styles from '../List.module.css';
 import Details from './Details';
 import { updatePurchaseDate, deleteItem } from '../lib/firebase.js';
+import { withStyles } from '@material-ui/core/styles';
+import { green, orange, red, grey } from '@material-ui/core/colors';
+import {
+  FormControlLabel,
+  Checkbox,
+  IconButton,
+  Grid,
+  Paper,
+  Typography,
+} from '@material-ui/core';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
+import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
+
+const DecoratedCheckbox = p => {
+  return (
+    <Checkbox
+      icon={<CircleUnchecked />}
+      checkedIcon={<CircleCheckedFilled />}
+      color="default"
+      {...p}
+    />
+  );
+};
+
+const GreenCheckbox = withStyles({
+  root: {
+    color: green[400],
+    '&$checked': {
+      color: green[600],
+    },
+  },
+  checked: {},
+})(props => DecoratedCheckbox(props));
+
+const OrangeCheckbox = withStyles({
+  root: {
+    color: orange[400],
+    '&$checked': {
+      color: orange[600],
+    },
+  },
+  checked: {},
+})(props => DecoratedCheckbox(props));
+
+const RedCheckbox = withStyles({
+  root: {
+    color: red[400],
+    '&$checked': {
+      color: red[600],
+    },
+  },
+  checked: {},
+})(props => DecoratedCheckbox(props));
+
+const GreyCheckbox = withStyles({
+  root: {
+    color: grey[400],
+    '&$checked': {
+      color: grey[600],
+    },
+  },
+  checked: {},
+})(props => DecoratedCheckbox(props));
 
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
   const [details, setDetails] = useState({});
@@ -71,6 +136,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
         }
       }
     });
+
     //sorts active items alphabetically and by next purchase date
     return [
       ...active
@@ -88,9 +154,51 @@ You cannot undo this action, and this item's purchase history will be lost.`,
     ];
   }
 
+  function checkmarkColor(result, time) {
+    switch (result.timeClass) {
+      case 'soon':
+        return (
+          <GreenCheckbox
+            checked={checkTime(time)}
+            onChange={e => handleOnCheck(e, result.purchaseDates)}
+            name={result.id}
+          />
+        );
+      case 'kind-of-soon':
+        return (
+          <OrangeCheckbox
+            checked={checkTime(time)}
+            onChange={e => handleOnCheck(e, result.purchaseDates)}
+            name={result.id}
+          />
+        );
+      case 'not-soon':
+        return (
+          <RedCheckbox
+            checked={checkTime(time)}
+            onChange={e => handleOnCheck(e, result.purchaseDates)}
+            name={result.id}
+          />
+        );
+      default:
+        return (
+          <GreyCheckbox
+            checked={checkTime(time)}
+            onChange={e => handleOnCheck(e, result.purchaseDates)}
+            name={result.id}
+          />
+        );
+    }
+  }
+
   return (
     <div className={styles['list-container']}>
-      <header>Smart Shopping List</header>
+      <header>
+        <Typography variant="h4">Smart Shopping List</Typography>
+      </header>
+      <Typography variant="subtitle2" style={{ fontWeight: 'bold' }}>
+        Share Token: {token}
+      </Typography>
       {results.length === 0 ? (
         <>
           <p>Your shopping list is currently empty</p>
@@ -105,7 +213,6 @@ You cannot undo this action, and this item's purchase history will be lost.`,
               Search
             </label>
           </div>
-
           <input
             onChange={event => setSearchTerm(event.target.value)}
             autoFocus
@@ -137,30 +244,48 @@ You cannot undo this action, and this item's purchase history will be lost.`,
                   key={result.id}
                   className={checkTime(time) ? `deactivated` : null}
                 >
-                  <span className="container">
-                    <label htmlFor={result.id}>
-                      {result.name}
-                      <input
-                        type="checkbox"
-                        disabled={checkTime(time)}
-                        defaultChecked={checkTime(time)}
-                        name={result.id}
-                        id={result.id}
-                        value={result.id}
-                        onClick={e => handleOnCheck(e, result.purchaseDates)}
-                        className="checkbox"
-                        aria-label={result.timeClass.split('-').join(' ')}
-                      />
-                      <span className={`checkmark ${result.timeClass}`}></span>
-                    </label>
-                    <button onClick={() => setDetails(result)}>Details</button>
-                    <button
-                      className="delete-btn"
-                      onClick={() => handleDelete(result)}
+                  <Paper
+                    elevation={1}
+                    className="list-item"
+                    style={{ margin: '.2em' }}
+                  >
+                    <Grid
+                      container
+                      direction="row"
+                      justify="space-between"
+                      alignItems="center"
+                      className="container"
                     >
-                      x
-                    </button>
-                  </span>
+                      <Grid item>
+                        <FormControlLabel
+                          control={checkmarkColor(result, time)}
+                          label={result.name}
+                          disabled={checkTime(time)}
+                          id={result.id}
+                          value={result.id}
+                          aria-label={result.timeClass.split('-').join(' ')}
+                        />
+                      </Grid>
+                      <Grid item>
+                        <IconButton
+                          onClick={() => setDetails(result)}
+                          color="primary"
+                          aria-label="item details"
+                          component="span"
+                        >
+                          <MoreHorizIcon />
+                        </IconButton>
+                        <IconButton
+                          onClick={() => handleDelete(result)}
+                          color="primary"
+                          aria-label="item details"
+                          component="span"
+                        >
+                          <DeleteOutlineIcon />
+                        </IconButton>
+                      </Grid>
+                    </Grid>
+                  </Paper>
                 </li>
               );
             })}
