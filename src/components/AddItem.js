@@ -1,9 +1,33 @@
 import React, { useState } from 'react';
 import { writeToFirestore, timestamp } from '../lib/firebase';
+import {
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Typography,
+} from '@material-ui/core';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  fieldset: {
+    border: '2px solid black',
+    padding: '20px',
+  },
+  legend: {
+    padding: '15px 0',
+  },
+});
 
 const AddItem = ({ token, results }) => {
   let [name, setName] = useState('');
   let [frequency, setFrequency] = useState(604800000);
+
+  const isMoreThan600px = useMediaQuery('(min-width: 600px');
+
+  const classes = useStyles();
 
   function handleSubmitForm(event) {
     event.preventDefault();
@@ -29,6 +53,10 @@ const AddItem = ({ token, results }) => {
     }
   }
 
+  function handleSetFrequency(event) {
+    setFrequency(Number(event.target.value));
+  }
+
   return (
     <form onSubmit={event => handleSubmitForm(event)}>
       <label htmlFor="add-shopping-list-item">Item Name</label>
@@ -38,36 +66,43 @@ const AddItem = ({ token, results }) => {
         onChange={e => setName(e.target.value)}
         id="add-shopping-list-item"
       />
-      <fieldset>
-        <legend>How soon will you buy this again?</legend>
-        <div>
-          <input
-            onChange={e => setFrequency(parseInt(e.target.value))}
-            type="radio"
+      <FormControl component="fieldset">
+        <FormLabel className={classes.legend} component="legend">
+          <Typography variant="subtitle1">
+            How soon will you buy this again?
+          </Typography>
+        </FormLabel>
+        <RadioGroup
+          className={classes.fieldset}
+          row={isMoreThan600px}
+          aria-label="purchase frequency"
+          name="purchaseFrequency"
+          value={frequency}
+          onChange={handleSetFrequency}
+        >
+          <FormControlLabel
+            value={604800000}
+            control={<Radio color="default" />}
+            label="Soon"
             id="soon"
             name="frequency"
-            value={604800000}
-            checked={frequency === 604800000}
           />
-          <label htmlFor="soon">Soon</label>
-          <input
-            onChange={e => setFrequency(parseInt(e.target.value))}
-            type="radio"
+          <FormControlLabel
+            value={1209600000}
+            control={<Radio color="default" />}
+            label="Kind of Soon"
             id="kind-of-soon"
             name="frequency"
-            value={1209600000}
           />
-          <label htmlFor="kind-of-soon">Kind of Soon</label>
-          <input
-            onChange={e => setFrequency(parseInt(e.target.value))}
-            type="radio"
+          <FormControlLabel
+            value={2592000000}
+            control={<Radio color="default" />}
+            label="Not Soon"
             id="not-soon"
             name="frequency"
-            value={2592000000}
           />
-          <label htmlFor="not-soon">Not Soon</label>
-        </div>
-      </fieldset>
+        </RadioGroup>
+      </FormControl>
       <button type="submit" onClick={() => setName(name.trim())}>
         Add Item
       </button>
