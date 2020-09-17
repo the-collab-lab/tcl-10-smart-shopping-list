@@ -154,7 +154,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
     ];
   }
 
-  function checkmarkColor(result, time) {
+  function getCheckboxWithColor(result, time) {
     //uses timeClasses found above to return the correct color of checkbox
     switch (result.timeClass) {
       case 'soon':
@@ -259,7 +259,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
                     >
                       <Grid item>
                         <FormControlLabel
-                          control={checkmarkColor(result, time)} //sends to above function to pull back the correct color checkbox component
+                          control={getCheckboxWithColor(result, time)} //sends to above function to pull back the correct color checkbox component
                           label={result.name}
                           disabled={checkTime(time)}
                           id={result.id}
