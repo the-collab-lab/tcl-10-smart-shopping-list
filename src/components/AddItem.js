@@ -7,6 +7,7 @@ import {
   FormControlLabel,
   Radio,
   Typography,
+  Divider,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
@@ -90,6 +91,7 @@ const AddItem = ({ token, results }) => {
           <Typography className={classes.caption} variant="caption">
             Within 7 days
           </Typography>
+          <Divider />
           <FormControlLabel
             value={1209600000}
             control={<Radio color="default" />}
@@ -102,6 +104,7 @@ const AddItem = ({ token, results }) => {
           <Typography className={classes.caption} variant="caption">
             More than 7 days, less than 14 days
           </Typography>
+          <Divider />
           <FormControlLabel
             value={2592000000}
             control={<Radio color="default" />}
@@ -114,6 +117,7 @@ const AddItem = ({ token, results }) => {
           <Typography className={classes.caption} variant="caption">
             More than 7 days, less than 14 days
           </Typography>
+          <Divider />
         </RadioGroup>
       </FormControl>
       <button type="submit" onClick={() => setName(name.trim())}>
