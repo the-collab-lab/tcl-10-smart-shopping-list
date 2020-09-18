@@ -8,24 +8,23 @@ import {
   Radio,
   Typography,
 } from '@material-ui/core';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/core/styles';
+import { grey } from '@material-ui/core/colors';
 
 const useStyles = makeStyles({
-  fieldset: {
-    border: '2px solid black',
-    padding: '20px',
+  caption: {
+    color: grey[600],
+    textAlign: 'left',
   },
-  legend: {
-    padding: '15px 0',
+  formControlLabel: {
+    justifyContent: 'space-between',
+    margin: 0,
   },
 });
 
 const AddItem = ({ token, results }) => {
   let [name, setName] = useState('');
   let [frequency, setFrequency] = useState(604800000);
-
-  const isMoreThan600px = useMediaQuery('(min-width: 600px');
 
   const classes = useStyles();
 
@@ -67,14 +66,13 @@ const AddItem = ({ token, results }) => {
         id="add-shopping-list-item"
       />
       <FormControl component="fieldset">
-        <FormLabel className={classes.legend} component="legend">
+        <FormLabel component="legend">
           <Typography variant="subtitle1">
-            How soon will you buy this again?
+            When will you purchase this item?
           </Typography>
         </FormLabel>
         <RadioGroup
-          className={classes.fieldset}
-          row={isMoreThan600px}
+          defaultValue={604800000}
           aria-label="purchase frequency"
           name="purchaseFrequency"
           value={frequency}
@@ -86,21 +84,36 @@ const AddItem = ({ token, results }) => {
             label="Soon"
             id="soon"
             name="frequency"
+            labelPlacement={'start'}
+            className={classes.formControlLabel}
           />
+          <Typography className={classes.caption} variant="caption">
+            Within 7 days
+          </Typography>
           <FormControlLabel
             value={1209600000}
             control={<Radio color="default" />}
             label="Kind of Soon"
             id="kind-of-soon"
             name="frequency"
+            labelPlacement="start"
+            className={classes.formControlLabel}
           />
+          <Typography className={classes.caption} variant="caption">
+            More than 7 days, less than 14 days
+          </Typography>
           <FormControlLabel
             value={2592000000}
             control={<Radio color="default" />}
             label="Not Soon"
             id="not-soon"
             name="frequency"
+            labelPlacement="start"
+            className={classes.formControlLabel}
           />
+          <Typography className={classes.caption} variant="caption">
+            More than 7 days, less than 14 days
+          </Typography>
         </RadioGroup>
       </FormControl>
       <button type="submit" onClick={() => setName(name.trim())}>
