@@ -26,7 +26,7 @@ export default function FullWidthTabs() {
   };
 
   return (
-    <div lassName={classes.root}>
+    <div className={classes.root}>
       <AppBar position="static" color="default">
         <Tabs
           value={value}
