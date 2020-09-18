@@ -8,6 +8,7 @@ import {
   Radio,
   Typography,
   Divider,
+  Box,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
@@ -59,13 +60,17 @@ const AddItem = ({ token, results }) => {
 
   return (
     <form onSubmit={event => handleSubmitForm(event)}>
-      <label htmlFor="add-shopping-list-item">Item Name</label>
-      <input
-        required
-        value={name}
-        onChange={e => setName(e.target.value)}
-        id="add-shopping-list-item"
-      />
+      <Box>
+        <Box>
+          <label htmlFor="add-shopping-list-item">Item Name</label>
+        </Box>
+        <input
+          required
+          value={name}
+          onChange={e => setName(e.target.value)}
+          id="add-shopping-list-item"
+        />
+      </Box>
       <FormControl component="fieldset">
         <FormLabel component="legend">
           <Typography variant="subtitle1">
@@ -120,9 +125,11 @@ const AddItem = ({ token, results }) => {
           <Divider />
         </RadioGroup>
       </FormControl>
-      <button type="submit" onClick={() => setName(name.trim())}>
-        Add Item
-      </button>
+      <Box>
+        <button type="submit" onClick={() => setName(name.trim())}>
+          Add Item
+        </button>
+      </Box>
     </form>
   );
 };
