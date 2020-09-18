@@ -80,7 +80,7 @@ const AddItem = ({ token, results }) => {
         <RadioGroup
           defaultValue={604800000}
           aria-label="purchase frequency"
-          name="purchaseFrequency"
+          name="purchase-frequency"
           value={frequency}
           onChange={handleSetFrequency}
         >
