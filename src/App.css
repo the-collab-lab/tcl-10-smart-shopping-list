@@ -10,6 +10,7 @@
   clip: rect(0 0 0 0);
   overflow: hidden;
 }
+
 .App {
   position: relative;
   font-size: 62.5%;
@@ -59,10 +60,8 @@ ul {
 
 .container {
   display: flex;
-  /* flex-direction: row; */
   position: relative;
-  padding-left: 35px;
-  margin-bottom: 12px;
+  padding-left: 12px;
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -71,80 +70,6 @@ ul {
   align-items: stretch;
 }
 
-/* Hide the browser's default checkbox */
-.container input {
-  position: relative;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-
-/* Create different background colors depending on id */
-
-.checkmark {
-  position: absolute;
-  top: 0.2em;
-  left: 0.2em;
-  height: 1em;
-  width: 1em;
-  opacity: 0.4;
-  cursor: pointer;
-}
-
-.soon {
-  background-color: green;
-}
-
-.kind-of-soon {
-  background-color: orange;
-}
-
-.not-soon {
-  background-color: red;
-}
-
-.inactive {
-  background-color: gray;
-}
-
-/* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
-  background-color: #ccc;
-}
-
-/* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
-  content: '';
-  position: absolute;
-  display: none;
-}
-
-/* Show the checkmark when checked */
-.container input:checked ~ .checkmark:after {
-  display: block;
-}
-
-/* Style the checkmark/indicator */
-.container .checkmark:after {
-  left: 0.3em;
-  top: 0.1em;
-  width: 0.25em;
-  height: 0.5em;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-.delete-btn {
-  margin: 0.5em;
-}
-
-.container input:focus ~ .checkmark {
-  box-shadow: 0 0 0 3px #5e9ed6;
-}
 .background {
   position: absolute;
   background-color: rgba(41, 43, 45, 0.75);
