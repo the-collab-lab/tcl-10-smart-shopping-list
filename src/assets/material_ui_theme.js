@@ -13,6 +13,9 @@ const theme = createMuiTheme({
       default: '#dbe2ec',
       //   #005e9e - site
     },
+    tab: {
+      nav: '#d9a557',
+    },
   },
   // typography: {
   //   fontFamily: [
