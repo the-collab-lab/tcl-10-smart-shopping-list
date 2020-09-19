@@ -14,7 +14,6 @@ const useStyles = makeStyles(theme => ({
     maxWidth: 3000,
     height: 30,
   },
-  tab: {},
 }));
 
 export default function FullWidthTabs() {
