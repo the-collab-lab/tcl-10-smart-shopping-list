@@ -33,17 +33,17 @@ export default function FullWidthTabs() {
           indicatorColor="primary"
           textColor="primary"
           variant="fullWidth"
-          aria-label="full width tabs example"
+          aria-label="main navigation tabs"
         >
           <Tab
             icon={<FormatListBulletedIcon />}
-            aria-label="list"
+            aria-label="shopping list"
             component={Link}
             to="/list"
           />
           <Tab
             icon={<AddCircleOutlineIcon />}
-            aria-label="Add"
+            aria-label="Add item to shopping list"
             component={Link}
             to="/add-item"
           />
