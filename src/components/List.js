@@ -271,7 +271,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
                         <IconButton
                           onClick={() => setDetails(result)}
                           color="primary"
-                          aria-label="item details"
+                          aria-label={`${result.name} details`}
                           component="span"
                         >
                           <MoreHorizIcon />
@@ -279,7 +279,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
                         <IconButton
                           onClick={() => handleDelete(result)}
                           color="primary"
-                          aria-label="item details"
+                          aria-label={`delete ${result.name}`}
                           component="span"
                         >
                           <DeleteOutlineIcon />

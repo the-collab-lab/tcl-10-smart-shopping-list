@@ -11,7 +11,9 @@ const theme = createMuiTheme({
     background: {
       paper: '#f5f5f5',
       default: '#dbe2ec',
-      //   #005e9e - site
+    },
+    tab: {
+      nav: '#d9a557',
     },
   },
   // typography: {
