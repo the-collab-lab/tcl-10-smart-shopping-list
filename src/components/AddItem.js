@@ -120,7 +120,7 @@ const AddItem = ({ token, results }) => {
             className={classes.formControlLabel}
           />
           <Typography className={classes.caption} variant="caption">
-            More than 7 days, less than 14 days
+            More than 14 days, less than 30 days
           </Typography>
           <Divider />
         </RadioGroup>
