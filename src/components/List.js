@@ -12,6 +12,7 @@ import {
   Grid,
   Paper,
   Typography,
+  Button,
 } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
@@ -221,12 +222,14 @@ You cannot undo this action, and this item's purchase history will be lost.`,
             id="searchField"
             placeholder="Search..."
           ></input>
-          <button
+          <Button
+            color="secondary"
+            variant="contained"
             disabled={searchTerm === ''}
             onClick={() => setSearchTerm('')}
           >
-            x
-          </button>
+            X
+          </Button>
         </div>
       )}
       <div className={styles['list-results-container']}>
