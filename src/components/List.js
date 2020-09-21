@@ -11,12 +11,15 @@ import {
   IconButton,
   Grid,
   Paper,
+  TextField,
   Typography,
+  InputAdornment,
 } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
+import SearchIcon from '@material-ui/icons/Search';
 
 const DecoratedCheckbox = p => {
   return (
@@ -209,18 +212,20 @@ You cannot undo this action, and this item's purchase history will be lost.`,
         </>
       ) : (
         <div>
-          <div>
-            <label htmlFor="searchField" className="sr-only">
-              Search
-            </label>
-          </div>
-          <input
+          <TextField
+            variant="outlined"
+            label="Search"
+            id="search-field"
             onChange={event => setSearchTerm(event.target.value)}
-            autoFocus
             value={searchTerm}
-            id="searchField"
-            placeholder="Search..."
-          ></input>
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
           <button
             disabled={searchTerm === ''}
             onClick={() => setSearchTerm('')}
