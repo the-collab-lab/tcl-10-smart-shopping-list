@@ -62,7 +62,9 @@ const AddItem = ({ token, results }) => {
   return (
     <form onSubmit={event => handleSubmitForm(event)}>
       <Box>
-        <Typography component="h1">Smart Shopping List</Typography>
+        <header>
+          <Typography variant="h4">Smart Shopping List</Typography>
+        </header>
         <TextField
           required
           id="add-shopping-list-item"
