@@ -17,6 +17,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
+import { Helmet } from 'react-helmet';
 
 const DecoratedCheckbox = p => {
   return (
@@ -194,6 +195,13 @@ You cannot undo this action, and this item's purchase history will be lost.`,
 
   return (
     <div className={styles['list-container']}>
+      <Helmet>
+        <title>Your Shopping List</title>
+        <meta
+          name="description"
+          content={`Your shopping list items with token: ${token}`}
+        />
+      </Helmet>
       <header>
         <Typography variant="h4">Smart Shopping List</Typography>
       </header>

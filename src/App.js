@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { db } from './lib/firebase.js';
 import './App.css';
+import { Helmet } from 'react-helmet';
 import Welcome from './components/Welcome';
 import List from './components/List';
 import AddItem from './components/AddItem';
@@ -43,6 +44,18 @@ function App() {
 
   return (
     <div className="App">
+      <Helmet>
+        <title>CartVoyant</title>
+        <meta charSet="utf-8" />
+        <link
+          rel="canonical"
+          href={
+            process.env.NODE_ENV === 'development'
+              ? 'http://localhost:3000'
+              : 'https://tcl-10-smart-shopping-list.netlify.app'
+          }
+        />
+      </Helmet>
       <header className="App-header">
         <div style={{ background: '#fff', padding: '40px', borderRadius: 5 }}>
           <Switch>

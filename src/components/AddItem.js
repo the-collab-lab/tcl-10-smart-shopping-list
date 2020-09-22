@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
+import { Helmet } from 'react-helmet';
 
 const useStyles = makeStyles({
   caption: {
@@ -60,6 +61,13 @@ const AddItem = ({ token, results }) => {
 
   return (
     <form onSubmit={event => handleSubmitForm(event)}>
+      <Helmet>
+        <title>Add Item</title>
+        <meta
+          name="description"
+          content={`Add item to shopping list with token: ${token}`}
+        />
+      </Helmet>
       <Box>
         <Box>
           <label htmlFor="add-shopping-list-item">Item Name</label>

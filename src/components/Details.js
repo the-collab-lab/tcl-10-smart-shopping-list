@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 const Details = ({ details, setDetails }) => {
   const numOfPurch = details.purchaseDates.length;
@@ -34,6 +35,13 @@ const Details = ({ details, setDetails }) => {
 
   return (
     <div className="background">
+      <Helmet>
+        <title>Item Details</title>
+        <meta
+          name="description"
+          content={`Item details for item: ${details.name}`}
+        />
+      </Helmet>
       <div className="modal">
         <div className="details-header">
           <button
