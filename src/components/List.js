@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import styles from '../List.module.css';
 import Details from './Details';
 import { updatePurchaseDate, deleteItem } from '../lib/firebase.js';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { green, orange, red, grey } from '@material-ui/core/colors';
 import {
   FormControlLabel,
@@ -20,13 +20,8 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
 import SearchIcon from '@material-ui/icons/Search';
-import ClearIcon from '@material-ui/icons/Clear';
+import { NoPaddingClearIcon } from './ClearIconButton.js';
 
-const useStyles = makeStyles({
-  clearButton: {
-    padding: 0,
-  },
-});
 const DecoratedCheckbox = p => {
   return (
     <Checkbox
@@ -80,8 +75,6 @@ const GreyCheckbox = withStyles({
 
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
   const [details, setDetails] = useState({});
-
-  const classes = useStyles();
 
   function handleOnCheck(event, purchaseDates) {
     updatePurchaseDate(token, event.target.value, purchaseDates);
@@ -207,14 +200,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
     if (searchTerm === '') {
       return <SearchIcon />;
     } else {
-      return (
-        <IconButton
-          className={classes.clearButton}
-          onClick={() => setSearchTerm('')}
-        >
-          <ClearIcon />
-        </IconButton>
-      );
+      return <NoPaddingClearIcon onClick={() => setSearchTerm('')} />;
     }
   };
 

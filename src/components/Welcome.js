@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import getToken from '../lib/tokens';
 import { writeToFirestore, db } from '../lib/firebase';
+import { TextField } from '@material-ui/core';
+import { NoPaddingClearIcon } from './ClearIconButton.js';
 
 const Welcome = ({ setToken }) => {
   const [input, setInput] = useState('');
@@ -39,10 +41,16 @@ const Welcome = ({ setToken }) => {
         <div>
           <label htmlFor="join-list">Enter a share token</label>
         </div>
-        <input
+        <TextField
+          label="Enter Token"
+          variant="outlined"
           id="join-list"
           onChange={event => setInput(event.target.value)}
-        ></input>
+          value={input}
+          InputProps={{
+            endAdornment: <NoPaddingClearIcon onClick={() => setInput('')} />,
+          }}
+        ></TextField>
         <button type="submit">Submit</button>
       </form>
     </div>
