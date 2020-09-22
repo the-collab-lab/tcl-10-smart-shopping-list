@@ -12,13 +12,11 @@ import {
   Grid,
   Paper,
   Typography,
-  Button,
 } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
-import CloseIcon from '@material-ui/icons/Close';
 
 const DecoratedCheckbox = p => {
   return (
@@ -223,15 +221,6 @@ You cannot undo this action, and this item's purchase history will be lost.`,
             id="searchField"
             placeholder="Search..."
           ></input>
-          <Button
-            size="small"
-            color="secondary"
-            variant="contained"
-            disabled={searchTerm === ''}
-            onClick={() => setSearchTerm('')}
-          >
-            <CloseIcon fontSize="small" />
-          </Button>
         </div>
       )}
       <div className={styles['list-results-container']}>
