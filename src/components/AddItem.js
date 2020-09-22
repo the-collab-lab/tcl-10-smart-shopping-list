@@ -139,7 +139,7 @@ const AddItem = ({ token, results }) => {
           variant="contained"
           color="secondary"
         >
-          Add To List
+          <Typography>Add To List</Typography>
         </Button>
       </Box>
     </form>
