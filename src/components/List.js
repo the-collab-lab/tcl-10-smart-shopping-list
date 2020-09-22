@@ -20,6 +20,7 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
 import SearchIcon from '@material-ui/icons/Search';
+import ClearIcon from '@material-ui/icons/Clear';
 
 const DecoratedCheckbox = p => {
   return (
@@ -195,6 +196,18 @@ You cannot undo this action, and this item's purchase history will be lost.`,
     }
   }
 
+  const getEndSearchIcon = () => {
+    if (searchTerm === '') {
+      return <SearchIcon />;
+    } else {
+      return (
+        <IconButton onClick={() => setSearchTerm('')}>
+          <ClearIcon />
+        </IconButton>
+      );
+    }
+  };
+
   return (
     <div className={styles['list-container']}>
       <header>
@@ -221,17 +234,11 @@ You cannot undo this action, and this item's purchase history will be lost.`,
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <SearchIcon />
+                  {getEndSearchIcon()}
                 </InputAdornment>
               ),
             }}
           />
-          <button
-            disabled={searchTerm === ''}
-            onClick={() => setSearchTerm('')}
-          >
-            x
-          </button>
         </div>
       )}
       <div className={styles['list-results-container']}>
