@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import styles from '../List.module.css';
 import Details from './Details';
 import { updatePurchaseDate, deleteItem } from '../lib/firebase.js';
+import isEmpty from 'lodash/isEmpty';
 
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
   const [details, setDetails] = useState({});
@@ -92,6 +93,9 @@ You cannot undo this action, and this item's purchase history will be lost.`,
 
   return (
     <div className={styles['list-container']}>
+      {!isEmpty(details) && (
+        <Details details={details} setDetails={setDetails} />
+      )}
       <header>Smart Shopping List</header>
       {results.length === 0 ? (
         <>
@@ -170,7 +174,6 @@ You cannot undo this action, and this item's purchase history will be lost.`,
               );
             })}
         </ul>
-        {details.name && <Details details={details} setDetails={setDetails} />}
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 const Details = ({ details, setDetails }) => {
   const numOfPurch = details.purchaseDates.length;
@@ -32,8 +33,8 @@ const Details = ({ details, setDetails }) => {
     return `${dateArray[1]} ${dateArray[2]}, ${dateArray[0]}`;
   };
 
-  return (
-    <div className="background">
+  return ReactDOM.createPortal(
+    <aside className="background" aria-modal="true" tabIndex="-1">
       <div className="modal">
         <div className="details-header">
           <button
@@ -58,7 +59,8 @@ const Details = ({ details, setDetails }) => {
           {numOfPurch === 1 ? null : 's'}.
         </p>
       </div>
-    </div>
+    </aside>,
+    document.body,
   );
 };
 
