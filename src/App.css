@@ -86,7 +86,8 @@ ul {
   background-color: white;
   border-radius: 10px;
   padding: 20px;
-  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .back-button {

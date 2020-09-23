@@ -1,6 +1,18 @@
 import React from 'react';
+import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
+import IconButton from '@material-ui/core/IconButton';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  button: {
+    color: 'black',
+    alignSelf: 'start',
+  },
+});
 
 const Details = ({ details, setDetails }) => {
+  const classes = useStyles();
+
   const numOfPurch = details.purchaseDates.length;
   const lastPurch = numOfPurch
     ? Math.max(...details.purchaseDates)
@@ -35,14 +47,16 @@ const Details = ({ details, setDetails }) => {
   return (
     <div className="background">
       <div className="modal">
+        <IconButton
+          aria-label="back to list"
+          onClick={() => setDetails({})}
+          color="secondary"
+          className={classes.button}
+          size="medium"
+        >
+          <ChevronLeftRoundedIcon />
+        </IconButton>
         <div className="details-header">
-          <button
-            className="back-button"
-            aria-label="back to list"
-            onClick={() => setDetails({})}
-          >
-            <span role="img">&#60;</span>
-          </button>
           <h2>Smart Shopping List</h2>
         </div>
         <h3>{details.name}</h3>

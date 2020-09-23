@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import getToken from '../lib/tokens';
 import { writeToFirestore, db } from '../lib/firebase';
-import { TextField } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 import { NoPaddingClearIcon } from './ClearIconButton.js';
 
 const Welcome = ({ setToken }) => {
@@ -32,9 +32,15 @@ const Welcome = ({ setToken }) => {
   return (
     <div>
       <h1>Welcome to your Smart Shopping list!</h1>
-      <Link to="/list" onClick={setTokenStorage}>
+      <Button
+        component={Link}
+        variant="contained"
+        color="secondary"
+        to="/list"
+        onClick={setTokenStorage}
+      >
         Create New List
-      </Link>
+      </Button>
       <p>- or -</p>
       <p>Join an existing shopping list by entering a three word token.</p>
       <form onSubmit={handleSubmit}>
@@ -51,7 +57,9 @@ const Welcome = ({ setToken }) => {
             endAdornment: <NoPaddingClearIcon onClick={() => setInput('')} />,
           }}
         ></TextField>
-        <button type="submit">Submit</button>
+        <Button variant="contained" color="secondary" type="submit">
+          Submit
+        </Button>
       </form>
     </div>
   );
