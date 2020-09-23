@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import getToken from '../lib/tokens';
 import { writeToFirestore, db } from '../lib/firebase';
+import { Button, TextField } from '@material-ui/core';
+import { NoPaddingClearIcon } from './ClearIconButton.js';
 
 const Welcome = ({ setToken }) => {
   const [input, setInput] = useState('');
@@ -30,20 +32,34 @@ const Welcome = ({ setToken }) => {
   return (
     <div>
       <h1>Welcome to your Smart Shopping list!</h1>
-      <Link to="/list" onClick={setTokenStorage}>
+      <Button
+        component={Link}
+        variant="contained"
+        color="secondary"
+        to="/list"
+        onClick={setTokenStorage}
+      >
         Create New List
-      </Link>
+      </Button>
       <p>- or -</p>
       <p>Join an existing shopping list by entering a three word token.</p>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="join-list">Enter a share token</label>
         </div>
-        <input
+        <TextField
+          label="Enter Token"
+          variant="outlined"
           id="join-list"
           onChange={event => setInput(event.target.value)}
-        ></input>
-        <button type="submit">Submit</button>
+          value={input}
+          InputProps={{
+            endAdornment: <NoPaddingClearIcon onClick={() => setInput('')} />,
+          }}
+        ></TextField>
+        <Button variant="contained" color="secondary" type="submit">
+          Submit
+        </Button>
       </form>
     </div>
   );
