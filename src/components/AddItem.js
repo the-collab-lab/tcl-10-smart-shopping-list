@@ -9,6 +9,7 @@ import {
   Typography,
   Divider,
   Box,
+  TextField,
   Button,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -66,14 +67,16 @@ const AddItem = ({ token, results }) => {
   return (
     <form onSubmit={event => handleSubmitForm(event)}>
       <Box>
-        <Box>
-          <label htmlFor="add-shopping-list-item">Item Name</label>
-        </Box>
-        <input
+        <header>
+          <Typography variant="h4">Smart Shopping List</Typography>
+        </header>
+        <TextField
           required
-          value={name}
-          onChange={e => setName(e.target.value)}
           id="add-shopping-list-item"
+          variant="outlined"
+          label="Item Name"
+          onChange={e => setName(e.target.value)}
+          value={name}
         />
       </Box>
       <FormControl component="fieldset">
