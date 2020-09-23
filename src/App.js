@@ -84,7 +84,7 @@ function App() {
           </Switch>
         </div>
       </header>
-      {token ? <BottomNav /> : null}
+      <footer>{token ? <BottomNav /> : null}</footer>
     </div>
   );
 }
