@@ -43,47 +43,41 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <div style={{ background: '#fff', padding: '40px', borderRadius: 5 }}>
-          <Switch>
+      <div className="App-container">
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() =>
+              token ? <Redirect to="/list" /> : <Welcome setToken={setToken} />
+            }
+          />
+          <RequireAuth>
             <Route
               exact
-              path="/"
+              path="/list"
               render={() =>
-                token ? (
-                  <Redirect to="/list" />
+                isLoading ? (
+                  <div>Loading...</div>
                 ) : (
-                  <Welcome setToken={setToken} />
+                  <List
+                    results={results}
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                    token={token}
+                  />
                 )
               }
             />
-            <RequireAuth>
-              <Route
-                exact
-                path="/list"
-                render={() =>
-                  isLoading ? (
-                    <div>Loading...</div>
-                  ) : (
-                    <List
-                      results={results}
-                      searchTerm={searchTerm}
-                      setSearchTerm={setSearchTerm}
-                      token={token}
-                    />
-                  )
-                }
-              />
-              <Route
-                exact
-                path="/add-item"
-                render={() => <AddItem token={token} results={results} />}
-              />
-            </RequireAuth>
-            <Redirect to="/" />
-          </Switch>
-        </div>
-      </header>
+            <Route
+              exact
+              path="/add-item"
+              render={() => <AddItem token={token} results={results} />}
+            />
+          </RequireAuth>
+          <Redirect to="/" />
+        </Switch>
+      </div>
       {token ? <BottomNav /> : null}
     </div>
   );
