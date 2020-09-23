@@ -221,12 +221,6 @@ You cannot undo this action, and this item's purchase history will be lost.`,
             id="searchField"
             placeholder="Search..."
           ></input>
-          <button
-            disabled={searchTerm === ''}
-            onClick={() => setSearchTerm('')}
-          >
-            x
-          </button>
         </div>
       )}
       <div className={styles['list-results-container']}>

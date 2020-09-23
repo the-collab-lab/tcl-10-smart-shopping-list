@@ -9,6 +9,7 @@ import {
   Typography,
   Divider,
   Box,
+  Button,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
@@ -21,6 +22,10 @@ const useStyles = makeStyles({
   formControlLabel: {
     justifyContent: 'space-between',
     margin: 0,
+  },
+  button: {
+    borderRadius: '25px',
+    color: 'white',
   },
 });
 
@@ -126,9 +131,16 @@ const AddItem = ({ token, results }) => {
         </RadioGroup>
       </FormControl>
       <Box>
-        <button type="submit" onClick={() => setName(name.trim())}>
-          Add Item
-        </button>
+        <Button
+          type="submit"
+          onClick={() => setName(name.trim())}
+          className={classes.button}
+          size="large"
+          variant="contained"
+          color="secondary"
+        >
+          <Typography>Add To List</Typography>
+        </Button>
       </Box>
     </form>
   );
