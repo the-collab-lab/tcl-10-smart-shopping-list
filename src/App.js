@@ -85,9 +85,9 @@ function App() {
               <Redirect to="/" />
             </Switch>
           </div>
+          {token ? <BottomNav /> : null}
         </div>
       </header>
-      <footer>{token ? <BottomNav /> : null}</footer>
     </div>
   );
 }
