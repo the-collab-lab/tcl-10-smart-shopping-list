@@ -6,6 +6,7 @@ import Welcome from './components/Welcome';
 import List from './components/List';
 import AddItem from './components/AddItem';
 import BottomNav from './components/BottomNav';
+import TopNav from './components/TopNav';
 import RequireAuth from './components/RequireAuth';
 
 function App() {
@@ -37,14 +38,14 @@ function App() {
         setIsLoading(false);
       });
     }
-
     return unsubscribe;
   }, [token]);
 
   return (
     <div className="App">
-      <header className="App-header">
-        <div style={{ background: '#fff', padding: '40px', borderRadius: 5 }}>
+      <div style={{ background: '#fff', borderRadius: 5 }}>
+        <TopNav token={token} setToken={setToken} />
+        <div style={{ padding: '20px' }}>
           <Switch>
             <Route
               exact
@@ -83,7 +84,7 @@ function App() {
             <Redirect to="/" />
           </Switch>
         </div>
-      </header>
+      </div>
       {token ? <BottomNav /> : null}
     </div>
   );

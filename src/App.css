@@ -16,6 +16,7 @@
   font-size: 62.5%;
   color: black;
   text-align: center;
+  height: 100vh;
 }
 
 .App-logo {
@@ -47,6 +48,11 @@ nav {
   bottom: 0;
   text-align: center;
   background-color: white;
+}
+.App-container {
+  background: #fff;
+  padding: 40px;
+  height: 100%;
 }
 
 ul {
@@ -82,17 +88,11 @@ ul {
   justify-content: center;
   align-items: center;
 }
+
 .modal {
   background-color: white;
   border-radius: 10px;
   padding: 20px;
   display: flex;
   flex-direction: column;
-}
-
-.back-button {
-  position: absolute;
-  left: 15px;
-  top: 15px;
-  padding: 10px;
 }
