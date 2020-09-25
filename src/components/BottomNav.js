@@ -37,8 +37,8 @@ export default function FullWidthTabs() {
             aria-label="shopping list"
             component={Link}
             to="/list"
+            style={{ borderRight: '0.1em solid white', padding: '0.5em' }}
           />
-
           <Tab
             icon={<AddCircleOutlineIcon />}
             aria-label="Add item to shopping list"
