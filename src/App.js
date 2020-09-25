@@ -6,6 +6,7 @@ import Welcome from './components/Welcome';
 import List from './components/List';
 import AddItem from './components/AddItem';
 import BottomNav from './components/BottomNav';
+import TopNav from './components/TopNav';
 import RequireAuth from './components/RequireAuth';
 
 function App() {
@@ -37,51 +38,53 @@ function App() {
         setIsLoading(false);
       });
     }
-
     return unsubscribe;
   }, [token]);
 
   return (
     <div className="App">
       <header className="App-header">
-        <div style={{ background: '#fff', padding: '40px', borderRadius: 5 }}>
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={() =>
-                token ? (
-                  <Redirect to="/list" />
-                ) : (
-                  <Welcome setToken={setToken} />
-                )
-              }
-            />
-            <RequireAuth>
+        <div style={{ background: '#fff', borderRadius: 5 }}>
+          <TopNav token={token} setToken={setToken} />
+          <div style={{ padding: '20px' }}>
+            <Switch>
               <Route
                 exact
-                path="/list"
+                path="/"
                 render={() =>
-                  isLoading ? (
-                    <div>Loading...</div>
+                  token ? (
+                    <Redirect to="/list" />
                   ) : (
-                    <List
-                      results={results}
-                      searchTerm={searchTerm}
-                      setSearchTerm={setSearchTerm}
-                      token={token}
-                    />
+                    <Welcome setToken={setToken} />
                   )
                 }
               />
-              <Route
-                exact
-                path="/add-item"
-                render={() => <AddItem token={token} results={results} />}
-              />
-            </RequireAuth>
-            <Redirect to="/" />
-          </Switch>
+              <RequireAuth>
+                <Route
+                  exact
+                  path="/list"
+                  render={() =>
+                    isLoading ? (
+                      <div>Loading...</div>
+                    ) : (
+                      <List
+                        results={results}
+                        searchTerm={searchTerm}
+                        setSearchTerm={setSearchTerm}
+                        token={token}
+                      />
+                    )
+                  }
+                />
+                <Route
+                  exact
+                  path="/add-item"
+                  render={() => <AddItem token={token} results={results} />}
+                />
+              </RequireAuth>
+              <Redirect to="/" />
+            </Switch>
+          </div>
         </div>
       </header>
       <footer>{token ? <BottomNav /> : null}</footer>
