@@ -7,6 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,6 +42,7 @@ export default function FullWidthTabs() {
             component={Link}
             to="/list"
           />
+          <Divider orientation="vertical" flexItem />
           <Tab
             icon={<AddCircleOutlineIcon />}
             aria-label="Add item to shopping list"
