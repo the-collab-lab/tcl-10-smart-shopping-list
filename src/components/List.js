@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import styles from '../List.module.css';
 import Details from './Details';
 import { updatePurchaseDate, deleteItem } from '../lib/firebase.js';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import { green, orange, red, grey } from '@material-ui/core/colors';
 import {
   FormControlLabel,
@@ -14,6 +13,7 @@ import {
   TextField,
   Typography,
   InputAdornment,
+  Box,
 } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
@@ -21,6 +21,13 @@ import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
 import SearchIcon from '@material-ui/icons/Search';
 import { NoPaddingClearIcon } from './ClearIconButton.js';
+
+const useStyles = makeStyles({
+  box: {
+    height: '60vh',
+    overflowY: 'scroll',
+  },
+});
 
 const DecoratedCheckbox = p => {
   return (
@@ -75,6 +82,8 @@ const GreyCheckbox = withStyles({
 
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
   const [details, setDetails] = useState({});
+
+  const classes = useStyles();
 
   function handleOnCheck(event, purchaseDates) {
     updatePurchaseDate(token, event.target.value, purchaseDates);
@@ -205,7 +214,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
   };
 
   return (
-    <div className={styles['list-container']}>
+    <div>
       <header>
         <Typography variant="h4">Smart Shopping List</Typography>
       </header>
@@ -237,8 +246,8 @@ You cannot undo this action, and this item's purchase history will be lost.`,
           />
         </div>
       )}
-      <div className={styles['list-results-container']}>
-        <ul className={styles['ul-list']}>
+      <Box className={classes.box}>
+        <ul>
           {sortedResults()
             .filter(result =>
               result.name
@@ -300,7 +309,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
             })}
         </ul>
         {details.name && <Details details={details} setDetails={setDetails} />}
-      </div>
+      </Box>
     </div>
   );
 };
