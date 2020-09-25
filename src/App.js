@@ -58,6 +58,7 @@ function App() {
                 )
               }
             />
+
             <RequireAuth>
               <Route
                 exact
@@ -75,36 +76,17 @@ function App() {
                   )
                 }
               />
-              <RequireAuth>
-                <Route
-                  exact
-                  path="/list"
-                  render={() =>
-                    isLoading ? (
-                      <div>Loading...</div>
-                    ) : (
-                      <List
-                        results={results}
-                        searchTerm={searchTerm}
-                        setSearchTerm={setSearchTerm}
-                        token={token}
-                      />
-                    )
-                  }
-                />
-                <Route
-                  exact
-                  path="/add-item"
-                  render={() => <AddItem token={token} results={results} />}
-                />
-              </RequireAuth>
-              <Redirect to="/" />
-            </Switch>
-          </div>
-          {token ? <BottomNav /> : null}
+              <Route
+                exact
+                path="/add-item"
+                render={() => <AddItem token={token} results={results} />}
+              />
+            </RequireAuth>
+            <Redirect to="/" />
+          </Switch>
         </div>
-      </header>
-
+        {token ? <BottomNav /> : null}
+      </div>
     </div>
   );
 }
