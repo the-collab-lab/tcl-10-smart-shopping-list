@@ -17,7 +17,6 @@ const CopyModal = ({ token, setOpenCopy }) => {
       <DialogContent>
         <TextField
           id="share-token"
-          autoFocus
           margin="dense"
           name="share-token"
           label="Share token"
