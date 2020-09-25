@@ -10,9 +10,7 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    minWidth: 375,
-    maxWidth: 3000,
-    height: 30,
+    minWidth: 375, // the width of an ipone x
   },
 }));
 
