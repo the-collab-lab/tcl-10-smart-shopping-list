@@ -43,50 +43,48 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <div style={{ background: '#fff', borderRadius: 5 }}>
-          <TopNav token={token} setToken={setToken} />
-          <div style={{ padding: '20px' }}>
-            <Switch>
+      <div style={{ background: '#fff', borderRadius: 5 }}>
+        <TopNav token={token} setToken={setToken} />
+        <div style={{ padding: '20px' }}>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() =>
+                token ? (
+                  <Redirect to="/list" />
+                ) : (
+                  <Welcome setToken={setToken} />
+                )
+              }
+            />
+            <RequireAuth>
               <Route
                 exact
-                path="/"
+                path="/list"
                 render={() =>
-                  token ? (
-                    <Redirect to="/list" />
+                  isLoading ? (
+                    <div>Loading...</div>
                   ) : (
-                    <Welcome setToken={setToken} />
+                    <List
+                      results={results}
+                      searchTerm={searchTerm}
+                      setSearchTerm={setSearchTerm}
+                      token={token}
+                    />
                   )
                 }
               />
-              <RequireAuth>
-                <Route
-                  exact
-                  path="/list"
-                  render={() =>
-                    isLoading ? (
-                      <div>Loading...</div>
-                    ) : (
-                      <List
-                        results={results}
-                        searchTerm={searchTerm}
-                        setSearchTerm={setSearchTerm}
-                        token={token}
-                      />
-                    )
-                  }
-                />
-                <Route
-                  exact
-                  path="/add-item"
-                  render={() => <AddItem token={token} results={results} />}
-                />
-              </RequireAuth>
-              <Redirect to="/" />
-            </Switch>
-          </div>
+              <Route
+                exact
+                path="/add-item"
+                render={() => <AddItem token={token} results={results} />}
+              />
+            </RequireAuth>
+            <Redirect to="/" />
+          </Switch>
         </div>
-      </header>
+      </div>
       {token ? <BottomNav /> : null}
     </div>
   );
