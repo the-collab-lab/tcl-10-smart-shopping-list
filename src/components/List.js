@@ -231,14 +231,24 @@ You cannot undo this action, and this item's purchase history will be lost.`,
       </Typography>
       {results.length === 0 ? (
         <>
-          <p>Your shopping list is currently empty</p>
-          <NavLink exact to="/add-item">
-            Add Item
+          <Typography
+            style={{ marginTop: '2em', marginBottom: '2em' }}
+            variant="h5"
+          >
+            Your shopping list is currently empty.
+          </Typography>
+          <NavLink
+            style={{ marginTop: '1em', marginBottom: '1em' }}
+            exact
+            to="/add-item"
+          >
+            <Typography variant="h6">Add Item</Typography>
           </NavLink>
         </>
       ) : (
         <div>
           <TextField
+            style={{ margin: '2em' }}
             variant="outlined"
             label="Search"
             id="search-field"

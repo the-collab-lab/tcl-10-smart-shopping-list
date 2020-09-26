@@ -33,6 +33,7 @@ const CopyModal = ({ token, setOpenCopy }) => {
           type="submit"
           onClick={copy}
           startIcon={<AssignmentIcon />}
+          aria-label={`copy list token: ${token}`}
         >
           Copy
         </Button>

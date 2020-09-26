@@ -62,12 +62,15 @@ function TopNav({ token, setToken }) {
               <Grid item>
                 <Grid container justify="flex-end">
                   <Grid item>
-                    <IconButton onClick={() => setOpenCopy(true)}>
+                    <IconButton
+                      onClick={() => setOpenCopy(true)}
+                      aria-label={`copy list token`}
+                    >
                       <GroupAddIcon style={{ color: '#ffffff' }} />
                     </IconButton>
                   </Grid>
                   <Grid item>
-                    <IconButton onClick={handleLogOut}>
+                    <IconButton onClick={handleLogOut} aria-label="exit list">
                       <ExitToAppIcon style={{ color: '#ffffff' }} />
                     </IconButton>
                   </Grid>
