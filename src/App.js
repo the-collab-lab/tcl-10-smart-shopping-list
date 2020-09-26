@@ -2,18 +2,41 @@ import React, { useState, useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { db } from './lib/firebase.js';
 import './App.css';
+import { Box } from '@material-ui/core';
 import Welcome from './components/Welcome';
 import List from './components/List';
 import AddItem from './components/AddItem';
 import BottomNav from './components/BottomNav';
 import TopNav from './components/TopNav';
 import RequireAuth from './components/RequireAuth';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  appContainer: {
+    display: 'flex',
+    flexFlow: 'column',
+    height: '100%',
+    background: '#fff',
+  },
+  topNav: {
+    flex: '0 1 auto',
+  },
+  mainContent: {
+    flex: '1 1 auto',
+    padding: '20px',
+  },
+  bottomNav: {
+    flex: '0 1 auto',
+  },
+});
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [isLoading, setIsLoading] = useState(true);
   let [results, setResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+
+  const classes = useStyles();
 
   useEffect(() => {
     let unsubscribe;
@@ -42,10 +65,10 @@ function App() {
   }, [token]);
 
   return (
-    <div className="App">
-      <div style={{ background: '#fff', borderRadius: 5 }}>
-        <TopNav token={token} setToken={setToken} />
-        <div style={{ padding: '20px' }}>
+    <Box className="App">
+      <Box className={classes.appContainer}>
+        <TopNav className={classes.topNav} token={token} setToken={setToken} />
+        <Box className={classes.mainContent}>
           <Switch>
             <Route
               exact
@@ -83,10 +106,14 @@ function App() {
             </RequireAuth>
             <Redirect to="/" />
           </Switch>
-        </div>
-      </div>
-      {token ? <BottomNav /> : null}
-    </div>
+        </Box>
+        {token ? (
+          <Box className={classes.bottomNav}>
+            <BottomNav />
+          </Box>
+        ) : null}
+      </Box>
+    </Box>
   );
 }
 
