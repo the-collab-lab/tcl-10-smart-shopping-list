@@ -64,7 +64,7 @@ function TopNav({ token, setToken }) {
                   <Grid item>
                     <IconButton
                       onClick={() => setOpenCopy(true)}
-                      aria-label={`copy list token: ${token}`}
+                      aria-label={`copy list token`}
                     >
                       <GroupAddIcon style={{ color: '#ffffff' }} />
                     </IconButton>
