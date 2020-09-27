@@ -64,22 +64,45 @@ const Details = ({ activeItem, setOpenDetails }) => {
       >
         <ChevronLeftRoundedIcon />
       </IconButton>
-      <Typography variant="h4" style={{ marginBottom: '.5em' }} align="center">
+      <Typography variant="h5" style={{ marginBottom: '.5em' }} align="center">
         Smart Shopping List
       </Typography>
-      <Typography variant="h6" align="center">
-        Item: {activeItem.name}
+      <Typography
+        variant="h6"
+        align="center"
+        style={{ textDecoration: 'underline' }}
+      >
+        Item
       </Typography>
       <Typography variant="h6" align="center">
-        Last Purchase Date:{' '}
-        {numOfPurch ? getTime(lastPurch) : 'This item has no purchase history'}{' '}
+        {activeItem.name}
+      </Typography>
+      <Typography
+        variant="h6"
+        align="center"
+        style={{ textDecoration: 'underline' }}
+      >
+        Last Purchase Date
       </Typography>
       <Typography variant="h6" align="center">
-        Next Purchase Date: {getTime(futurePurch)}{' '}
+        {numOfPurch ? getTime(lastPurch) : 'No Purchase History'}{' '}
+      </Typography>
+
+      <Typography
+        variant="h6"
+        align="center"
+        style={{ textDecoration: 'underline' }}
+      >
+        Next Purchase Date
       </Typography>
       <Typography variant="h6" align="center">
-        You have purchased this item {numOfPurch} time
-        {numOfPurch === 1 ? null : 's'}.
+        {getTime(futurePurch)}{' '}
+      </Typography>
+      <Typography variant="h6" align="center">
+        <strong>
+          You have purchased this item {numOfPurch} time
+          {numOfPurch === 1 ? null : 's'}.
+        </strong>
       </Typography>
     </DialogContent>
   );
