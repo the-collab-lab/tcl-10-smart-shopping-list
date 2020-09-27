@@ -222,7 +222,13 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
   };
 
   return (
-    <div>
+    <Grid
+      container
+      style={{ height: results.length ? '100%' : '50%', width: '100%' }}
+      direction="column"
+      justify="space-between"
+      alignItems="center"
+    >
       <Helmet>
         <title>Your Shopping List</title>
         <meta
@@ -232,16 +238,16 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
       </Helmet>
       <header>
         <Typography variant="h4">Smart Shopping List</Typography>
+        <Typography
+          variant="subtitle2"
+          style={{ fontWeight: 'bold', marginTop: '2em' }}
+        >
+          Share Token: {token}
+        </Typography>
       </header>
-      <Typography variant="subtitle2" style={{ fontWeight: 'bold' }}>
-        Share Token: {token}
-      </Typography>
       {results.length === 0 ? (
-        <>
-          <Typography
-            style={{ marginTop: '2em', marginBottom: '2em' }}
-            variant="h6"
-          >
+        <Box>
+          <Typography variant="h6">
             Your shopping list is currently empty.
           </Typography>
           <Button
@@ -258,11 +264,11 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
           >
             <Typography variant="h6">Add Item</Typography>
           </Button>
-        </>
+        </Box>
       ) : (
-        <div>
+        <div style={{ width: '100%' }}>
           <TextField
-            style={{ margin: '2em' }}
+            style={{ width: '100%' }}
             variant="outlined"
             label="Search"
             id="search-field"
@@ -363,7 +369,7 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
           </Box>
         </div>
       )}
-    </div>
+    </Grid>
   );
 };
 

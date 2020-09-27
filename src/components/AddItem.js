@@ -96,21 +96,24 @@ const AddItem = ({ token, results }) => {
         aria-label={`${name} already exists on your list.`}
       />
       <Grid
-        style={{ height: '100%' }}
+        style={{ height: '100%', width: '100%' }}
         container
         direction="column"
         justify="space-evenly"
         alignItems="center"
       >
         <FormControl
-          style={{ height: '100%' }}
+          style={{ height: '100%', width: '100%' }}
           component="form"
           onSubmit={event => handleSubmitForm(event)}
         >
           <Grid item>
             <header>
               <Typography variant="h4">Smart Shopping List</Typography>
-              <Typography variant="subtitle2" style={{ fontWeight: 'bold' }}>
+              <Typography
+                variant="subtitle2"
+                style={{ fontWeight: 'bold', marginTop: '2em' }}
+              >
                 Share Token: {token}
               </Typography>
             </header>
@@ -123,11 +126,18 @@ const AddItem = ({ token, results }) => {
               label="Item Name"
               onChange={e => setName(e.target.value)}
               value={name}
-              style={{ margin: '2em' }}
+              style={{ width: '100%' }}
             />
           </Grid>
           <Grid item>
-            <FormControl component="fieldset">
+            <FormControl
+              component="fieldset"
+              style={{
+                border: '1px solid #c4c4c4',
+                borderRadius: '5px',
+                width: '100%',
+              }}
+            >
               <FormLabel component="legend">
                 <Typography variant="subtitle1">
                   When will you purchase this item?
@@ -139,6 +149,7 @@ const AddItem = ({ token, results }) => {
                 name="purchase-frequency"
                 value={frequency}
                 onChange={handleSetFrequency}
+                style={{ padding: '0 10px' }}
               >
                 <FormControlLabel
                   value={604800000}
@@ -183,13 +194,14 @@ const AddItem = ({ token, results }) => {
             </FormControl>
           </Grid>
           <Grid item>
-            <Box style={{ margin: '2em' }}>
+            <Box>
               <Button
                 type="submit"
                 onClick={() => setName(name.trim())}
                 size="large"
                 variant="contained"
                 color="secondary"
+                style={{ height: '50px', width: '100%' }}
               >
                 <Typography>Add To List</Typography>
               </Button>
