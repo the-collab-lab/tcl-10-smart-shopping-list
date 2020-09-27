@@ -27,7 +27,7 @@ function TopNav({ token, setToken }) {
       <Dialog
         open={openCopy}
         onClose={() => setOpenCopy(false)}
-        aria-labelledby="make-copy-dialog"
+        aria-label="make-copy-dialog"
       >
         <CopyModal token={token} setOpenCopy={setOpenCopy} />
       </Dialog>

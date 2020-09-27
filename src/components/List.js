@@ -14,6 +14,7 @@ import {
   Typography,
   InputAdornment,
   Box,
+  Dialog,
 } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
@@ -82,8 +83,8 @@ const GreyCheckbox = withStyles({
 })(props => DecoratedCheckbox(props));
 
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
-  const [details, setDetails] = useState({});
-
+  const [openDetails, setOpenDetails] = useState(false);
+  const [activeItem, setActiveItem] = useState({});
   const classes = useStyles();
 
   function handleOnCheck(event, purchaseDates) {
@@ -214,6 +215,11 @@ You cannot undo this action, and this item's purchase history will be lost.`,
     }
   };
 
+  const handleOnClickDetails = result => {
+    setActiveItem(result);
+    setOpenDetails(true);
+  };
+
   return (
     <div>
       <Helmet>
@@ -304,7 +310,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
                       </Grid>
                       <Grid item>
                         <IconButton
-                          onClick={() => setDetails(result)}
+                          onClick={() => handleOnClickDetails(result)}
                           color="primary"
                           aria-label={`${result.name} details`}
                           component="span"
@@ -326,7 +332,18 @@ You cannot undo this action, and this item's purchase history will be lost.`,
               );
             })}
         </ul>
-        {details.name && <Details details={details} setDetails={setDetails} />}
+        <Dialog
+          open={openDetails}
+          onClose={() => setOpenDetails(false)}
+          // aria-label={`set details for ${details.name}`}
+        >
+          <Details
+            activeItem={activeItem}
+            setActiveItem={setActiveItem}
+            setOpenDetails={setOpenDetails}
+          />
+        </Dialog>
+        {/* {details.name && <Details details={details} setDetails={setDetails} />} */}
       </Box>
     </div>
   );

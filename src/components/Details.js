@@ -1,6 +1,6 @@
 import React from 'react';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
-import IconButton from '@material-ui/core/IconButton';
+import { IconButton, DialogContent, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Helmet } from 'react-helmet';
 
@@ -11,14 +11,14 @@ const useStyles = makeStyles({
   },
 });
 
-const Details = ({ details, setDetails }) => {
+const Details = ({ activeItem, setOpenDetails }) => {
   const classes = useStyles();
 
-  const numOfPurch = details.purchaseDates.length;
+  const numOfPurch = activeItem.purchaseDates.length;
   const lastPurch = numOfPurch
-    ? Math.max(...details.purchaseDates)
-    : details.addedDate;
-  const futurePurch = lastPurch + details.frequency;
+    ? Math.max(...activeItem.purchaseDates)
+    : activeItem.addedDate;
+  const futurePurch = lastPurch + activeItem.frequency;
 
   const months = [
     'January',
@@ -46,41 +46,41 @@ const Details = ({ details, setDetails }) => {
   };
 
   return (
-    <div className="background">
+    <DialogContent style={{ paddingBottom: '2em' }}>
       <Helmet>
         <title>Item Details</title>
         <meta
           name="description"
-          content={`Item details for item: ${details.name}`}
+          content={`Item details for item: ${activeItem.name}`}
         />
       </Helmet>
-      <div className="modal">
-        <IconButton
-          aria-label="back to list"
-          onClick={() => setDetails({})}
-          color="secondary"
-          className={classes.button}
-          size="medium"
-        >
-          <ChevronLeftRoundedIcon />
-        </IconButton>
-        <div className="details-header">
-          <h2>Smart Shopping List</h2>
-        </div>
-        <h3>{details.name}</h3>
-        <p>
-          Last Purchase Date:{' '}
-          {numOfPurch
-            ? getTime(lastPurch)
-            : 'This item has no purchase history'}{' '}
-        </p>
-        <p>Next Purchase Date: {getTime(futurePurch)} </p>
-        <p>
-          You have purchased this item {numOfPurch} time
-          {numOfPurch === 1 ? null : 's'}.
-        </p>
-      </div>
-    </div>
+      <IconButton
+        aria-label="back to list"
+        onClick={() => setOpenDetails(false)}
+        color="secondary"
+        className={classes.button}
+        size="medium"
+      >
+        <ChevronLeftRoundedIcon />
+      </IconButton>
+      <Typography variant="h4" style={{ marginBottom: '.5em' }} align="center">
+        Smart Shopping List
+      </Typography>
+      <Typography variant="h6" align="center">
+        Item: {activeItem.name}
+      </Typography>
+      <Typography variant="h6" align="center">
+        Last Purchase Date:{' '}
+        {numOfPurch ? getTime(lastPurch) : 'This item has no purchase history'}{' '}
+      </Typography>
+      <Typography variant="h6" align="center">
+        Next Purchase Date: {getTime(futurePurch)}{' '}
+      </Typography>
+      <Typography variant="h6" align="center">
+        You have purchased this item {numOfPurch} time
+        {numOfPurch === 1 ? null : 's'}.
+      </Typography>
+    </DialogContent>
   );
 };
 
