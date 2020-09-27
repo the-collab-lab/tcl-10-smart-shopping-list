@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import styles from '../List.module.css';
 import Details from './Details';
-import { updatePurchaseDate, deleteItem } from '../lib/firebase.js';
-import { withStyles } from '@material-ui/core/styles';
+import { updatePurchaseDate } from '../lib/firebase.js';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import { green, orange, red, grey } from '@material-ui/core/colors';
 import {
   FormControlLabel,
@@ -11,12 +10,28 @@ import {
   IconButton,
   Grid,
   Paper,
+  TextField,
   Typography,
+  InputAdornment,
+  Box,
+  Dialog,
+  Button,
 } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
+import SearchIcon from '@material-ui/icons/Search';
+import { NoPaddingClearIcon } from './ClearIconButton.js';
+import { Helmet } from 'react-helmet';
+import DeleteModal from './DeleteModal';
+
+const useStyles = makeStyles({
+  box: {
+    height: '48vh',
+    overflowY: 'scroll',
+  },
+});
 
 const DecoratedCheckbox = p => {
   return (
@@ -70,7 +85,10 @@ const GreyCheckbox = withStyles({
 })(props => DecoratedCheckbox(props));
 
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
-  const [details, setDetails] = useState({});
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openDetails, setOpenDetails] = useState(false);
+  const [activeItem, setActiveItem] = useState({});
+  const classes = useStyles();
 
   function handleOnCheck(event, purchaseDates) {
     updatePurchaseDate(token, event.target.value, purchaseDates);
@@ -79,12 +97,10 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
   function checkTime(time) {
     return Date.now() - time <= 86400000; //number of milliseconds equal to 24 hours
   }
+
   function handleDelete(result) {
-    let response = window.confirm(
-      `Permanently remove "${result.name}" from your shopping list? 
-You cannot undo this action, and this item's purchase history will be lost.`,
-    );
-    return response ? deleteItem(token, result.id) : null;
+    setActiveItem(result);
+    setOpenDeleteModal(true);
   }
 
   function predictedNextPurchase(lastPurchase, frequency) {
@@ -192,108 +208,168 @@ You cannot undo this action, and this item's purchase history will be lost.`,
     }
   }
 
+  const getEndSearchIcon = () => {
+    if (searchTerm === '') {
+      return <SearchIcon />;
+    } else {
+      return <NoPaddingClearIcon onClick={() => setSearchTerm('')} />;
+    }
+  };
+
+  const handleOnClickDetails = result => {
+    setActiveItem(result);
+    setOpenDetails(true);
+  };
+
   return (
-    <div className={styles['list-container']}>
+    <Grid
+      container
+      style={{ height: results.length ? '100%' : '50%', width: '100%' }}
+      direction="column"
+      justify="space-around"
+      alignItems="center"
+    >
+      <Helmet>
+        <title>Your Shopping List</title>
+        <meta
+          name="description"
+          content={`Your shopping list items with token: ${token}`}
+        />
+      </Helmet>
       <header>
         <Typography variant="h4">Smart Shopping List</Typography>
+        <Typography
+          variant="subtitle2"
+          style={{ fontWeight: 'bold', marginTop: '2em' }}
+        >
+          Share Token: {token}
+        </Typography>
       </header>
-      <Typography variant="subtitle2" style={{ fontWeight: 'bold' }}>
-        Share Token: {token}
-      </Typography>
       {results.length === 0 ? (
-        <>
-          <p>Your shopping list is currently empty</p>
-          <NavLink exact to="/add-item">
-            Add Item
-          </NavLink>
-        </>
-      ) : (
-        <div>
-          <div>
-            <label htmlFor="searchField" className="sr-only">
-              Search
-            </label>
-          </div>
-          <input
-            onChange={event => setSearchTerm(event.target.value)}
-            autoFocus
-            value={searchTerm}
-            id="searchField"
-            placeholder="Search..."
-          ></input>
-          <button
-            disabled={searchTerm === ''}
-            onClick={() => setSearchTerm('')}
+        <Box>
+          <Typography variant="h6">
+            Your shopping list is currently empty.
+          </Typography>
+          <Button
+            component={NavLink}
+            to="/add-item"
+            style={{
+              marginTop: '1em',
+              marginBottom: '1em',
+              height: '50px',
+              width: '228.2px',
+            }}
+            variant="contained"
+            color="secondary"
           >
-            x
-          </button>
+            <Typography variant="h6">Add Item</Typography>
+          </Button>
+        </Box>
+      ) : (
+        <div style={{ width: '100%' }}>
+          <TextField
+            style={{ width: '100%' }}
+            variant="outlined"
+            label="Search"
+            id="search-field"
+            onChange={event => setSearchTerm(event.target.value)}
+            value={searchTerm}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  {getEndSearchIcon()}
+                </InputAdornment>
+              ),
+            }}
+          />
+          <Box className={classes.box}>
+            <ul>
+              {sortedResults()
+                .filter(result =>
+                  result.name
+                    .toLowerCase()
+                    .replace(/[\W_]/g, '')
+                    .includes(searchTerm.toLowerCase()),
+                )
+                .map(result => {
+                  const time = Math.max(...result.purchaseDates); //pulls most recent purchase date
+                  return (
+                    <li
+                      key={result.id}
+                      className={checkTime(time) ? `deactivated` : null}
+                    >
+                      <Paper // adds background color. If we don't want a shadow, we can set elevation to 0
+                        elevation={1}
+                        className="list-item"
+                        style={{ margin: '.2em' }}
+                      >
+                        <Grid // used to align labe/checkbox with icon buttons and to properly space
+                          container
+                          direction="row"
+                          justify="space-between"
+                          alignItems="center"
+                          className="container"
+                        >
+                          <Grid item>
+                            <FormControlLabel
+                              control={getCheckboxWithColor(result, time)} //sends to above function to pull back the correct color checkbox component
+                              label={result.name}
+                              disabled={checkTime(time)}
+                              id={result.id}
+                              value={result.id}
+                              aria-label={result.timeClass.split('-').join(' ')}
+                            />
+                          </Grid>
+                          <Grid item>
+                            <IconButton
+                              onClick={() => handleOnClickDetails(result)}
+                              color="primary"
+                              aria-label={`${result.name} details`}
+                              component="span"
+                            >
+                              <MoreHorizIcon />
+                            </IconButton>
+                            <IconButton
+                              onClick={() => handleDelete(result)}
+                              color="primary"
+                              aria-label={`delete ${result.name}`}
+                              component="span"
+                            >
+                              <DeleteOutlineIcon />
+                            </IconButton>
+                          </Grid>
+                        </Grid>
+                      </Paper>
+                    </li>
+                  );
+                })}
+            </ul>
+            <Dialog
+              open={openDetails}
+              onClose={() => setOpenDetails(false)}
+              aria-label="see item details"
+            >
+              <Details
+                activeItem={activeItem}
+                setActiveItem={setActiveItem}
+                setOpenDetails={setOpenDetails}
+              />
+            </Dialog>
+            <Dialog
+              open={openDeleteModal}
+              onClose={() => setOpenDeleteModal(false)}
+              aria-label="delete item"
+            >
+              <DeleteModal
+                activeItem={activeItem}
+                token={token}
+                setOpenDeleteModal={setOpenDeleteModal}
+              />
+            </Dialog>
+          </Box>
         </div>
       )}
-      <div className={styles['list-results-container']}>
-        <ul className={styles['ul-list']}>
-          {sortedResults()
-            .filter(result =>
-              result.name
-                .toLowerCase()
-                .replace(/[\W_]/g, '')
-                .includes(searchTerm.toLowerCase()),
-            )
-            .map(result => {
-              const time = Math.max(...result.purchaseDates); //pulls most recent purchase date
-              return (
-                <li
-                  key={result.id}
-                  className={checkTime(time) ? `deactivated` : null}
-                >
-                  <Paper // adds background color. If we don't want a shadow, we can set elevation to 0
-                    elevation={1}
-                    className="list-item"
-                    style={{ margin: '.2em' }}
-                  >
-                    <Grid // used to align labe/checkbox with icon buttons and to properly space
-                      container
-                      direction="row"
-                      justify="space-between"
-                      alignItems="center"
-                      className="container"
-                    >
-                      <Grid item>
-                        <FormControlLabel
-                          control={getCheckboxWithColor(result, time)} //sends to above function to pull back the correct color checkbox component
-                          label={result.name}
-                          disabled={checkTime(time)}
-                          id={result.id}
-                          value={result.id}
-                          aria-label={result.timeClass.split('-').join(' ')}
-                        />
-                      </Grid>
-                      <Grid item>
-                        <IconButton
-                          onClick={() => setDetails(result)}
-                          color="primary"
-                          aria-label={`${result.name} details`}
-                          component="span"
-                        >
-                          <MoreHorizIcon />
-                        </IconButton>
-                        <IconButton
-                          onClick={() => handleDelete(result)}
-                          color="primary"
-                          aria-label={`delete ${result.name}`}
-                          component="span"
-                        >
-                          <DeleteOutlineIcon />
-                        </IconButton>
-                      </Grid>
-                    </Grid>
-                  </Paper>
-                </li>
-              );
-            })}
-        </ul>
-        {details.name && <Details details={details} setDetails={setDetails} />}
-      </div>
-    </div>
+    </Grid>
   );
 };
 
