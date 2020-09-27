@@ -31,16 +31,15 @@ function TopNav({ token, setToken }) {
       >
         <CopyModal token={token} setOpenCopy={setOpenCopy} />
       </Dialog>
-      <AppBar position="static">
+      <AppBar position="static" style={{ height: '65px' }}>
         <Toolbar
           style={{
-            paddingLeft: '.5em',
-            paddingRight: '0em',
-            paddingTop: '.25em',
+            padding: '.5rem',
+            height: '100%',
           }}
         >
-          <Grid container justify="space-between" spacing={3}>
-            <Grid item>
+          <Grid container justify="space-between">
+            <Grid item style={{ alignSelf: 'center' }}>
               <Grid
                 container
                 justify="flex-start"
@@ -63,12 +62,15 @@ function TopNav({ token, setToken }) {
               <Grid item>
                 <Grid container justify="flex-end">
                   <Grid item>
-                    <IconButton onClick={() => setOpenCopy(true)}>
+                    <IconButton
+                      onClick={() => setOpenCopy(true)}
+                      aria-label={`copy list token`}
+                    >
                       <GroupAddIcon style={{ color: '#ffffff' }} />
                     </IconButton>
                   </Grid>
                   <Grid item>
-                    <IconButton onClick={handleLogOut}>
+                    <IconButton onClick={handleLogOut} aria-label="exit list">
                       <ExitToAppIcon style={{ color: '#ffffff' }} />
                     </IconButton>
                   </Grid>

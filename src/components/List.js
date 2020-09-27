@@ -21,6 +21,7 @@ import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
 import SearchIcon from '@material-ui/icons/Search';
 import { NoPaddingClearIcon } from './ClearIconButton.js';
+import { Helmet } from 'react-helmet';
 
 const useStyles = makeStyles({
   box: {
@@ -215,6 +216,13 @@ You cannot undo this action, and this item's purchase history will be lost.`,
 
   return (
     <div>
+      <Helmet>
+        <title>Your Shopping List</title>
+        <meta
+          name="description"
+          content={`Your shopping list items with token: ${token}`}
+        />
+      </Helmet>
       <header>
         <Typography variant="h4">Smart Shopping List</Typography>
       </header>
@@ -223,14 +231,24 @@ You cannot undo this action, and this item's purchase history will be lost.`,
       </Typography>
       {results.length === 0 ? (
         <>
-          <p>Your shopping list is currently empty</p>
-          <NavLink exact to="/add-item">
-            Add Item
+          <Typography
+            style={{ marginTop: '2em', marginBottom: '2em' }}
+            variant="h5"
+          >
+            Your shopping list is currently empty.
+          </Typography>
+          <NavLink
+            style={{ marginTop: '1em', marginBottom: '1em' }}
+            exact
+            to="/add-item"
+          >
+            <Typography variant="h6">Add Item</Typography>
           </NavLink>
         </>
       ) : (
         <div>
           <TextField
+            style={{ margin: '2em' }}
             variant="outlined"
             label="Search"
             id="search-field"

@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
+import { Helmet } from 'react-helmet';
 
 const useStyles = makeStyles({
   caption: {
@@ -23,10 +24,6 @@ const useStyles = makeStyles({
   formControlLabel: {
     justifyContent: 'space-between',
     margin: 0,
-  },
-  button: {
-    borderRadius: '25px',
-    color: 'white',
   },
 });
 
@@ -66,9 +63,19 @@ const AddItem = ({ token, results }) => {
 
   return (
     <form onSubmit={event => handleSubmitForm(event)}>
+      <Helmet>
+        <title>Add Item</title>
+        <meta
+          name="description"
+          content={`Add item to shopping list with token: ${token}`}
+        />
+      </Helmet>
       <Box>
         <header>
           <Typography variant="h4">Smart Shopping List</Typography>
+          <Typography variant="subtitle2" style={{ fontWeight: 'bold' }}>
+            Share Token: {token}
+          </Typography>
         </header>
         <TextField
           required
@@ -77,6 +84,7 @@ const AddItem = ({ token, results }) => {
           label="Item Name"
           onChange={e => setName(e.target.value)}
           value={name}
+          style={{ margin: '2em' }}
         />
       </Box>
       <FormControl component="fieldset">
@@ -133,11 +141,10 @@ const AddItem = ({ token, results }) => {
           <Divider />
         </RadioGroup>
       </FormControl>
-      <Box>
+      <Box style={{ margin: '2em' }}>
         <Button
           type="submit"
           onClick={() => setName(name.trim())}
-          className={classes.button}
           size="large"
           variant="contained"
           color="secondary"

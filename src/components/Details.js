@@ -2,6 +2,7 @@ import React from 'react';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
+import { Helmet } from 'react-helmet';
 
 const useStyles = makeStyles({
   button: {
@@ -46,6 +47,13 @@ const Details = ({ details, setDetails }) => {
 
   return (
     <div className="background">
+      <Helmet>
+        <title>Item Details</title>
+        <meta
+          name="description"
+          content={`Item details for item: ${details.name}`}
+        />
+      </Helmet>
       <div className="modal">
         <IconButton
           aria-label="back to list"
