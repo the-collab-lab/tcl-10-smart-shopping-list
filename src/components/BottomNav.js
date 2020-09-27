@@ -15,7 +15,7 @@ export default function FullWidthTabs() {
       <AppBar position="static" color="primary">
         <Tabs
           value={tabNumber}
-          onChange={setTabNumber}
+          onChange={(event, newValue) => setTabNumber(newValue)}
           indicatorColor="secondary"
           variant="fullWidth"
           aria-label="main navigation tabs"
