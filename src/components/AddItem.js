@@ -82,6 +82,8 @@ const AddItem = ({ token, results }) => {
         onClose={() => setOpenSuccessAlert(false)}
         message={`Successfully added ${name}to your list.`}
         action={<CheckBoxIcon />}
+        role="alert"
+        aria-label={`Successfully added ${name}to your list.`}
       />
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -90,6 +92,8 @@ const AddItem = ({ token, results }) => {
         onClose={() => setOpenAlreadyExistsAlert(false)}
         message={`${name} already exists on your list.`}
         action={<WarningIcon />}
+        role="alert"
+        aria-label={`${name} already exists on your list.`}
       />
       <Grid
         style={{ height: '100%' }}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import Details from './Details';
-import { updatePurchaseDate, deleteItem } from '../lib/firebase.js';
+import { updatePurchaseDate } from '../lib/firebase.js';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import { green, orange, red, grey } from '@material-ui/core/colors';
 import {
@@ -23,6 +23,7 @@ import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
 import SearchIcon from '@material-ui/icons/Search';
 import { NoPaddingClearIcon } from './ClearIconButton.js';
 import { Helmet } from 'react-helmet';
+import DeleteModal from './DeleteModal';
 
 const useStyles = makeStyles({
   box: {
@@ -83,6 +84,7 @@ const GreyCheckbox = withStyles({
 })(props => DecoratedCheckbox(props));
 
 const List = ({ results, setSearchTerm, searchTerm, token }) => {
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openDetails, setOpenDetails] = useState(false);
   const [activeItem, setActiveItem] = useState({});
   const classes = useStyles();
@@ -94,12 +96,10 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
   function checkTime(time) {
     return Date.now() - time <= 86400000; //number of milliseconds equal to 24 hours
   }
+
   function handleDelete(result) {
-    let response = window.confirm(
-      `Permanently remove "${result.name}" from your shopping list? 
-You cannot undo this action, and this item's purchase history will be lost.`,
-    );
-    return response ? deleteItem(token, result.id) : null;
+    setActiveItem(result);
+    setOpenDeleteModal(true);
   }
 
   function predictedNextPurchase(lastPurchase, frequency) {
@@ -335,7 +335,7 @@ You cannot undo this action, and this item's purchase history will be lost.`,
         <Dialog
           open={openDetails}
           onClose={() => setOpenDetails(false)}
-          // aria-label={`set details for ${details.name}`}
+          aria-label="see item details"
         >
           <Details
             activeItem={activeItem}
@@ -343,7 +343,17 @@ You cannot undo this action, and this item's purchase history will be lost.`,
             setOpenDetails={setOpenDetails}
           />
         </Dialog>
-        {/* {details.name && <Details details={details} setDetails={setDetails} />} */}
+        <Dialog
+          open={openDeleteModal}
+          onClose={() => setOpenDeleteModal(false)}
+          aria-label="delete item"
+        >
+          <DeleteModal
+            activeItem={activeItem}
+            token={token}
+            setOpenDeleteModal={setOpenDeleteModal}
+          />
+        </Dialog>
       </Box>
     </div>
   );
