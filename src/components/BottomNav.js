@@ -7,33 +7,37 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Box from '@material-ui/core/Box';
 
-export default function FullWidthTabs() {
+export default function FullWidthTabs({ token }) {
   const [tabNumber, setTabNumber] = React.useState(0);
 
   return (
     <Box>
       <AppBar position="static" color="primary">
-        <Tabs
-          value={tabNumber}
-          onChange={(event, newValue) => setTabNumber(newValue)}
-          indicatorColor="secondary"
-          variant="fullWidth"
-          aria-label="main navigation tabs"
-        >
-          <Tab
-            icon={<FormatListBulletedIcon />}
-            aria-label="shopping list"
-            component={Link}
-            to="/list"
-            style={{ borderRight: '0.1em solid white' }}
-          />
-          <Tab
-            icon={<AddCircleOutlineIcon />}
-            aria-label="Add item to shopping list"
-            component={Link}
-            to="/add-item"
-          />
-        </Tabs>
+        {token ? (
+          <Tabs
+            value={tabNumber}
+            onChange={(event, newValue) => setTabNumber(newValue)}
+            indicatorColor="secondary"
+            variant="fullWidth"
+            aria-label="main navigation tabs"
+          >
+            <Tab
+              icon={<FormatListBulletedIcon />}
+              aria-label="shopping list"
+              component={Link}
+              to="/list"
+              style={{ borderRight: '0.1em solid white' }}
+            />
+            <Tab
+              icon={<AddCircleOutlineIcon />}
+              aria-label="Add item to shopping list"
+              component={Link}
+              to="/add-item"
+            />
+          </Tabs>
+        ) : (
+          <Tabs />
+        )}
       </AppBar>
     </Box>
   );
