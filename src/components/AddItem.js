@@ -76,7 +76,7 @@ const AddItem = ({ token, results }) => {
         />
       </Helmet>
       <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={openSuccessAlert}
         autoHideDuration={3000}
         onClose={() => setOpenSuccessAlert(false)}
@@ -86,7 +86,7 @@ const AddItem = ({ token, results }) => {
         aria-label={`Successfully added ${name}to your list.`}
       />
       <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={openAlreadyExistsAlert}
         autoHideDuration={3000}
         onClose={() => setOpenAlreadyExistsAlert(false)}
