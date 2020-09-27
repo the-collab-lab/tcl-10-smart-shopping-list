@@ -13,8 +13,8 @@ const DeleteModal = ({ activeItem, setOpenDeleteModal, token }) => {
   return (
     <div>
       <DialogContent>
-        <Typography>{`Permanently remove "${activeItem.name}" from your shopping list?`}</Typography>
-        <Typography>
+        <Typography variant="h6">{`Permanently remove "${activeItem.name}" from your shopping list?`}</Typography>
+        <Typography variant="h6">
           You cannot undo this action, and this item's purchase history will be
           lost.
         </Typography>
