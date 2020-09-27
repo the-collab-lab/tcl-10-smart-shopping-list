@@ -46,7 +46,8 @@ const Details = ({ activeItem, setOpenDetails }) => {
   };
 
   return (
-    <DialogContent style={{ paddingBottom: '2em' }}>
+    <DialogContent style={{ maxWidth: '350px', paddingBottom: '2em' }}>
+      {/* dialog maxWdith for demo */}
       <Helmet>
         <title>Item Details</title>
         <meta

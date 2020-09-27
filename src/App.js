@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { db } from './lib/firebase.js';
 import './App.css';
-import { Box, CircularProgress } from '@material-ui/core';
+import { Box, CircularProgress, Grid } from '@material-ui/core';
 import Welcome from './components/Welcome';
 import List from './components/List';
 import AddItem from './components/AddItem';
@@ -66,63 +66,73 @@ function App() {
 
   return (
     <Box className="App">
-      <Box className={classes.appContainer}>
-        <TopNav className={classes.topNav} token={token} setToken={setToken} />
-        <Box className={classes.mainContent}>
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={() =>
-                token ? (
-                  <Redirect to="/list" />
-                ) : (
-                  <Welcome setToken={setToken} />
-                )
-              }
+      <Grid container justify="center">
+        {/* <Grid item xs={12} sm={6} md={4} style={{height: "90vh", marginTop: "5vh"}}> more responsive */}
+        <Grid
+          item
+          style={{ height: '650px', width: '375px', marginTop: '20px' }}
+        >
+          <Box className={classes.appContainer}>
+            <TopNav
+              className={classes.topNav}
+              token={token}
+              setToken={setToken}
             />
-            <RequireAuth>
-              <Route
-                exact
-                path="/list"
-                render={() =>
-                  isLoading ? (
-                    <Box
-                      color="secondary"
-                      style={{
-                        height: '100%',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <CircularProgress />
-                    </Box>
-                  ) : (
-                    <List
-                      results={results}
-                      searchTerm={searchTerm}
-                      setSearchTerm={setSearchTerm}
-                      token={token}
-                    />
-                  )
-                }
-              />
-              <Route
-                exact
-                path="/add-item"
-                render={() => <AddItem token={token} results={results} />}
-              />
-            </RequireAuth>
-            <Redirect to="/" />
-          </Switch>
-        </Box>
-        {token ? (
-          <Box className={classes.bottomNav}>
-            <BottomNav />
+            <Box className={classes.mainContent}>
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={() =>
+                    token ? (
+                      <Redirect to="/list" />
+                    ) : (
+                      <Welcome setToken={setToken} />
+                    )
+                  }
+                />
+                <RequireAuth>
+                  <Route
+                    exact
+                    path="/list"
+                    render={() =>
+                      isLoading ? (
+                        <Box
+                          color="secondary"
+                          style={{
+                            height: '100%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <CircularProgress />
+                        </Box>
+                      ) : (
+                        <List
+                          results={results}
+                          searchTerm={searchTerm}
+                          setSearchTerm={setSearchTerm}
+                          token={token}
+                        />
+                      )
+                    }
+                  />
+                  <Route
+                    exact
+                    path="/add-item"
+                    render={() => <AddItem token={token} results={results} />}
+                  />
+                </RequireAuth>
+                <Redirect to="/" />
+              </Switch>
+            </Box>
+            <Box className={classes.bottomNav}>
+              <BottomNav token={token} />
+            </Box>
           </Box>
-        ) : null}
-      </Box>
+        </Grid>
+      </Grid>
     </Box>
   );
 }
