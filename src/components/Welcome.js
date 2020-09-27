@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import getToken from '../lib/tokens';
 import { writeToFirestore, db } from '../lib/firebase';
-import { Button, TextField } from '@material-ui/core';
+import {
+  Button,
+  TextField,
+  Grid,
+  FormControl,
+  Typography,
+} from '@material-ui/core';
 import { NoPaddingClearIcon } from './ClearIconButton.js';
 
 const Welcome = ({ setToken }) => {
@@ -30,38 +36,60 @@ const Welcome = ({ setToken }) => {
   }
 
   return (
-    <div>
-      <h1>Welcome to your Smart Shopping list!</h1>
-      <Button
-        component={Link}
-        variant="contained"
-        color="secondary"
-        to="/list"
-        onClick={setTokenStorage}
-      >
-        Create New List
-      </Button>
-      <p>- or -</p>
-      <p>Join an existing shopping list by entering a three word token.</p>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="join-list">Enter a share token</label>
-        </div>
-        <TextField
-          label="Enter Token"
-          variant="outlined"
-          id="join-list"
-          onChange={event => setInput(event.target.value)}
-          value={input}
-          InputProps={{
-            endAdornment: <NoPaddingClearIcon onClick={() => setInput('')} />,
-          }}
-        ></TextField>
-        <Button variant="contained" color="secondary" type="submit">
-          Submit
+    <Grid
+      style={{ height: '100%' }}
+      container
+      direction="column"
+      justify="space-evenly"
+      alignItems="center"
+    >
+      <Grid item>
+        <Typography variant="h4">Welcome!</Typography>
+        <Typography variant="h6">Create a new Smart Shopping List</Typography>
+      </Grid>
+      <Grid item>
+        <Button
+          component={Link}
+          variant="contained"
+          color="secondary"
+          to="/list"
+          onClick={setTokenStorage}
+          style={{ height: '50px', width: '228.2px' }}
+        >
+          <Typography variant="button">Create New List</Typography>
         </Button>
-      </form>
-    </div>
+      </Grid>
+      <Grid item>
+        <Typography variant="h6">- or -</Typography>
+      </Grid>
+      <Grid item>
+        <Typography variant="h4">Join a Shopping List.</Typography>
+        <Typography variant="h6">Enter a three word token</Typography>
+      </Grid>
+      <Grid item>
+        <FormControl component="form" onSubmit={handleSubmit}>
+          <TextField
+            label="Enter Token"
+            variant="outlined"
+            id="join-list"
+            onChange={event => setInput(event.target.value)}
+            value={input}
+            InputProps={{
+              endAdornment: <NoPaddingClearIcon onClick={() => setInput('')} />,
+            }}
+          ></TextField>
+          <Button
+            style={{ marginTop: '4px', height: '50px' }}
+            disabled={!input}
+            variant="contained"
+            color="secondary"
+            type="submit"
+          >
+            <Typography variant="button">Submit</Typography>
+          </Button>
+        </FormControl>
+      </Grid>
+    </Grid>
   );
 };
 
