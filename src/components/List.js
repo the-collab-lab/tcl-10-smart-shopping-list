@@ -15,6 +15,7 @@ import {
   InputAdornment,
   Box,
   Dialog,
+  Button,
 } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
@@ -239,17 +240,24 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
         <>
           <Typography
             style={{ marginTop: '2em', marginBottom: '2em' }}
-            variant="h5"
+            variant="h6"
           >
             Your shopping list is currently empty.
           </Typography>
-          <NavLink
-            style={{ marginTop: '1em', marginBottom: '1em' }}
-            exact
+          <Button
+            component={NavLink}
             to="/add-item"
+            style={{
+              marginTop: '1em',
+              marginBottom: '1em',
+              height: '50px',
+              width: '228.2px',
+            }}
+            variant="contained"
+            color="secondary"
           >
             <Typography variant="h6">Add Item</Typography>
-          </NavLink>
+          </Button>
         </>
       ) : (
         <div>
