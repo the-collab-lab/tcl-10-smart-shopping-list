@@ -103,7 +103,11 @@ const AddItem = ({ token, results }) => {
         alignItems="center"
       >
         <FormControl
-          style={{ height: '100%', width: '100%' }}
+          style={{
+            height: '100%',
+            width: '100%',
+            justifyContent: 'space-around',
+          }}
           component="form"
           onSubmit={event => handleSubmitForm(event)}
         >

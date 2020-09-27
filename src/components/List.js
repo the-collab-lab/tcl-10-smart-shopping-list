@@ -226,7 +226,7 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
       container
       style={{ height: results.length ? '100%' : '50%', width: '100%' }}
       direction="column"
-      justify="space-between"
+      justify="space-around"
       alignItems="center"
     >
       <Helmet>
