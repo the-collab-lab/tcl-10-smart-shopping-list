@@ -70,7 +70,7 @@ function App() {
         {/* <Grid item xs={12} sm={6} md={4} style={{height: "90vh", marginTop: "5vh"}}> more responsive */}
         <Grid
           item
-          style={{ height: '650px', width: '375px', marginTop: '10px' }}
+          style={{ height: '650px', width: '375px', marginTop: '20px' }}
         >
           <Box className={classes.appContainer}>
             <TopNav
