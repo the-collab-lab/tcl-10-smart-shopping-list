@@ -12,7 +12,9 @@ const useStyles = makeStyles(theme => ({
   root: {
     minWidth: 375,
     maxWidth: 3000,
-    height: 30,
+    position: 'fixed',
+    width: '100%',
+    bottom: '0',
   },
 }));
 
@@ -25,7 +27,7 @@ export default function FullWidthTabs() {
   };
 
   return (
-    <div className={classes.root}>
+    <nav className={classes.root}>
       <AppBar position="static" color="default">
         <Tabs
           value={value}
@@ -49,6 +51,6 @@ export default function FullWidthTabs() {
           />
         </Tabs>
       </AppBar>
-    </div>
+    </nav>
   );
 }

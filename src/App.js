@@ -44,7 +44,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <div style={{ background: '#fff', padding: '40px', borderRadius: 5 }}>
+        <div style={{ background: '#fff', padding: '40px' }}>
           <Switch>
             <Route
               exact

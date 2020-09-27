@@ -1,6 +1,6 @@
 .list-container {
-  height: 50vh;
-  width: 25vw;
+  /* height: 50vh;
+  width: 25vw; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
