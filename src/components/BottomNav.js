@@ -5,22 +5,18 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import Box from '@material-ui/core/Box';
 
 export default function FullWidthTabs() {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const [tabNumber, setTabNumber] = React.useState(0);
 
   return (
-    <div>
-      <AppBar position="static" color="default">
+    <Box>
+      <AppBar position="static" color="primary">
         <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
+          value={tabNumber}
+          onChange={setTabNumber}
+          indicatorColor="secondary"
           variant="fullWidth"
           aria-label="main navigation tabs"
         >
@@ -29,6 +25,7 @@ export default function FullWidthTabs() {
             aria-label="shopping list"
             component={Link}
             to="/list"
+            style={{ borderRight: '0.1em solid white' }}
           />
           <Tab
             icon={<AddCircleOutlineIcon />}
@@ -38,6 +35,6 @@ export default function FullWidthTabs() {
           />
         </Tabs>
       </AppBar>
-    </div>
+    </Box>
   );
 }
