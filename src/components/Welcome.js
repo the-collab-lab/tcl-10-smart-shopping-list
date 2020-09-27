@@ -37,8 +37,8 @@ const Welcome = ({ setToken }) => {
 
   return (
     <Grid
-      style={{ height: '100%' }}
       container
+      style={{ height: '100%' }}
       direction="column"
       justify="space-evenly"
       alignItems="center"
