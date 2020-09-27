@@ -268,93 +268,93 @@ const List = ({ results, setSearchTerm, searchTerm, token }) => {
               ),
             }}
           />
+          <Box className={classes.box}>
+            <ul>
+              {sortedResults()
+                .filter(result =>
+                  result.name
+                    .toLowerCase()
+                    .replace(/[\W_]/g, '')
+                    .includes(searchTerm.toLowerCase()),
+                )
+                .map(result => {
+                  const time = Math.max(...result.purchaseDates); //pulls most recent purchase date
+                  return (
+                    <li
+                      key={result.id}
+                      className={checkTime(time) ? `deactivated` : null}
+                    >
+                      <Paper // adds background color. If we don't want a shadow, we can set elevation to 0
+                        elevation={1}
+                        className="list-item"
+                        style={{ margin: '.2em' }}
+                      >
+                        <Grid // used to align labe/checkbox with icon buttons and to properly space
+                          container
+                          direction="row"
+                          justify="space-between"
+                          alignItems="center"
+                          className="container"
+                        >
+                          <Grid item>
+                            <FormControlLabel
+                              control={getCheckboxWithColor(result, time)} //sends to above function to pull back the correct color checkbox component
+                              label={result.name}
+                              disabled={checkTime(time)}
+                              id={result.id}
+                              value={result.id}
+                              aria-label={result.timeClass.split('-').join(' ')}
+                            />
+                          </Grid>
+                          <Grid item>
+                            <IconButton
+                              onClick={() => handleOnClickDetails(result)}
+                              color="primary"
+                              aria-label={`${result.name} details`}
+                              component="span"
+                            >
+                              <MoreHorizIcon />
+                            </IconButton>
+                            <IconButton
+                              onClick={() => handleDelete(result)}
+                              color="primary"
+                              aria-label={`delete ${result.name}`}
+                              component="span"
+                            >
+                              <DeleteOutlineIcon />
+                            </IconButton>
+                          </Grid>
+                        </Grid>
+                      </Paper>
+                    </li>
+                  );
+                })}
+            </ul>
+            <Dialog
+              open={openDetails}
+              onClose={() => setOpenDetails(false)}
+              aria-label="see item details"
+            >
+              <Details
+                activeItem={activeItem}
+                setActiveItem={setActiveItem}
+                setOpenDetails={setOpenDetails}
+              />
+            </Dialog>
+            <Dialog
+              open={openDeleteModal}
+              onClose={() => setOpenDeleteModal(false)}
+              aria-label="delete item"
+            >
+              <DeleteModal
+                activeItem={activeItem}
+                token={token}
+                setOpenDeleteModal={setOpenDeleteModal}
+              />
+            </Dialog>
+          </Box>
         </div>
       )}
-      <Box className={classes.box}>
-        <ul>
-          {sortedResults()
-            .filter(result =>
-              result.name
-                .toLowerCase()
-                .replace(/[\W_]/g, '')
-                .includes(searchTerm.toLowerCase()),
-            )
-            .map(result => {
-              const time = Math.max(...result.purchaseDates); //pulls most recent purchase date
-              return (
-                <li
-                  key={result.id}
-                  className={checkTime(time) ? `deactivated` : null}
-                >
-                  <Paper // adds background color. If we don't want a shadow, we can set elevation to 0
-                    elevation={1}
-                    className="list-item"
-                    style={{ margin: '.2em' }}
-                  >
-                    <Grid // used to align labe/checkbox with icon buttons and to properly space
-                      container
-                      direction="row"
-                      justify="space-between"
-                      alignItems="center"
-                      className="container"
-                    >
-                      <Grid item>
-                        <FormControlLabel
-                          control={getCheckboxWithColor(result, time)} //sends to above function to pull back the correct color checkbox component
-                          label={result.name}
-                          disabled={checkTime(time)}
-                          id={result.id}
-                          value={result.id}
-                          aria-label={result.timeClass.split('-').join(' ')}
-                        />
-                      </Grid>
-                      <Grid item>
-                        <IconButton
-                          onClick={() => handleOnClickDetails(result)}
-                          color="primary"
-                          aria-label={`${result.name} details`}
-                          component="span"
-                        >
-                          <MoreHorizIcon />
-                        </IconButton>
-                        <IconButton
-                          onClick={() => handleDelete(result)}
-                          color="primary"
-                          aria-label={`delete ${result.name}`}
-                          component="span"
-                        >
-                          <DeleteOutlineIcon />
-                        </IconButton>
-                      </Grid>
-                    </Grid>
-                  </Paper>
-                </li>
-              );
-            })}
-        </ul>
-        <Dialog
-          open={openDetails}
-          onClose={() => setOpenDetails(false)}
-          aria-label="see item details"
-        >
-          <Details
-            activeItem={activeItem}
-            setActiveItem={setActiveItem}
-            setOpenDetails={setOpenDetails}
-          />
-        </Dialog>
-        <Dialog
-          open={openDeleteModal}
-          onClose={() => setOpenDeleteModal(false)}
-          aria-label="delete item"
-        >
-          <DeleteModal
-            activeItem={activeItem}
-            token={token}
-            setOpenDeleteModal={setOpenDeleteModal}
-          />
-        </Dialog>
-      </Box>
     </div>
   );
 };
