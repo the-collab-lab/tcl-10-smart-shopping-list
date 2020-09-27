@@ -27,6 +27,7 @@ const CopyModal = ({ token, setOpenCopy }) => {
         <Button
           variant="contained"
           fullWidth
+          autoFocus
           style={{ marginTop: '20px' }}
           color="secondary"
           size="small"
