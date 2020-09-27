@@ -8,18 +8,14 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Box from '@material-ui/core/Box';
 
 export default function FullWidthTabs() {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const [tabNumber, setTabNumber] = React.useState(0);
 
   return (
     <Box>
       <AppBar position="static" color="primary">
         <Tabs
-          value={value}
-          onChange={handleChange}
+          value={tabNumber}
+          onChange={setTabNumber}
           indicatorColor="secondary"
           variant="fullWidth"
           aria-label="main navigation tabs"
