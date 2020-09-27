@@ -28,7 +28,7 @@ const CopyModal = ({ token, setOpenCopy }) => {
           variant="contained"
           fullWidth
           style={{ marginTop: '20px' }}
-          color="primary"
+          color="secondary"
           size="small"
           type="submit"
           onClick={copy}
