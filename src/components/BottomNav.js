@@ -1,21 +1,13 @@
 import React from 'react';
-
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    minWidth: 375, // the width of an ipone x
-  },
-}));
+import Box from '@material-ui/core/Box';
 
 export default function FullWidthTabs() {
-  const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -23,12 +15,12 @@ export default function FullWidthTabs() {
   };
 
   return (
-    <div className={classes.root}>
+    <Box>
       <AppBar position="static" color="primary">
         <Tabs
           value={value}
           onChange={handleChange}
-          indicatorColor="primary"
+          indicatorColor="secondary"
           variant="fullWidth"
           aria-label="main navigation tabs"
         >
@@ -37,7 +29,7 @@ export default function FullWidthTabs() {
             aria-label="shopping list"
             component={Link}
             to="/list"
-            style={{ borderRight: '0.1em solid white', padding: '0.5em' }}
+            style={{ borderRight: '0.1em solid white' }}
           />
           <Tab
             icon={<AddCircleOutlineIcon />}
@@ -47,6 +39,6 @@ export default function FullWidthTabs() {
           />
         </Tabs>
       </AppBar>
-    </div>
+    </Box>
   );
 }
