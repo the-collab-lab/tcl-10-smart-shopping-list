@@ -66,12 +66,14 @@ function App() {
 
   return (
     <Box className="App">
-      <Grid container justify="center">
+      <Grid
+        container
+        justify="center"
+        alignItems="center"
+        style={{ height: '100vh' }}
+      >
         {/* <Grid item xs={12} sm={6} md={4} style={{height: "90vh", marginTop: "5vh"}}> more responsive */}
-        <Grid
-          item
-          style={{ height: '650px', width: '375px', marginTop: '20px' }}
-        >
+        <Grid item style={{ height: '650px', width: '375px' }}>
           <Box className={classes.appContainer}>
             <TopNav
               className={classes.topNav}
