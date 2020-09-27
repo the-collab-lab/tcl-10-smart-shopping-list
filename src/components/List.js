@@ -27,7 +27,7 @@ import DeleteModal from './DeleteModal';
 
 const useStyles = makeStyles({
   box: {
-    height: '60vh',
+    height: '55vh',
     overflowY: 'scroll',
   },
 });

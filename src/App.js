@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { db } from './lib/firebase.js';
 import './App.css';
-import { Box } from '@material-ui/core';
+import { Box, CircularProgress } from '@material-ui/core';
 import Welcome from './components/Welcome';
 import List from './components/List';
 import AddItem from './components/AddItem';
@@ -87,7 +87,17 @@ function App() {
                 path="/list"
                 render={() =>
                   isLoading ? (
-                    <div>Loading...</div>
+                    <Box
+                      color="secondary"
+                      style={{
+                        height: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <CircularProgress />
+                    </Box>
                   ) : (
                     <List
                       results={results}
