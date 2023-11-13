@@ -5,7 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
-    "firebase": "^7.17.1",
+    "firebase": "^10.6.0",
     "husky": "^3.1.0",
     "lint-staged": "^9.5.0",
     "lodash": "^4.17.19",
@@ -15,7 +15,7 @@
     "react-firestore": "^1.0.1",
     "react-helmet": "^6.1.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.3"
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -51,6 +51,9 @@
     ]
   },
   "devDependencies": {
-    "cypress": "^3.8.3"
+    "cypress": "^13.5.0"
+  },
+  "overrides": {
+    "@svgr/webpack": "^6.2.1"
   }
 }

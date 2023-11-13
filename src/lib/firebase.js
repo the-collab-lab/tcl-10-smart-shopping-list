@@ -1,6 +1,7 @@
 // NOTE: import only the Firebase modules that you need in your app... except
 // for the second line, which makes both the linter and react-firebase happy
-import firebase from 'firebase/app';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
 import 'firebase/firestore';
 import { calculateFrequency } from './estimates';
 
