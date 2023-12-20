@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import getToken from '../lib/tokens';
-import { writeToFirestore, db } from '../lib/firebase';
+import { db } from '../lib/firebase';
 import {
   Button,
   TextField,
@@ -14,11 +13,13 @@ import { NoPaddingClearIcon } from './ClearIconButton.js';
 const Welcome = ({ setToken }) => {
   const [input, setInput] = useState('');
 
-  const setTokenStorage = () => {
-    const token = getToken();
-    localStorage.setItem('token', token);
-    setToken(token);
-    writeToFirestore(token);
+  const setTokenStorage = e => {
+    e.preventDefault();
+    // const token = getToken();
+    // localStorage.setItem('token', token);
+    // setToken(token);
+    // writeToFirestore(token);
+    console.log('Creating new lists is no longer supported.');
   };
 
   function handleSubmit(event) {
@@ -34,6 +35,13 @@ const Welcome = ({ setToken }) => {
       }
     });
   }
+
+  /** Using this alert instead of the ArchivalNoticeModal due to legacy deps */
+  useEffect(() => {
+    alert(
+      'This Smart Shopping List App was made by early-career developers at The Collab Lab. This project has now been archived. To view the demo shopping list, enter the three word token: the collab lab. The following features are no longer supported: creating new lists, adding & deleting items from the list, and marking items on the list as purchased.',
+    );
+  }, []);
 
   return (
     <Grid
@@ -54,7 +62,10 @@ const Welcome = ({ setToken }) => {
           color="secondary"
           to="/list"
           onClick={setTokenStorage}
-          style={{ height: '50px', width: '228.2px' }}
+          style={{
+            height: '50px',
+            width: '228.2px',
+          }}
         >
           <Typography variant="button">Create New List</Typography>
         </Button>
@@ -79,7 +90,10 @@ const Welcome = ({ setToken }) => {
             }}
           ></TextField>
           <Button
-            style={{ marginTop: '4px', height: '50px' }}
+            style={{
+              marginTop: '4px',
+              height: '50px',
+            }}
             disabled={!input}
             variant="contained"
             color="secondary"
